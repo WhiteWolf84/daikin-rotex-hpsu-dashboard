@@ -2,42 +2,42 @@ import {
     svg_item_config,
     SVGItem,
     Category,
+    Language,
     languages,
+    text_map,
     validateConfig,
+    HpsuDashboardConfig,
 } from "./svg_item_config";
 
-import type { LovelaceCardConfig } from "@ha/data/lovelace/config/card";
 import type { HomeAssistant } from "@ha/types";
 
-import type { HassEntity } from "home-assistant-js-websocket";
 import { property, state } from "lit/decorators.js";
-import { html, LitElement, css } from "lit";
+import { html, LitElement, css, nothing } from "lit";
 
 declare global {
-  interface Window {
-    loadCardHelpers(): Promise<any>;
-  }
+    interface Window {
+        loadCardHelpers(): Promise<{
+            createCardElement(config: Record<string, unknown>): Promise<{
+                constructor: { getConfigElement(): Promise<unknown> };
+            }>;
+        }>;
+    }
 }
 
-const ensureArray = <T>(value: T | T[]): T[] => {
-  return Array.isArray(value) ? value : [value];
+const ensureArray = <T>(value: T | T[] | undefined): (T | undefined)[] => {
+    return Array.isArray(value) ? value : [value];
 };
 
 export class HpsuDashboardCardEditor extends LitElement {
     @property({ attribute: false }) public hass!: HomeAssistant;
-    @property({ type: Object }) public config!: LovelaceCardConfig;
+    @property({ attribute: false }) public config!: HpsuDashboardConfig;
 
-    @state() private language: string = "en";
+    @state() private language: Language = "en";
     @state() private svgItemConfig: SVGItem[] = [];
 
-    async setConfig(config: LovelaceCardConfig) {
+    private static helpersLoaded = false;
 
-        // HACK: This call is necessary to load the ha-entity-picker components.
-        const cardHelpers = await (window as any).loadCardHelpers();
-        const entitiesCard = await cardHelpers.createCardElement({ type: "entities", entities: [] });
-        await entitiesCard.constructor.getConfigElement();
-        // HACK end
-
+    public setConfig(config: HpsuDashboardConfig): void {
         this.config = validateConfig(config);
         this.svgItemConfig = svg_item_config.map(svg_item => ({
             ...svg_item,
@@ -45,47 +45,60 @@ export class HpsuDashboardCardEditor extends LitElement {
         }));
     }
 
-    protected willUpdate(changedProperties: Map<string, any>): void {
+    public connectedCallback(): void {
+        super.connectedCallback();
+        void HpsuDashboardCardEditor.loadHaComponents();
+    }
+
+    // HACK: Creating an entities card config element forces Home Assistant to
+    // lazily register the ha-selector / ha-entity-picker components.
+    private static async loadHaComponents(): Promise<void> {
+        if (HpsuDashboardCardEditor.helpersLoaded) {
+            return;
+        }
+        HpsuDashboardCardEditor.helpersLoaded = true;
+        try {
+            const cardHelpers = await window.loadCardHelpers();
+            const entitiesCard = await cardHelpers.createCardElement({ type: "entities", entities: [] });
+            await entitiesCard.constructor.getConfigElement();
+        } catch (e) {
+            HpsuDashboardCardEditor.helpersLoaded = false;
+            console.error("Failed to load Home Assistant card helpers.", e);
+        }
+    }
+
+    protected willUpdate(changedProperties: Map<PropertyKey, unknown>): void {
         if (changedProperties.has("hass") && this.hass?.language) {
             const lang = this.hass.language.split("-")[0];
-            this.language = languages.includes(lang) ? lang : "en";
+            this.language = (languages as string[]).includes(lang) ? lang as Language : "en";
         }
     }
 
     protected render() {
-        if (!this.config) {
-            return html``;
+        if (!this.config || this.svgItemConfig.length === 0) {
+            return nothing;
         }
 
         const categories: Record<string, SVGItem[]> = {};
+        let lastCategory: Category | undefined = this.svgItemConfig[0].category;
 
-        if (this.svgItemConfig[0].category) {
-            let lastCategory: Category = this.svgItemConfig[0].category;
-
+        if (lastCategory) {
             this.svgItemConfig.forEach(item => {
-                let currentCategory: Category | undefined = item.category;
-
-                if (currentCategory) {
-                    lastCategory = currentCategory;
-                } else {
-                    currentCategory = lastCategory;
-                }
-
-                const category = currentCategory[this.language];
+                lastCategory = item.category ?? lastCategory;
+                const category = lastCategory![this.language];
 
                 if (!categories[category]) {
                     categories[category] = [];
                 }
                 categories[category].push(item);
             });
-
         }
 
-        const deviceLabel = "HPSU Devices";
+        const texts = text_map[this.language];
         return html`
             <div class="card-config">
                 <ha-expansion-panel
-                    .header=${deviceLabel}
+                    .header=${"HPSU Devices"}
                 >
                     <ha-selector
                         .hass=${this.hass}
@@ -93,8 +106,7 @@ export class HpsuDashboardCardEditor extends LitElement {
                         .value=${this.config.canDevice}
                         @value-changed=${this._entityChanged}
                         id="can-device-selector"
-                        .placeholder=${"CAN Gerät auswählen"}
-                        can-device-id=${this.config.canDevice}>
+                        .placeholder=${texts.selectCanDevice}>
                     </ha-selector>
                     <ha-selector
                         .hass=${this.hass}
@@ -102,9 +114,7 @@ export class HpsuDashboardCardEditor extends LitElement {
                         .value=${this.config.uartDevice}
                         @value-changed=${this._entityChanged}
                         id="uart-device-selector"
-                        .placeholder=${"UART Gerät auswählen"}
-                        can-device-id=${this.config.uartDevice}
-                        >
+                        .placeholder=${texts.selectUartDevice}>
                     </ha-selector>
                 </ha-expansion-panel>
                 ${Object.keys(categories).map(category => html`
@@ -171,24 +181,24 @@ export class HpsuDashboardCardEditor extends LitElement {
         return relevantEntityIds;
     }
 
-    private _entityChanged(event: CustomEvent): void {
+    private _entityChanged(event: CustomEvent<{ value: string }>): void {
         event.stopPropagation();
         const picker = event.target as HTMLElement;
         const updatedEntities = { ...this.config.entities } as Record<string, string>;
 
         let canDevice = this.config.canDevice;
-        if (picker.getAttribute("id") == "can-device-selector") {
-            canDevice = (event.detail as any).value;
+        if (picker.id === "can-device-selector") {
+            canDevice = event.detail.value;
         }
 
         let uartDevice = this.config.uartDevice;
-        if (picker.getAttribute("id") == "uart-device-selector") {
-            uartDevice = (event.detail as any).value;
+        if (picker.id === "uart-device-selector") {
+            uartDevice = event.detail.value;
         }
 
         const entityId = picker.getAttribute("data-id");
         if (entityId) {
-            updatedEntities[entityId] = (event.detail as any).value;
+            updatedEntities[entityId] = event.detail.value;
         }
 
         this.config = {
@@ -221,11 +231,6 @@ export class HpsuDashboardCardEditor extends LitElement {
                 display: flex;
                 flex-direction: column;
                 padding: 16px;
-            }
-            h2 {
-                font-size: 20px;
-                margin-bottom: 16px;
-                margin-top: 24px;
             }
             ha-selector, ha-device-picker, ha-entity-picker {
                 margin: 5px;

@@ -14,10 +14,11 @@
   "devDependencies": {
     "@parcel/transformer-inline-string": "^2.8.3",
     "http-server": "^14.1.1",
-    "parcel": "^2.16.0"
+    "parcel": "^2.16.0",
+    "typescript": "^6.0.3"
   },
   "dependencies": {
     "home-assistant-js-websocket": "^9.5.0",
-    "lit": "^2.7.4"
+    "lit": "^3.2.0"
   }
 }

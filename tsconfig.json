@@ -6,7 +6,7 @@
     "moduleResolution": "bundler",
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
-    "strictNullChecks": true,
+    "strict": true,
     "noUnusedLocals": true,
     "noImplicitReturns": true,
     //"noUnusedParameters": true,

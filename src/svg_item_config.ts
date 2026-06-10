@@ -1,14 +1,20 @@
-export interface Category {
-    de: string;
-    en: string;
-    it: string;
-};
+export type Language = "de" | "en" | "it";
+
+export type Category = Record<Language, string>;
+
+export type TextAlign = "left" | "middle";
+
+export interface SVGItemTexts {
+    label?: string;
+    suffix?: string;
+    desc: string;
+}
 
 export interface SVGItem {
-    entityId?: string;
+    entityId?: string | null;
     parent?: string;
-    labelBox?: any;
-    valueBox?: any;
+    labelBox?: Element | null;
+    valueBox?: Element | null;
 
     id: string;
     label_rect_id?: string;
@@ -20,26 +26,9 @@ export interface SVGItem {
     unit?: string | string[];
     digits?: number;
     fontSize?: string;
-    align?: string;
-    suffix?: string;
+    align?: TextAlign;
     optional?: boolean;
-    texts: {
-        de: {
-            label?: string;
-            suffix?: string;
-            desc: string;
-        };
-        en: {
-            label?: string;
-            suffix?: string;
-            desc: string;
-        };
-        it: {
-            label?: string;
-            suffix?: string;
-            desc: string;
-        };
-    };
+    texts: Record<Language, SVGItemTexts>;
 }
 
 export const svg_item_config: SVGItem[] = [
@@ -108,7 +97,7 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "EEV",
-                desc: "Elektonisches Expansionsventil"
+                desc: "Elektronisches Expansionsventil"
             },
             en: {
                 label: "EEV",
@@ -492,7 +481,7 @@ export const svg_item_config: SVGItem[] = [
                 desc: "Flow BH - UART"
             },
             it: {
-                desc: "Flow BH - UART"
+                desc: "Mandata BH - UART"
             }
         }
     },
@@ -746,11 +735,11 @@ export const svg_item_config: SVGItem[] = [
                 desc: "Betriebsart"
             },
             en: {
-                suffix: "Mode of oper.: ",
-                desc: "Mode of operating"
+                suffix: "Op. mode: ",
+                desc: "Current operating mode"
             },
             it: {
-                suffix: "Tipo di funzionamento.: ",
+                suffix: "Funzionamento: ",
                 desc: "Tipo di funzionamento"
             }
         }
@@ -764,7 +753,6 @@ export const svg_item_config: SVGItem[] = [
         offset: 6,
         fontSize: "40px",
         align: "left",
-        suffix: "Therm. Leistung: ",
         texts: {
             de: {
                 suffix: "Thermische Leistung: ",
@@ -791,7 +779,7 @@ export const svg_item_config: SVGItem[] = [
         optional: true,
         texts: {
             de: {
-                suffix: "Elekrische Leistung: ",
+                suffix: "Elektrische Leistung: ",
                 desc: "Elektrische Leistung"
             },
             en: {
@@ -841,12 +829,12 @@ export const svg_item_config: SVGItem[] = [
                 desc: "Raum-Ist"
             },
             en: {
-                suffix: "Room setpoint: ",
-                desc: "Room setpoint"
+                suffix: "Room temp.: ",
+                desc: "Current room temperature"
             },
             it: {
-                suffix: "Temperatura ambiente impostata: ",
-                desc: "Temperatura ambiente impostata"
+                suffix: "Temp. ambiente: ",
+                desc: "Temperatura ambiente attuale"
             }
         }
     },
@@ -894,23 +882,68 @@ export const svg_item_config: SVGItem[] = [
     }
 ];
 
-export const languages = ["de", "en", "it"];
-export const text_map = {
-    "de" : {
-        "on": "An",
-        "off": "Aus"
+export const languages: Language[] = ["de", "en", "it"];
+
+export interface UITexts {
+    on: string;
+    off: string;
+    errorLoading: string;
+    selectCanDevice: string;
+    selectUartDevice: string;
+}
+
+export const text_map: Record<Language, UITexts> = {
+    de: {
+        on: "An",
+        off: "Aus",
+        errorLoading: "Fehler beim Laden des HPSU Dashboards.",
+        selectCanDevice: "CAN Gerät auswählen",
+        selectUartDevice: "UART Gerät auswählen",
     },
-    "en" : {
-        "on": "On",
-        "off": "Off"
+    en: {
+        on: "On",
+        off: "Off",
+        errorLoading: "Failed to load the HPSU dashboard.",
+        selectCanDevice: "Select CAN device",
+        selectUartDevice: "Select UART device",
     },
-    "it" : {
-        "on": "On",
-        "off": "Off"
-    }
+    it: {
+        on: "On",
+        off: "Off",
+        errorLoading: "Errore durante il caricamento della dashboard HPSU.",
+        selectCanDevice: "Seleziona dispositivo CAN",
+        selectUartDevice: "Seleziona dispositivo UART",
+    },
 };
 
-export const validateConfig = function(config) {
+// State strings emitted by the Daikin-Rotex-HPSU-CAN integration that mean
+// "no error". The integration localizes entity states independently of the
+// dashboard language, so all supported languages are listed.
+export const no_error_states = [
+    "Kein Fehler",
+    "No Error",
+    "Nessun Errore",
+    "Pas d'erreur",
+];
+
+// Long integration state strings that do not fit into their SVG value box,
+// mapped to a shorter display form.
+export const state_abbreviations: Record<string, string> = {
+    "Warmwasserbereitung": "Warmwasser",
+    "Hot Water Production": "Hot Water",
+    "Produzione di Acqua Calda": "Acqua Calda",
+    "Préparation d’eau chaude": "Eau chaude",
+};
+
+export interface HpsuDashboardConfig {
+    type: string;
+    entities?: Record<string, string>;
+    canDevice?: string;
+    uartDevice?: string;
+    [key: string]: unknown;
+}
+
+export const validateConfig = function(config: HpsuDashboardConfig): HpsuDashboardConfig {
     const validEntities = Object.fromEntries(
         Object.entries(config.entities ?? {}).filter(([key]) =>
             svg_item_config.some(entity_conf => entity_conf.id === key)
