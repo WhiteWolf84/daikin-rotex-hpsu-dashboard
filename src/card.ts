@@ -132,6 +132,7 @@ export class HPSUDashboardCard extends LitElement {
         if (this._state === DashboardState.Ready) {
             this.updateLabels();
             this.updateOpacity();
+            this.updateDynamics();
 
             if (!this.clickHandlersAdded) {
                 this.addClickHandlers();
@@ -146,6 +147,92 @@ export class HPSUDashboardCard extends LitElement {
             width: 100%;
             height: 100%;
         }
+
+        /* ---- dynamic schema animations ------------------------------- */
+
+        @keyframes hpsu-arrow-pulse {
+            0%, 100% { opacity: 0.25; }
+            50% { opacity: 1; }
+        }
+        @keyframes hpsu-pump-pulse {
+            0%, 100% { scale: 1; filter: brightness(1); }
+            50% { scale: 1.06; filter: brightness(1.25); }
+        }
+        @keyframes hpsu-compressor-glow {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.5) drop-shadow(0 0 8px #ffd24d); }
+        }
+        @keyframes hpsu-fan-flutter {
+            0%, 100% { scale: 1 1; filter: brightness(1); }
+            50% { scale: 0.88 1; filter: brightness(1.18); }
+        }
+        @keyframes hpsu-buh-glow {
+            0%, 100% { filter: brightness(1) drop-shadow(0 0 2px #d4aa00); }
+            50% { filter: brightness(1.6) drop-shadow(0 0 10px #ff9900); }
+        }
+
+        /* Smooth opacity changes for valve arrow groups. */
+        #dhw-open-arrows, #dhw-closed-arrows,
+        #bpv-open-arrows, #bpv-closed-arrows,
+        [id^="Flow-Arrow-"] {
+            transition: opacity 0.8s ease;
+        }
+
+        /* Marching flow arrows while water is flowing. */
+        :host([flowing]) [id^="Flow-Arrow-"] {
+            animation: hpsu-arrow-pulse var(--hpsu-flow-period, 1.5s) ease-in-out infinite;
+        }
+        :host([flowing]) #Flow-Arrow-2,
+        :host([flowing]) #Flow-Arrow-6 { animation-delay: calc(var(--hpsu-flow-period, 1.5s) / -8 * 1); }
+        :host([flowing]) #Flow-Arrow-3,
+        :host([flowing]) #Flow-Arrow-7 { animation-delay: calc(var(--hpsu-flow-period, 1.5s) / -8 * 2); }
+        :host([flowing]) #Flow-Arrow-4,
+        :host([flowing]) #Flow-Arrow-8 { animation-delay: calc(var(--hpsu-flow-period, 1.5s) / -8 * 3); }
+
+        /* Circulation pump pulses while running. */
+        #g3 { transform-box: fill-box; transform-origin: center; }
+        :host([pump-on]) #g3 {
+            animation: hpsu-pump-pulse var(--hpsu-pump-period, 1.6s) ease-in-out infinite;
+        }
+
+        /* Compressor glows while running. */
+        #compressor_on_off_group { transform-box: fill-box; transform-origin: center; }
+        :host([compressor-on]) #compressor_on_off_group {
+            animation: hpsu-compressor-glow 2.4s ease-in-out infinite;
+        }
+
+        /* Fan is drawn side-on: flutter instead of a rotation. */
+        #fan { transform-box: fill-box; transform-origin: center; }
+        :host([fan-on]) #fan {
+            animation: hpsu-fan-flutter var(--hpsu-fan-period, 0.6s) ease-in-out infinite;
+        }
+
+        /* Backup heater rod glows while heating. */
+        :host([buh-on]) #buh-rod {
+            animation: hpsu-buh-glow 1.8s ease-in-out infinite;
+        }
+
+        /* EEV arrows pulse during pressure equalization. */
+        :host([eev-on]) #eev_arrow_left,
+        :host([eev-on]) #eev_arrow_right {
+            animation: hpsu-arrow-pulse 1.2s ease-in-out infinite;
+        }
+
+        /* DHW tank shifts from blue to red as it warms up. */
+        #water-tank {
+            filter: hue-rotate(var(--hpsu-tank-hue, 0deg));
+            transition: filter 2s ease;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            :host [id^="Flow-Arrow-"], :host #g3, :host #fan,
+            :host #compressor_on_off_group, :host #buh-rod,
+            :host #eev_arrow_left, :host #eev_arrow_right {
+                animation: none !important;
+            }
+        }
+
+        /* --------------------------------------------------------------- */
 
         :host([panel-view]) {
             display: block;
@@ -354,12 +441,12 @@ export class HPSUDashboardCard extends LitElement {
 
         if (!dhwOpenArrows || !dhwClosedArrows || !bpvOpenArrows || !bpvClosedArrows) return;
 
-        const flowRate = this.getNumericState("durchfluss");
-        const mischerState = this.getNumericState("mischer");
+        const flowRate = this.getNumericState("flow_rate");
+        const mixerState = this.getNumericState("mixer");
         const bpvState = this.getNumericState("bypass");
 
-        dhwOpenArrows.style.opacity = (flowRate > 0 ? (mischerState / 100.0) : 0).toString();
-        dhwClosedArrows.style.opacity = (flowRate > 0 ? ((100.0 - mischerState) / 100.0) : 0).toString();
+        dhwOpenArrows.style.opacity = (flowRate > 0 ? (mixerState / 100.0) : 0).toString();
+        dhwClosedArrows.style.opacity = (flowRate > 0 ? ((100.0 - mixerState) / 100.0) : 0).toString();
         bpvOpenArrows.style.opacity = (flowRate > 0 ? (bpvState / 100.0) : 0).toString();
         bpvClosedArrows.style.opacity = (flowRate > 0 ? ((100.0 - bpvState) / 100.0) : 0).toString();
 
@@ -376,6 +463,51 @@ export class HPSUDashboardCard extends LitElement {
         const entity = entityId ? this.hass.states[entityId] : null;
         const value = entity ? parseFloat(entity.state) : NaN;
         return isNaN(value) ? 0 : value;
+    }
+
+    private getBinaryState(itemId: string): boolean {
+        const entityId = this.config.entities?.[itemId];
+        return entityId ? this.hass.states[entityId]?.state === "on" : false;
+    }
+
+    /**
+     * Drives the CSS animations of the schema: pulsing flow arrows, pump,
+     * compressor and backup heater activity, fan flutter and the tank color.
+     * Animation speeds scale with the measured values.
+     */
+    private updateDynamics(): void {
+        const clamp = (value: number, min: number, max: number) =>
+            Math.min(max, Math.max(min, value));
+
+        const flowRate = this.getNumericState("flow_rate");
+        const compressorOn = this.getBinaryState("compressor_status");
+        const pumpPercent = this.getNumericState("circulation_pump");
+        const pumpOn = this.getBinaryState("circulation_pump_status") || pumpPercent > 0;
+        const fanRpm = this.getNumericState("fan_speed");
+        const fanOn = fanRpm > 0 || (!this.config.entities?.["fan_speed"] && compressorOn);
+        const buhEntity = this.config.entities?.["buh_power"];
+        const buhOn = buhEntity ? this.isPositiveNumber(this.hass.states[buhEntity]?.state) : false;
+        const eevOn = this.getBinaryState("pressure_equalization");
+
+        this.toggleAttribute("flowing", flowRate > 0);
+        this.toggleAttribute("compressor-on", compressorOn);
+        this.toggleAttribute("pump-on", pumpOn);
+        this.toggleAttribute("fan-on", fanOn);
+        this.toggleAttribute("buh-on", buhOn);
+        this.toggleAttribute("eev-on", eevOn);
+
+        // Faster water flow, fan or pump speed -> faster animation.
+        const flowPeriod = flowRate > 0 ? clamp(1500 / flowRate, 0.5, 3) : 1.5;
+        const fanPeriod = fanRpm > 0 ? clamp(400 / fanRpm, 0.2, 1.2) : 0.6;
+        const pumpPeriod = pumpPercent > 0 ? clamp(120 / pumpPercent, 0.8, 3) : 1.6;
+        this.style.setProperty("--hpsu-flow-period", `${flowPeriod.toFixed(2)}s`);
+        this.style.setProperty("--hpsu-fan-period", `${fanPeriod.toFixed(2)}s`);
+        this.style.setProperty("--hpsu-pump-period", `${pumpPeriod.toFixed(2)}s`);
+
+        // DHW tank color shifts from blue (<= 30 °C) towards red (>= 55 °C).
+        const tankTemp = this.getNumericState("storage_temperature");
+        const warmth = tankTemp > 0 ? clamp((tankTemp - 30) / 25, 0, 1) : 0;
+        this.style.setProperty("--hpsu-tank-hue", `${Math.round(warmth * 145)}deg`);
     }
 
     private handleStateClick(entityId: string): void {
