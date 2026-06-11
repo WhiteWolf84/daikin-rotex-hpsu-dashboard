@@ -2713,9 +2713,10 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
             animation: hpsu-arrow-pulse 1.2s ease-in-out infinite;
         }
 
-        /* Mode/state labels fade smoothly between their signal colors. */
+        /* Mode/state and COP labels fade smoothly between their signal colors. */
         #mode_of_operating_value_text,
-        #operating_mode_value_text {
+        #operating_mode_value_text,
+        #cop_value_text {
             transition: fill 0.8s ease;
         }
 
@@ -2869,6 +2870,7 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
                             const isError = svg_item.id === "error_code" && !(0, $eb5cfe1dd9fe4e85$export$ac75e9db5428c70).includes(newState.state);
                             let fill = isError ? "red" : "silver";
                             if (svg_item.id === "mode_of_operating" || svg_item.id === "operating_mode") fill = this.getModeColor(newState.state) ?? "silver";
+                            else if (svg_item.id === "cop") fill = this.getCopColor(parseFloat(newState.state)) ?? "silver";
                             valueText.setAttribute("fill", fill);
                         }
                     }
@@ -2899,6 +2901,21 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
         if (/absenk|reduc|riduz|nacht|night|nott/.test(s)) return "#b39ddb";
         if (/auto/.test(s)) return "#80cbc4";
         return null;
+    }
+    /**
+     * Colors the COP value according to real-world air/water heat pump
+     * efficiency: below ~2 is poor, around 3 is average for an A2/W35-45
+     * machine, 4+ is good and 5+ is excellent (mild weather / low flow
+     * temperature). A COP of 0 (compressor off) stays neutral.
+     */ getCopColor(cop) {
+        if (!isFinite(cop) || cop <= 0) return null;
+        if (cop < 2) return "#ff5252";
+        if (cop < 2.5) return "#ff8a50";
+        if (cop < 3) return "#ffb74d";
+        if (cop < 3.5) return "#ffd54f";
+        if (cop < 4) return "#d4e157";
+        if (cop < 5) return "#9ccc65";
+        return "#4caf50";
     }
     setFill(elementId, color) {
         this.shadowRoot?.getElementById(elementId)?.setAttribute('fill', color);
