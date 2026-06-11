@@ -2713,6 +2713,12 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
             animation: hpsu-arrow-pulse 1.2s ease-in-out infinite;
         }
 
+        /* Mode/state labels fade smoothly between their signal colors. */
+        #mode_of_operating_value_text,
+        #operating_mode_value_text {
+            transition: fill 0.8s ease;
+        }
+
         /* DHW tank shifts from blue to red as it warms up. */
         #water-tank {
             filter: hue-rotate(var(--hpsu-tank-hue, 0deg));
@@ -2860,8 +2866,10 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
                             entityState = (0, $eb5cfe1dd9fe4e85$export$812790f65cac9681)[entityState] ?? entityState;
                             const suffix = svg_item.texts[this.language]?.suffix;
                             valueText.textContent = suffix ? suffix + entityState : entityState;
-                            const isError = svg_item.id === "fehlercode" && !(0, $eb5cfe1dd9fe4e85$export$ac75e9db5428c70).includes(newState.state);
-                            valueText.setAttribute("fill", isError ? "red" : "silver");
+                            const isError = svg_item.id === "error_code" && !(0, $eb5cfe1dd9fe4e85$export$ac75e9db5428c70).includes(newState.state);
+                            let fill = isError ? "red" : "silver";
+                            if (svg_item.id === "mode_of_operating" || svg_item.id === "operating_mode") fill = this.getModeColor(newState.state) ?? "silver";
+                            valueText.setAttribute("fill", fill);
                         }
                     }
                     this.layoutText(valueText, svg_item.valueBox, svg_item.align, svg_item.offset);
@@ -2876,6 +2884,21 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
                 this.setFill("buh-control", color);
             }
         });
+    }
+    /**
+     * Maps a heat pump state/mode text (de/en/it) to a signal color so the
+     * label itself shows at a glance what the system is doing.
+     */ getModeColor(state) {
+        const s = state.toLowerCase();
+        if (/abtau|defrost|sbrina/.test(s)) return "#9be8ff";
+        if (/heiz|heat|riscal/.test(s)) return "#ff8a50";
+        if (/kühl|kuehl|cool|raffr/.test(s)) return "#55c8ff";
+        if (/warmwasser|hot water|dhw|acs|sanitar/.test(s)) return "#ffd24d";
+        if (/standby|bereitschaft|aus|off|spento/.test(s)) return "#9e9e9e";
+        if (/sommer|summer|estate/.test(s)) return "#d4e157";
+        if (/absenk|reduc|riduz|nacht|night|nott/.test(s)) return "#b39ddb";
+        if (/auto/.test(s)) return "#80cbc4";
+        return null;
     }
     setFill(elementId, color) {
         this.shadowRoot?.getElementById(elementId)?.setAttribute('fill', color);
@@ -2937,10 +2960,16 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
         this.style.setProperty("--hpsu-flow-period", `${flowPeriod.toFixed(2)}s`);
         this.style.setProperty("--hpsu-fan-period", `${fanPeriod.toFixed(2)}s`);
         this.style.setProperty("--hpsu-pump-period", `${pumpPeriod.toFixed(2)}s`);
-        // DHW tank color shifts from blue (<= 30 °C) towards red (>= 55 °C).
+        // DHW tank color relative to the configured DHW setpoint: blue when
+        // far below it, red when reached. The hue rotates "the long way"
+        // (blue -> cyan -> green -> yellow -> red, the classic thermal scale)
+        // so intermediate temperatures never look pink/magenta.
         const tankTemp = this.getNumericState("storage_temperature");
-        const warmth = tankTemp > 0 ? clamp((tankTemp - 30) / 25, 0, 1) : 0;
-        this.style.setProperty("--hpsu-tank-hue", `${Math.round(warmth * 145)}deg`);
+        const setpointEntity = this.config.entities?.["storage_setpoint"];
+        const setpoint = setpointEntity ? this.getNumericState("storage_setpoint") : 48;
+        const range = 18;
+        const warmth = tankTemp > 0 && setpoint > 0 ? clamp((tankTemp - (setpoint - range)) / range, 0, 1) : 0;
+        this.style.setProperty("--hpsu-tank-hue", `${Math.round(warmth * -215)}deg`);
     }
     handleStateClick(entityId) {
         this.dispatchEvent(new CustomEvent("hass-more-info", {
