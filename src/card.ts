@@ -36,7 +36,7 @@ export class HPSUDashboardCard extends LitElement {
     private config!: HpsuDashboardConfig;
 
     @state() private _state: DashboardState = DashboardState.Loading;
-    @state() private language: Language = "de";
+    @state() private language: Language = "en";
     @state() private svgContent: string | null = null;
 
     private svg_item_config: SVGItem[] = [];
@@ -65,7 +65,7 @@ export class HPSUDashboardCard extends LitElement {
     protected willUpdate(changed: Map<PropertyKey, unknown>): void {
         if (changed.has("hass") && this.hass?.language) {
             const lang = this.hass.language.split("-")[0];
-            this.language = (languages as string[]).includes(lang) ? lang as Language : "de";
+            this.language = (languages as string[]).includes(lang) ? lang as Language : "en";
         }
     }
 

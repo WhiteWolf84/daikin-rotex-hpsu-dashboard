@@ -33,7 +33,7 @@ export interface SVGItem {
 
 export const svg_item_config: SVGItem[] = [
     {
-        id: "ta",
+        id: "outside_temperature",
         label_rect_id: "ta_label",
         domain: "sensor",
         device: "CAN",
@@ -48,15 +48,15 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "TA",
-                desc: "TA - Außentemperatur"
+                desc: "TA - Außentemperatur (RoCon OT1)"
             },
             en: {
                 label: "TA",
-                desc: "TA - Outside Temperature"
+                desc: "TA - Outside temperature (RoCon OT1)"
             },
             it: {
                 label: "TA",
-                desc: "TA - Temperatura esterna"
+                desc: "TA - Temperatura esterna (sonda RoCon OT1)"
             }
         }
     },
@@ -73,15 +73,15 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "TA2",
-                desc: "TA2 - Im Außengerät"
+                desc: "TA2 - Außentemperatur am Außengerät"
             },
             en: {
                 label: "TA2",
-                desc: "TA2 - In the outdoor unit"
+                desc: "TA2 - Outdoor unit air temperature"
             },
             it: {
                 label: "TA2",
-                desc: "TA2 - Nell'unità esterna"
+                desc: "TA2 - Temperatura aria unità esterna"
             }
         }
     },
@@ -101,7 +101,7 @@ export const svg_item_config: SVGItem[] = [
             },
             en: {
                 label: "EEV",
-                desc: "Electronic Expansion Valve"
+                desc: "Electronic expansion valve"
             },
             it: {
                 label: "EEV",
@@ -126,54 +126,54 @@ export const svg_item_config: SVGItem[] = [
         }
     },
     {
-        id: "kondensat",
-        label_rect_id: "kondensat_label",
+        id: "condensate",
+        label_rect_id: "condensate_label",
         domain:  "sensor",
         device: "UART",
         unit: "°C",
-        value_rect_id: "kondensat_value",
+        value_rect_id: "condensate_value",
         offset: 6,
         texts: {
             de: {
                 label: "Kondensat",
-                desc: "Kondensat"
+                desc: "Kondensattemperatur"
             },
             en: {
                 label: "Condensate",
-                desc: "Condensate"
+                desc: "Condensate temperature"
             },
             it: {
-                label: "Condensato",
-                desc: "Condensato"
+                label: "Condensa",
+                desc: "Temperatura della condensa"
             }
         }
 	},
     {
-        id: "umwaelzpumpe",
-        label_rect_id: "uwp_label",
+        id: "circulation_pump",
+        label_rect_id: "circulation_pump_label",
         domain:  "sensor",
         device: "CAN",
         unit: "%",
-        value_rect_id: "uwp_value",
+        value_rect_id: "circulation_pump_value",
         offset: 6,
         digits: 0,
         texts: {
             de: {
                 label: "Umwälzpumpe",
-                desc: "Umwälzpumpe"
+                desc: "Umwälzpumpe - Leistung"
             },
             en: {
-                label: "Circulation pump",
-                desc: "Circulation pump"
+                label: "Circ. pump",
+                desc: "Circulation pump - speed"
             },
             it: {
                 label: "Pompa circ.",
-                desc: "Pompa di circolazione"
+                desc: "Pompa di circolazione - velocità"
             }
         }
     },
     {
-        id: "umwaelzpumpe_an_aus",
+        id: "circulation_pump_status",
         domain:  "binary_sensor",
         device: "CAN",
         value_rect_id: "circ_pump_rect",
@@ -181,18 +181,18 @@ export const svg_item_config: SVGItem[] = [
         fontSize: "30px",
         texts: {
             de: {
-                desc: "Status Umwälzpumpe"
+                desc: "Umwälzpumpe - Status"
             },
             en: {
-                desc: "Circulation pump status"
+                desc: "Circulation pump - status"
             },
             it: {
-                desc: "Stato pompa di circolazione"
+                desc: "Pompa di circolazione - stato"
             }
         }
     },
     {
-        id: "durchfluss",
+        id: "flow_rate",
         domain:  "sensor",
         device: "CAN",
         unit: "L/h",
@@ -211,12 +211,12 @@ export const svg_item_config: SVGItem[] = [
             },
             it: {
                 label: "Portata",
-                desc: "Portata"
+                desc: "Portata acqua"
             }
         }
     },
     {
-        id: "ruecklauf_1",
+        id: "return_temperature_can",
         domain:  "sensor",
         device: "CAN",
         unit: "°C",
@@ -226,20 +226,20 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Rücklauf",
-                desc: "Rücklauf - CAN"
+                desc: "TR - Rücklauftemperatur (CAN)"
             },
             en: {
-                label: "Return flow",
-                desc: "Return flow - CAN"
+                label: "Return",
+                desc: "TR - Return temperature (CAN)"
             },
             it: {
                 label: "Ritorno",
-                desc: "Ritorno - CAN"
+                desc: "TR - Temperatura di ritorno (CAN)"
             }
         }
     },
     {
-        id: "ruecklauf_2",
+        id: "return_temperature_uart",
         domain:  "sensor",
         device: "UART",
         unit: "°C",
@@ -247,18 +247,18 @@ export const svg_item_config: SVGItem[] = [
         offset: 6,
         texts: {
             de: {
-                desc: "Rücklauf - UART"
+                desc: "TR - Rücklauftemperatur (UART)"
             },
             en: {
-                desc: "Return flow - UART"
+                desc: "TR - Return temperature (UART)"
             },
             it: {
-                desc: "Ritorno - UART"
+                desc: "TR - Temperatura di ritorno (UART)"
             }
         }
     },
     {
-        id: "verdampfer",
+        id: "evaporator",
         domain:  "sensor",
         device: "UART",
         unit: "°C",
@@ -273,15 +273,15 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Verdampfer",
-                desc: "Verdampfer"
+                desc: "Verdampfertemperatur"
             },
             en: {
                 label: "Evaporator",
-                desc: "Evaporator"
+                desc: "Evaporator temperature"
             },
             it: {
                 label: "Evaporatore",
-                desc: "Evaporatore"
+                desc: "Temperatura dell'evaporatore"
             }
         }
     },
@@ -296,15 +296,15 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Heißgas",
-                desc: "Heißgas"
+                desc: "Heißgastemperatur"
             },
             en: {
                 label: "Hot gas",
-                desc: "Hot gas"
+                desc: "Hot gas temperature"
             },
             it: {
                 label: "Gas caldo",
-                desc: "Gas caldo"
+                desc: "Temperatura del gas caldo"
             }
         }
     },
@@ -320,15 +320,15 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Heißgas",
-                desc: "Heißgas am Kondensator"
+                desc: "Heißgastemperatur am Kondensator"
             },
             en: {
                 label: "Hot gas",
-                desc: "Hot gas at the condenser"
+                desc: "Hot gas temperature at the condenser"
             },
             it: {
                 label: "Gas caldo",
-                desc: "Gas caldo al condensatore"
+                desc: "Temperatura del gas caldo al condensatore"
             }
         }
     },
@@ -343,20 +343,20 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Spreizung",
-                desc: "Spreizung"
+                desc: "Spreizung (TV - TR)"
             },
             en: {
                 label: "Spread",
-                desc: "Temperature spread"
+                desc: "Temperature spread (TV - TR)"
             },
             it: {
                 label: "ΔT",
-                desc: "Differenza di temperatura"
+                desc: "Differenza di temperatura (TV - TR)"
             }
         }
     },
     {
-        id: "vorlauf_1",
+        id: "flow_temperature_can",
         domain:  "sensor",
         device: "CAN",
         unit: "°C",
@@ -366,20 +366,20 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Vorlauf",
-                desc: "Vorlauf - CAN"
+                desc: "TV - Vorlauftemperatur (CAN)"
             },
             en: {
                 label: "Flow",
-                desc: "Flow - CAN"
+                desc: "TV - Flow temperature (CAN)"
             },
             it: {
                 label: "Mandata",
-                desc: "Mandata - CAN"
+                desc: "TV - Temperatura di mandata (CAN)"
             }
         }
     },
     {
-        id: "vorlauf_2",
+        id: "flow_temperature_uart",
         domain:  "sensor",
         device: "UART",
         unit: "°C",
@@ -387,18 +387,18 @@ export const svg_item_config: SVGItem[] = [
         offset: 6,
         texts: {
             de: {
-                desc: "Vorlauf - UART"
+                desc: "TV - Vorlauftemperatur (UART)"
             },
             en: {
-                desc: "Flow - UART"
+                desc: "TV - Flow temperature (UART)"
             },
             it: {
-                desc: "Mandata - UART"
+                desc: "TV - Temperatura di mandata (UART)"
             }
         }
     },
     {
-        id: "vorlauf_soll",
+        id: "flow_temperature_setpoint",
         domain:  "sensor",
         device: "CAN",
         unit: "°C",
@@ -408,20 +408,20 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Vorlauf-Soll",
-                desc: "Vorlauf Soll"
+                desc: "Vorlauf-Solltemperatur"
             },
             en: {
-                label: "Setpoint",
-                desc: "Flow setpoint"
+                label: "Flow set",
+                desc: "Flow temperature setpoint"
             },
             it: {
-                label: "Impostata",
+                label: "Mand. imp.",
                 desc: "Temperatura di mandata impostata"
             }
         }
     },
     {
-        id: "wasserdruck",
+        id: "water_pressure",
         domain:  "sensor",
         device: "CAN",
         unit: "bar",
@@ -435,7 +435,7 @@ export const svg_item_config: SVGItem[] = [
             },
             en: {
                 label: "Pressure",
-                desc: "Water Pressure"
+                desc: "Water pressure"
             },
             it: {
                 label: "Pressione",
@@ -444,7 +444,7 @@ export const svg_item_config: SVGItem[] = [
         }
     },
     {
-        id: "vorlauf_bh_1",
+        id: "flow_temperature_bh_can",
         domain:  "sensor",
         device: "CAN",
         unit: "°C",
@@ -454,20 +454,20 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Vorlauf BH",
-                desc: "VorlaufBH - CAN"
+                desc: "TVBH - Vorlauf nach Heizstab (CAN)"
             },
             en: {
                 label: "Flow BH",
-                desc: "Flow BH - CAN"
+                desc: "TVBH - Flow after backup heater (CAN)"
             },
             it: {
-                label: "Mandata BH",
-                desc: "Mandata al riscaldatore di backup - CAN"
+                label: "Mand. BH",
+                desc: "TVBH - Mandata dopo resistenza (CAN)"
             }
         }
     },
     {
-        id: "vorlauf_bh_2",
+        id: "flow_temperature_bh_uart",
         domain:  "sensor",
         device: "UART",
         unit: "°C",
@@ -475,18 +475,18 @@ export const svg_item_config: SVGItem[] = [
         offset: 6,
         texts: {
             de: {
-                desc: "VorlaufBH - UART"
+                desc: "TVBH - Vorlauf nach Heizstab (UART)"
             },
             en: {
-                desc: "Flow BH - UART"
+                desc: "TVBH - Flow after backup heater (UART)"
             },
             it: {
-                desc: "Mandata BH - UART"
+                desc: "TVBH - Mandata dopo resistenza (UART)"
             }
         }
     },
     {
-        id: "kompressor_an_aus",
+        id: "compressor_status",
         domain:  "binary_sensor",
         device: "CAN",
         value_rect_id: "comp_rect",
@@ -494,18 +494,18 @@ export const svg_item_config: SVGItem[] = [
         fontSize: "40px",
         texts: {
             de: {
-                desc: "Status Kompressor"
+                desc: "Kompressor - Status"
             },
             en: {
-                desc: "Compressor status"
+                desc: "Compressor - status"
             },
             it: {
-                desc: "Stato del compressore"
+                desc: "Compressore - stato"
             }
         }
     },
     {
-        id: "luefter",
+        id: "fan_speed",
         domain:  "sensor",
         device: "UART",
         unit: "RPM",
@@ -521,20 +521,20 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Lüfter",
-                desc: "Lüfter Drehzahl"
+                desc: "Lüfterdrehzahl"
             },
             en: {
                 label: "Fan",
                 desc: "Fan speed"
             },
             it: {
-                label: "Ventilatore",
-                desc: "Velocità del ventilatore"
+                label: "Ventola",
+                desc: "Velocità della ventola"
             }
         }
     },
     {
-        id: "verdichter",
+        id: "compressor_speed",
         domain:  "sensor",
         device: "UART",
         unit: "RPM",
@@ -545,7 +545,7 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Verdichter",
-                desc: "Verdichter Drehzahl"
+                desc: "Verdichterdrehzahl"
             },
             en: {
                 label: "Compressor",
@@ -558,7 +558,7 @@ export const svg_item_config: SVGItem[] = [
         }
     },
     {
-        id: "speicher",
+        id: "storage_temperature",
         domain:  "sensor",
         device: "CAN",
         unit: "°C",
@@ -568,20 +568,20 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Speicher",
-                desc: "Speicher Ist"
+                desc: "Speichertemperatur (Ist)"
             },
             en: {
-                label: "Storage",
-                desc: "Current storage value"
+                label: "Tank",
+                desc: "DHW tank temperature (actual)"
             },
             it: {
-                label: "Serbatoio",
-                desc: "Temperatura serbatoio attuale"
+                label: "Bollitore",
+                desc: "Temperatura bollitore (attuale)"
             }
         }
     },
     {
-        id: "speicher_soll",
+        id: "storage_setpoint",
         domain:  "select",
         device: "CAN",
         unit: "°C",
@@ -591,15 +591,15 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 label: "Soll",
-                desc: "Speicher Soll"
+                desc: "Speichertemperatur (Soll)"
             },
             en: {
                 label: "Setpoint",
-                desc: "Storage setpoint"
+                desc: "DHW tank temperature setpoint"
             },
             it: {
-                label: "Impostata",
-                desc: "Temperatura serbatoio impostata"
+                label: "Imp.",
+                desc: "Temperatura bollitore impostata"
             }
         }
     },
@@ -619,17 +619,17 @@ export const svg_item_config: SVGItem[] = [
                 desc: "Heizstableistung"
             },
             en: {
-                label: "Heating rod",
-                desc: "Heating rod power"
+                label: "Backup heater",
+                desc: "Backup heater power"
             },
             it: {
                 label: "Resistenza",
-                desc: "Potenza della barra riscaldante"
+                desc: "Potenza della resistenza elettrica"
             }
         }
     },
     {
-        id: "mischer",
+        id: "mixer",
         domain:  "sensor",
         device: "CAN",
         unit: "%",
@@ -639,13 +639,13 @@ export const svg_item_config: SVGItem[] = [
         fontSize: "40px",
         texts: {
             de: {
-                desc: "Mischer"
+                desc: "Mischerstellung"
             },
             en: {
-                desc: "Mixer"
+                desc: "Mixer position"
             },
             it: {
-                desc: "Miscelatore"
+                desc: "Posizione del miscelatore"
             }
         }
     },
@@ -660,21 +660,21 @@ export const svg_item_config: SVGItem[] = [
         fontSize: "40px",
         texts: {
             de: {
-                desc: "Bypass"
+                desc: "Bypass-Ventilstellung"
             },
             en: {
-                desc: "Bypass"
+                desc: "Bypass valve position"
             },
             it: {
-                desc: "Bypass"
+                desc: "Posizione della valvola di bypass"
             }
         }
     },
     {
-        id: "fehlercode",
+        id: "error_code",
         domain:  "sensor",
         device: "CAN",
-        value_rect_id: "fehlercode_value",
+        value_rect_id: "error_code_value",
         offset: 6,
         fontSize: "40px",
         align: "left",
@@ -699,63 +699,63 @@ export const svg_item_config: SVGItem[] = [
         }
     },
     {
-        id: "betriebsmodus",
+        id: "operating_mode",
         domain:  "select",
         device: "CAN",
-        value_rect_id: "betriebsmodus_value",
+        value_rect_id: "operating_mode_value",
         offset: 6,
         fontSize: "40px",
         align: "left",
         texts: {
             de: {
                 suffix: "Modus: ",
-                desc: "Betriebsmodus"
+                desc: "Betriebsmodus (vom Benutzer eingestellt)"
             },
             en: {
                 suffix: "Mode: ",
-                desc: "Operating mode"
+                desc: "Operating mode (user setting)"
             },
             it: {
                 suffix: "Modalità: ",
-                desc: "Modalità di funzionamento"
+                desc: "Modalità operativa (impostata dall'utente)"
             }
         }
     },
     {
-        id: "betriebsart",
+        id: "mode_of_operating",
         domain:  "sensor",
         device: "CAN",
-        value_rect_id: "betriebsart_value",
+        value_rect_id: "mode_of_operating_value",
         offset: 6,
         fontSize: "40px",
         align: "left",
         texts: {
             de: {
-                suffix: "Betriebsart: ",
-                desc: "Betriebsart"
+                suffix: "Status: ",
+                desc: "Aktueller Wärmepumpenstatus"
             },
             en: {
-                suffix: "Op. mode: ",
-                desc: "Current operating mode"
+                suffix: "State: ",
+                desc: "Current heat pump state"
             },
             it: {
-                suffix: "Funzionamento: ",
-                desc: "Tipo di funzionamento"
+                suffix: "Stato: ",
+                desc: "Stato attuale della pompa di calore"
             }
         }
     },
     {
-        id: "thermische_leistung",
+        id: "thermal_power",
         domain:  "sensor",
         device: "CAN",
         unit: "kW",
-        value_rect_id: "therm_leistung_value",
+        value_rect_id: "thermal_power_value",
         offset: 6,
         fontSize: "40px",
         align: "left",
         texts: {
             de: {
-                suffix: "Thermische Leistung: ",
+                suffix: "Therm. Leistung: ",
                 desc: "Thermische Leistung"
             },
             en: {
@@ -779,7 +779,7 @@ export const svg_item_config: SVGItem[] = [
         optional: true,
         texts: {
             de: {
-                suffix: "Elektrische Leistung: ",
+                suffix: "El. Leistung: ",
                 desc: "Elektrische Leistung"
             },
             en: {
@@ -803,20 +803,20 @@ export const svg_item_config: SVGItem[] = [
         texts: {
             de: {
                 suffix: "COP: ",
-                desc: "COP"
+                desc: "Leistungszahl (COP)"
             },
             en: {
                 suffix: "COP: ",
-                desc: "COP"
+                desc: "Coefficient of performance (COP)"
             },
             it: {
                 suffix: "COP: ",
-                desc: "COP"
+                desc: "Coefficiente di prestazione (COP)"
             }
         }
     },
     {
-        id: "t_room_is",
+        id: "room_temperature",
         domain:  "sensor",
         value_rect_id: "t_room_is_value",
         offset: 6,
@@ -825,8 +825,8 @@ export const svg_item_config: SVGItem[] = [
         optional: true,
         texts: {
             de: {
-                suffix: "Raum-Ist: ",
-                desc: "Raum-Ist"
+                suffix: "Raumtemp.: ",
+                desc: "Aktuelle Raumtemperatur"
             },
             en: {
                 suffix: "Room temp.: ",
@@ -849,13 +849,13 @@ export const svg_item_config: SVGItem[] = [
         optional: true,
         texts: {
             de: {
-                desc: "Datum"
+                desc: "Systemdatum"
             },
             en: {
-                desc: "Date"
+                desc: "System date"
             },
             it: {
-                desc: "Data"
+                desc: "Data di sistema"
             }
         }
     },
@@ -870,13 +870,13 @@ export const svg_item_config: SVGItem[] = [
         optional: true,
         texts: {
             de: {
-                desc: "Zeit"
+                desc: "Systemzeit"
             },
             en: {
-                desc: "Time"
+                desc: "System time"
             },
             it: {
-                desc: "Ora"
+                desc: "Ora di sistema"
             }
         }
     }
@@ -935,6 +935,36 @@ export const state_abbreviations: Record<string, string> = {
     "Préparation d’eau chaude": "Eau chaude",
 };
 
+// Maps configuration keys used by previous (German) releases to the current
+// English ids, so existing card configurations keep working after the rename.
+export const legacy_id_map: Record<string, string> = {
+    ta: "outside_temperature",
+    kondensat: "condensate",
+    umwaelzpumpe: "circulation_pump",
+    umwaelzpumpe_an_aus: "circulation_pump_status",
+    durchfluss: "flow_rate",
+    ruecklauf_1: "return_temperature_can",
+    ruecklauf_2: "return_temperature_uart",
+    verdampfer: "evaporator",
+    vorlauf_1: "flow_temperature_can",
+    vorlauf_2: "flow_temperature_uart",
+    vorlauf_soll: "flow_temperature_setpoint",
+    wasserdruck: "water_pressure",
+    vorlauf_bh_1: "flow_temperature_bh_can",
+    vorlauf_bh_2: "flow_temperature_bh_uart",
+    kompressor_an_aus: "compressor_status",
+    luefter: "fan_speed",
+    verdichter: "compressor_speed",
+    speicher: "storage_temperature",
+    speicher_soll: "storage_setpoint",
+    mischer: "mixer",
+    fehlercode: "error_code",
+    betriebsmodus: "operating_mode",
+    betriebsart: "mode_of_operating",
+    thermische_leistung: "thermal_power",
+    t_room_is: "room_temperature",
+};
+
 export interface HpsuDashboardConfig {
     type: string;
     entities?: Record<string, string>;
@@ -944,11 +974,15 @@ export interface HpsuDashboardConfig {
 }
 
 export const validateConfig = function(config: HpsuDashboardConfig): HpsuDashboardConfig {
-    const validEntities = Object.fromEntries(
-        Object.entries(config.entities ?? {}).filter(([key]) =>
-            svg_item_config.some(entity_conf => entity_conf.id === key)
-        )
-    );
+    const validIds = new Set(svg_item_config.map(item => item.id));
+    const validEntities: Record<string, string> = {};
+
+    for (const [key, value] of Object.entries(config.entities ?? {})) {
+        const id = legacy_id_map[key] ?? key;
+        if (validIds.has(id)) {
+            validEntities[id] = value as string;
+        }
+    }
 
     return {
         ...config,
