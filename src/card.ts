@@ -25,6 +25,8 @@ declare global {
     }
 }
 
+const SCRIPT_FILENAME = "hpsu-dashboard-card.js";
+
 export enum DashboardState {
     Loading = 'loading',
     Ready = 'ready',
@@ -575,18 +577,25 @@ export class HPSUDashboardCard extends LitElement {
         );
     }
 
+    /**
+     * Resolves a file shipped next to this script, wherever the script is
+     * served from: HA Marketplace (/local/community/<repo>/), legacy HACS
+     * (/hacsfiles/<repo>/) or a manual install (/local/<repo>/dist/).
+     * The script's own query string (e.g. ?hacstag=...) is reused as cache
+     * buster, so the SVG is refreshed exactly when the card is updated.
+     */
     private makeURL(filename: string): string {
-        const repoName = "daikin-rotex-hpsu-dashboard";
-        const scriptElement = document.querySelector(`script[src*="/hacsfiles/${repoName}/"]`) as HTMLScriptElement | null;
-
-        const scriptUrl = scriptElement?.src ?? "";
-        const hacsTag = new URLSearchParams(scriptUrl.split("?")[1]).get("hacstag");
-
-        if (hacsTag) {
-            return `/hacsfiles/${repoName}/${filename}?hacstag=${hacsTag}`;
-        } else {
-            return `/local/${repoName}/dist/${filename}?v=${Date.now()}`;
-        }
+        // import.meta.url can't be used: the bundler replaces it at build time.
+        const scriptElement = document.querySelector<HTMLScriptElement>(
+            `script[src*="/${SCRIPT_FILENAME}"]`
+        );
+        const scriptUrl = new URL(
+            scriptElement?.src ?? `/local/community/daikin-rotex-hpsu-dashboard/${SCRIPT_FILENAME}`,
+            document.baseURI
+        );
+        const fileUrl = new URL(filename, scriptUrl);
+        fileUrl.search = scriptUrl.search || `?v=${Date.now()}`;
+        return fileUrl.pathname + fileUrl.search;
     }
 
     private isPanelView(): boolean {
