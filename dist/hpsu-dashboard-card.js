@@ -1,493 +1,1241 @@
-function $656ade2323340eda$export$71511d61b312f219(decorators, target, key, desc) {
+/******************************************************************************
+Copyright (c) Microsoft Corporation.
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES WITH
+REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
+AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY SPECIAL, DIRECT,
+INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES WHATSOEVER RESULTING FROM
+LOSS OF USE, DATA OR PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR
+OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
+PERFORMANCE OF THIS SOFTWARE.
+***************************************************************************** */ /* global Reflect, Promise, SuppressedError, Symbol, Iterator */ var $24c52f343453d62d$var$extendStatics = function(d, b) {
+    $24c52f343453d62d$var$extendStatics = Object.setPrototypeOf || ({
+        __proto__: []
+    }) instanceof Array && function(d, b) {
+        d.__proto__ = b;
+    } || function(d, b) {
+        for(var p in b)if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+    };
+    return $24c52f343453d62d$var$extendStatics(d, b);
+};
+function $24c52f343453d62d$export$a8ba968b8961cb8a(d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+    $24c52f343453d62d$var$extendStatics(d, b);
+    function __() {
+        this.constructor = d;
+    }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+var $24c52f343453d62d$export$18ce0697a983be9b = function() {
+    $24c52f343453d62d$export$18ce0697a983be9b = Object.assign || function __assign(t) {
+        for(var s, i = 1, n = arguments.length; i < n; i++){
+            s = arguments[i];
+            for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    };
+    return $24c52f343453d62d$export$18ce0697a983be9b.apply(this, arguments);
+};
+function $24c52f343453d62d$export$3c9a16f847548506(s, e) {
+    var t = {};
+    for(var p in s)if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function") {
+        for(var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++)if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
+    }
+    return t;
+}
+function $24c52f343453d62d$export$29e00dfd3077644b(decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else {
-        for(var i = decorators.length - 1; i >= 0; i--)if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    }
+    else for(var i = decorators.length - 1; i >= 0; i--)if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 }
+function $24c52f343453d62d$export$d5ad3fd78186038f(paramIndex, decorator) {
+    return function(target, key) {
+        decorator(target, key, paramIndex);
+    };
+}
+function $24c52f343453d62d$export$3a84e1ae4e97e9b0(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+    function accept(f) {
+        if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected");
+        return f;
+    }
+    var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+    var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+    var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+    var _, done = false;
+    for(var i = decorators.length - 1; i >= 0; i--){
+        var context = {};
+        for(var p in contextIn)context[p] = p === "access" ? {} : contextIn[p];
+        for(var p in contextIn.access)context.access[p] = contextIn.access[p];
+        context.addInitializer = function(f) {
+            if (done) throw new TypeError("Cannot add initializers after decoration has completed");
+            extraInitializers.push(accept(f || null));
+        };
+        var result = (0, decorators[i])(kind === "accessor" ? {
+            get: descriptor.get,
+            set: descriptor.set
+        } : descriptor[key], context);
+        if (kind === "accessor") {
+            if (result === void 0) continue;
+            if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+            if (_ = accept(result.get)) descriptor.get = _;
+            if (_ = accept(result.set)) descriptor.set = _;
+            if (_ = accept(result.init)) initializers.unshift(_);
+        } else if (_ = accept(result)) {
+            if (kind === "field") initializers.unshift(_);
+            else descriptor[key] = _;
+        }
+    }
+    if (target) Object.defineProperty(target, contextIn.name, descriptor);
+    done = true;
+}
+function $24c52f343453d62d$export$d831c04e792af3d(thisArg, initializers, value) {
+    var useValue = arguments.length > 2;
+    for(var i = 0; i < initializers.length; i++)value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+    return useValue ? value : void 0;
+}
+function $24c52f343453d62d$export$6a2a36740a146cb8(x) {
+    return typeof x === "symbol" ? x : "".concat(x);
+}
+function $24c52f343453d62d$export$d1a06452d3489bc7(f, name, prefix) {
+    if (typeof name === "symbol") name = name.description ? "[".concat(name.description, "]") : "";
+    return Object.defineProperty(f, "name", {
+        configurable: true,
+        value: prefix ? "".concat(prefix, " ", name) : name
+    });
+}
+function $24c52f343453d62d$export$f1db080c865becb9(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+function $24c52f343453d62d$export$1050f835b63b671e(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+        return value instanceof P ? value : new P(function(resolve) {
+            resolve(value);
+        });
+    }
+    return new (P || (P = Promise))(function(resolve, reject) {
+        function fulfilled(value) {
+            try {
+                step(generator.next(value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function rejected(value) {
+            try {
+                step(generator["throw"](value));
+            } catch (e) {
+                reject(e);
+            }
+        }
+        function step(result) {
+            result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+        }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+function $24c52f343453d62d$export$67ebef60e6f28a6(thisArg, body) {
+    var _ = {
+        label: 0,
+        sent: function() {
+            if (t[0] & 1) throw t[1];
+            return t[1];
+        },
+        trys: [],
+        ops: []
+    }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+        return this;
+    }), g;
+    function verb(n) {
+        return function(v) {
+            return step([
+                n,
+                v
+            ]);
+        };
+    }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while(g && (g = 0, op[0] && (_ = 0)), _)try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [
+                op[0] & 2,
+                t.value
+            ];
+            switch(op[0]){
+                case 0:
+                case 1:
+                    t = op;
+                    break;
+                case 4:
+                    _.label++;
+                    return {
+                        value: op[1],
+                        done: false
+                    };
+                case 5:
+                    _.label++;
+                    y = op[1];
+                    op = [
+                        0
+                    ];
+                    continue;
+                case 7:
+                    op = _.ops.pop();
+                    _.trys.pop();
+                    continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+                        _ = 0;
+                        continue;
+                    }
+                    if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+                        _.label = op[1];
+                        break;
+                    }
+                    if (op[0] === 6 && _.label < t[1]) {
+                        _.label = t[1];
+                        t = op;
+                        break;
+                    }
+                    if (t && _.label < t[2]) {
+                        _.label = t[2];
+                        _.ops.push(op);
+                        break;
+                    }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop();
+                    continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) {
+            op = [
+                6,
+                e
+            ];
+            y = 0;
+        } finally{
+            f = t = 0;
+        }
+        if (op[0] & 5) throw op[1];
+        return {
+            value: op[0] ? op[1] : void 0,
+            done: true
+        };
+    }
+}
+var $24c52f343453d62d$export$45d3717a4c69092e = Object.create ? function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) desc = {
+        enumerable: true,
+        get: function() {
+            return m[k];
+        }
+    };
+    Object.defineProperty(o, k2, desc);
+} : function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+};
+function $24c52f343453d62d$export$f33643c0debef087(m, o) {
+    for(var p in m)if (p !== "default" && !Object.prototype.hasOwnProperty.call(o, p)) $24c52f343453d62d$export$45d3717a4c69092e(o, m, p);
+}
+function $24c52f343453d62d$export$19a8beecd37a4c45(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function() {
+            if (o && i >= o.length) o = void 0;
+            return {
+                value: o && o[i++],
+                done: !o
+            };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+function $24c52f343453d62d$export$8d051b38c9118094(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while((n === void 0 || n-- > 0) && !(r = i.next()).done)ar.push(r.value);
+    } catch (error) {
+        e = {
+            error: error
+        };
+    } finally{
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        } finally{
+            if (e) throw e.error;
+        }
+    }
+    return ar;
+}
+function $24c52f343453d62d$export$afc72e2116322959() {
+    for(var ar = [], i = 0; i < arguments.length; i++)ar = ar.concat($24c52f343453d62d$export$8d051b38c9118094(arguments[i]));
+    return ar;
+}
+function $24c52f343453d62d$export$6388937ca91ccae8() {
+    for(var s = 0, i = 0, il = arguments.length; i < il; i++)s += arguments[i].length;
+    for(var r = Array(s), k = 0, i = 0; i < il; i++)for(var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)r[k] = a[j];
+    return r;
+}
+function $24c52f343453d62d$export$1216008129fb82ed(to, from, pack) {
+    if (pack || arguments.length === 2) {
+        for(var i = 0, l = from.length, ar; i < l; i++)if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+}
+function $24c52f343453d62d$export$10c90e4f7922046c(v) {
+    return this instanceof $24c52f343453d62d$export$10c90e4f7922046c ? (this.v = v, this) : new $24c52f343453d62d$export$10c90e4f7922046c(v);
+}
+function $24c52f343453d62d$export$e427f37a30a4de9b(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = Object.create((typeof AsyncIterator === "function" ? AsyncIterator : Object).prototype), verb("next"), verb("throw"), verb("return", awaitReturn), i[Symbol.asyncIterator] = function() {
+        return this;
+    }, i;
+    function awaitReturn(f) {
+        return function(v) {
+            return Promise.resolve(v).then(f, reject);
+        };
+    }
+    function verb(n, f) {
+        if (g[n]) {
+            i[n] = function(v) {
+                return new Promise(function(a, b) {
+                    q.push([
+                        n,
+                        v,
+                        a,
+                        b
+                    ]) > 1 || resume(n, v);
+                });
+            };
+            if (f) i[n] = f(i[n]);
+        }
+    }
+    function resume(n, v) {
+        try {
+            step(g[n](v));
+        } catch (e) {
+            settle(q[0][3], e);
+        }
+    }
+    function step(r) {
+        r.value instanceof $24c52f343453d62d$export$10c90e4f7922046c ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r);
+    }
+    function fulfill(value) {
+        resume("next", value);
+    }
+    function reject(value) {
+        resume("throw", value);
+    }
+    function settle(f, v) {
+        if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]);
+    }
+}
+function $24c52f343453d62d$export$bbd80228419bb833(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function(e) {
+        throw e;
+    }), verb("return"), i[Symbol.iterator] = function() {
+        return this;
+    }, i;
+    function verb(n, f) {
+        i[n] = o[n] ? function(v) {
+            return (p = !p) ? {
+                value: $24c52f343453d62d$export$10c90e4f7922046c(o[n](v)),
+                done: false
+            } : f ? f(v) : v;
+        } : f;
+    }
+}
+function $24c52f343453d62d$export$e3b29a3d6162315f(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof $24c52f343453d62d$export$19a8beecd37a4c45 === "function" ? $24c52f343453d62d$export$19a8beecd37a4c45(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function() {
+        return this;
+    }, i);
+    function verb(n) {
+        i[n] = o[n] && function(v) {
+            return new Promise(function(resolve, reject) {
+                v = o[n](v), settle(resolve, reject, v.done, v.value);
+            });
+        };
+    }
+    function settle(resolve, reject, d, v) {
+        Promise.resolve(v).then(function(v) {
+            resolve({
+                value: v,
+                done: d
+            });
+        }, reject);
+    }
+}
+function $24c52f343453d62d$export$4fb47efe1390b86f(cooked, raw) {
+    if (Object.defineProperty) Object.defineProperty(cooked, "raw", {
+        value: raw
+    });
+    else cooked.raw = raw;
+    return cooked;
+}
+var $24c52f343453d62d$var$__setModuleDefault = Object.create ? function(o, v) {
+    Object.defineProperty(o, "default", {
+        enumerable: true,
+        value: v
+    });
+} : function(o, v) {
+    o["default"] = v;
+};
+var $24c52f343453d62d$var$ownKeys = function(o) {
+    $24c52f343453d62d$var$ownKeys = Object.getOwnPropertyNames || function(o) {
+        var ar = [];
+        for(var k in o)if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+        return ar;
+    };
+    return $24c52f343453d62d$var$ownKeys(o);
+};
+function $24c52f343453d62d$export$c21735bcef00d192(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) {
+        for(var k = $24c52f343453d62d$var$ownKeys(mod), i = 0; i < k.length; i++)if (k[i] !== "default") $24c52f343453d62d$export$45d3717a4c69092e(result, mod, k[i]);
+    }
+    $24c52f343453d62d$var$__setModuleDefault(result, mod);
+    return result;
+}
+function $24c52f343453d62d$export$da59b14a69baef04(mod) {
+    return mod && mod.__esModule ? mod : {
+        default: mod
+    };
+}
+function $24c52f343453d62d$export$d5dcaf168c640c35(receiver, state, kind, f) {
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a getter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot read private member from an object whose class did not declare it");
+    return kind === "m" ? f : kind === "a" ? f.call(receiver) : f ? f.value : state.get(receiver);
+}
+function $24c52f343453d62d$export$d40a35129aaff81f(receiver, state, value, kind, f) {
+    if (kind === "m") throw new TypeError("Private method is not writable");
+    if (kind === "a" && !f) throw new TypeError("Private accessor was defined without a setter");
+    if (typeof state === "function" ? receiver !== state || !f : !state.has(receiver)) throw new TypeError("Cannot write private member to an object whose class did not declare it");
+    return kind === "a" ? f.call(receiver, value) : f ? f.value = value : state.set(receiver, value), value;
+}
+function $24c52f343453d62d$export$81fdc39f203e4e04(state, receiver) {
+    if (receiver === null || typeof receiver !== "object" && typeof receiver !== "function") throw new TypeError("Cannot use 'in' operator on non-object");
+    return typeof state === "function" ? receiver === state : state.has(receiver);
+}
+function $24c52f343453d62d$export$88ac25d8e944e405(env, value, async) {
+    if (value !== null && value !== void 0) {
+        if (typeof value !== "object" && typeof value !== "function") throw new TypeError("Object expected.");
+        var dispose, inner;
+        if (async) {
+            if (!Symbol.asyncDispose) throw new TypeError("Symbol.asyncDispose is not defined.");
+            dispose = value[Symbol.asyncDispose];
+        }
+        if (dispose === void 0) {
+            if (!Symbol.dispose) throw new TypeError("Symbol.dispose is not defined.");
+            dispose = value[Symbol.dispose];
+            if (async) inner = dispose;
+        }
+        if (typeof dispose !== "function") throw new TypeError("Object not disposable.");
+        if (inner) dispose = function() {
+            try {
+                inner.call(this);
+            } catch (e) {
+                return Promise.reject(e);
+            }
+        };
+        env.stack.push({
+            value: value,
+            dispose: dispose,
+            async: async
+        });
+    } else if (async) env.stack.push({
+        async: true
+    });
+    return value;
+}
+var $24c52f343453d62d$var$_SuppressedError = typeof SuppressedError === "function" ? SuppressedError : function(error, suppressed, message) {
+    var e = new Error(message);
+    return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+function $24c52f343453d62d$export$8f076105dc360e92(env) {
+    function fail(e) {
+        env.error = env.hasError ? new $24c52f343453d62d$var$_SuppressedError(e, env.error, "An error was suppressed during disposal.") : e;
+        env.hasError = true;
+    }
+    var r, s = 0;
+    function next() {
+        while(r = env.stack.pop())try {
+            if (!r.async && s === 1) return s = 0, env.stack.push(r), Promise.resolve().then(next);
+            if (r.dispose) {
+                var result = r.dispose.call(r.value);
+                if (r.async) return s |= 2, Promise.resolve(result).then(next, function(e) {
+                    fail(e);
+                    return next();
+                });
+            } else s |= 1;
+        } catch (e) {
+            fail(e);
+        }
+        if (s === 1) return env.hasError ? Promise.reject(env.error) : Promise.resolve();
+        if (env.hasError) throw env.error;
+    }
+    return next();
+}
+function $24c52f343453d62d$export$889dfb5d17574b0b(path, preserveJsx) {
+    if (typeof path === "string" && /^\.\.?\//.test(path)) return path.replace(/\.(tsx)$|((?:\.d)?)((?:\.[^./]+?)?)\.([cm]?)ts$/i, function(m, tsx, d, ext, cm) {
+        return tsx ? preserveJsx ? ".jsx" : ".js" : d && (!ext || !cm) ? m : d + ext + "." + cm.toLowerCase() + "js";
+    });
+    return path;
+}
+var $24c52f343453d62d$export$2e2bcd8739ae039 = {
+    __extends: $24c52f343453d62d$export$a8ba968b8961cb8a,
+    __assign: $24c52f343453d62d$export$18ce0697a983be9b,
+    __rest: $24c52f343453d62d$export$3c9a16f847548506,
+    __decorate: $24c52f343453d62d$export$29e00dfd3077644b,
+    __param: $24c52f343453d62d$export$d5ad3fd78186038f,
+    __esDecorate: $24c52f343453d62d$export$3a84e1ae4e97e9b0,
+    __runInitializers: $24c52f343453d62d$export$d831c04e792af3d,
+    __propKey: $24c52f343453d62d$export$6a2a36740a146cb8,
+    __setFunctionName: $24c52f343453d62d$export$d1a06452d3489bc7,
+    __metadata: $24c52f343453d62d$export$f1db080c865becb9,
+    __awaiter: $24c52f343453d62d$export$1050f835b63b671e,
+    __generator: $24c52f343453d62d$export$67ebef60e6f28a6,
+    __createBinding: $24c52f343453d62d$export$45d3717a4c69092e,
+    __exportStar: $24c52f343453d62d$export$f33643c0debef087,
+    __values: $24c52f343453d62d$export$19a8beecd37a4c45,
+    __read: $24c52f343453d62d$export$8d051b38c9118094,
+    __spread: $24c52f343453d62d$export$afc72e2116322959,
+    __spreadArrays: $24c52f343453d62d$export$6388937ca91ccae8,
+    __spreadArray: $24c52f343453d62d$export$1216008129fb82ed,
+    __await: $24c52f343453d62d$export$10c90e4f7922046c,
+    __asyncGenerator: $24c52f343453d62d$export$e427f37a30a4de9b,
+    __asyncDelegator: $24c52f343453d62d$export$bbd80228419bb833,
+    __asyncValues: $24c52f343453d62d$export$e3b29a3d6162315f,
+    __makeTemplateObject: $24c52f343453d62d$export$4fb47efe1390b86f,
+    __importStar: $24c52f343453d62d$export$c21735bcef00d192,
+    __importDefault: $24c52f343453d62d$export$da59b14a69baef04,
+    __classPrivateFieldGet: $24c52f343453d62d$export$d5dcaf168c640c35,
+    __classPrivateFieldSet: $24c52f343453d62d$export$d40a35129aaff81f,
+    __classPrivateFieldIn: $24c52f343453d62d$export$81fdc39f203e4e04,
+    __addDisposableResource: $24c52f343453d62d$export$88ac25d8e944e405,
+    __disposeResources: $24c52f343453d62d$export$8f076105dc360e92,
+    __rewriteRelativeImportExtension: $24c52f343453d62d$export$889dfb5d17574b0b
+};
 
 
 const $eb5cfe1dd9fe4e85$export$9b06e6104ce35b16 = [
     {
-        id: "outside_temperature",
+        group_id: "TA",
         label_rect_id: "ta_label",
-        domain: "sensor",
-        device: "CAN",
-        unit: "\xb0C",
-        value_rect_id: "ta_val",
         offset: 6,
         category: {
             de: "Oben",
             en: "Top",
             it: "In alto"
         },
+        visual_container: true,
+        values: [
+            {
+                id: "outside_temperature",
+                device: "CAN",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "ta_val",
+                texts: {
+                    de: {
+                        desc: "TA - Au\xdfentemperatur (RoCon OT1)"
+                    },
+                    en: {
+                        desc: "TA - Outside temperature (RoCon OT1)"
+                    },
+                    it: {
+                        desc: "TA - Temperatura esterna (sonda RoCon OT1)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "TA",
-                desc: "TA - Au\xdfentemperatur (RoCon OT1)"
+                label: "TA"
             },
             en: {
-                label: "TA",
-                desc: "TA - Outside temperature (RoCon OT1)"
+                label: "TA"
             },
             it: {
-                label: "TA",
-                desc: "TA - Temperatura esterna (sonda RoCon OT1)"
+                label: "TA"
             }
         }
     },
     {
-        id: "ta2",
+        group_id: "TA2",
         label_rect_id: "ta2_label",
-        domain: "sensor",
-        device: "CAN",
-        unit: "\xb0C",
-        value_rect_id: "ta2_val",
         offset: 6,
-        optional: true,
         parent: "TA2",
+        visual_container: true,
+        values: [
+            {
+                id: "ta2",
+                device: "CAN",
+                domain: "sensor",
+                unit: "\xb0C",
+                optional: true,
+                value_rect_id: "ta2_val",
+                texts: {
+                    de: {
+                        desc: "TA2 - Au\xdfentemperatur am Au\xdfenger\xe4t"
+                    },
+                    en: {
+                        desc: "TA2 - Outdoor unit air temperature"
+                    },
+                    it: {
+                        desc: "TA2 - Temperatura aria unit\xe0 esterna"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "TA2",
-                desc: "TA2 - Au\xdfentemperatur am Au\xdfenger\xe4t"
+                label: "TA2"
             },
             en: {
-                label: "TA2",
-                desc: "TA2 - Outdoor unit air temperature"
+                label: "TA2"
             },
             it: {
-                label: "TA2",
-                desc: "TA2 - Temperatura aria unit\xe0 esterna"
+                label: "TA2"
             }
         }
     },
     {
-        id: "expansion_valve",
+        group_id: "EEV",
         label_rect_id: "eev_label",
-        domain: "sensor",
-        device: "UART",
-        unit: "pls",
-        value_rect_id: "eev_val",
         offset: 6,
         digits: 0,
+        visual_container: true,
+        values: [
+            {
+                id: "expansion_valve",
+                device: "UART",
+                domain: "sensor",
+                unit: "pls",
+                value_rect_id: "eev_val",
+                texts: {
+                    de: {
+                        desc: "Elektronisches Expansionsventil"
+                    },
+                    en: {
+                        desc: "Electronic expansion valve"
+                    },
+                    it: {
+                        desc: "Valvola di espansione elettronica"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "EEV",
-                desc: "Elektronisches Expansionsventil"
+                label: "EEV"
             },
             en: {
-                label: "EEV",
-                desc: "Electronic expansion valve"
+                label: "EEV"
             },
             it: {
-                label: "EEV",
-                desc: "Valvola di espansione elettronica"
+                label: "EEV"
             }
         }
     },
     {
-        id: "pressure_equalization",
-        domain: "binary_sensor",
-        device: "UART",
-        texts: {
-            de: {
-                desc: "Druckausgleich"
-            },
-            en: {
-                desc: "Pressure equalization"
-            },
-            it: {
-                desc: "Equalizzazione della pressione"
+        group_id: "eev-schema",
+        values: [
+            {
+                id: "pressure_equalization",
+                device: "UART",
+                domain: "binary_sensor",
+                texts: {
+                    de: {
+                        desc: "Druckausgleich"
+                    },
+                    en: {
+                        desc: "Pressure equalization"
+                    },
+                    it: {
+                        desc: "Equalizzazione della pressione"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "condensate",
-        label_rect_id: "condensate_label",
-        domain: "sensor",
-        device: "UART",
-        unit: "\xb0C",
-        value_rect_id: "condensate_value",
+        group_id: "Kondensat",
+        label_rect_id: "kondensat_label",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "condensate",
+                device: "UART",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "kondensat_value",
+                texts: {
+                    de: {
+                        desc: "Kondensattemperatur"
+                    },
+                    en: {
+                        desc: "Condensate temperature"
+                    },
+                    it: {
+                        desc: "Temperatura della condensa"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Kondensat",
-                desc: "Kondensattemperatur"
+                label: "Kondensat"
             },
             en: {
-                label: "Condensate",
-                desc: "Condensate temperature"
+                label: "Condensate"
             },
             it: {
-                label: "Condensa",
-                desc: "Temperatura della condensa"
+                label: "Condensa"
             }
         }
     },
     {
-        id: "circulation_pump",
-        label_rect_id: "circulation_pump_label",
-        domain: "sensor",
-        device: "CAN",
-        unit: "%",
-        value_rect_id: "circulation_pump_value",
+        group_id: "Umwaelzpumpe",
+        label_rect_id: "uwp_label",
+        visual_container: true,
         offset: 6,
         digits: 0,
+        values: [
+            {
+                id: "circulation_pump",
+                device: "CAN",
+                domain: "sensor",
+                unit: "%",
+                value_rect_id: "uwp_value",
+                texts: {
+                    de: {
+                        desc: "Umw\xe4lzpumpe - Leistung"
+                    },
+                    en: {
+                        desc: "Circulation pump - speed"
+                    },
+                    it: {
+                        desc: "Pompa di circolazione - velocit\xe0"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Umw\xe4lzpumpe",
-                desc: "Umw\xe4lzpumpe - Leistung"
+                label: "Umw\xe4lzpumpe"
             },
             en: {
-                label: "Circ. pump",
-                desc: "Circulation pump - speed"
+                label: "Circ. pump"
             },
             it: {
-                label: "Pompa circ.",
-                desc: "Pompa di circolazione - velocit\xe0"
+                label: "Pompa circ."
             }
         }
     },
     {
-        id: "circulation_pump_status",
-        domain: "binary_sensor",
-        device: "CAN",
-        value_rect_id: "circ_pump_rect",
+        group_id: "Umwaelzpumpe-Status",
         offset: 2,
         fontSize: "30px",
-        texts: {
-            de: {
-                desc: "Umw\xe4lzpumpe - Status"
-            },
-            en: {
-                desc: "Circulation pump - status"
-            },
-            it: {
-                desc: "Pompa di circolazione - stato"
+        values: [
+            {
+                id: "circulation_pump_status",
+                device: "CAN",
+                domain: "binary_sensor",
+                value_rect_id: "circ_pump_rect",
+                texts: {
+                    de: {
+                        desc: "Umw\xe4lzpumpe - Status"
+                    },
+                    en: {
+                        desc: "Circulation pump - status"
+                    },
+                    it: {
+                        desc: "Pompa di circolazione - stato"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "flow_rate",
-        domain: "sensor",
-        device: "CAN",
-        unit: "L/h",
+        group_id: "Durchfluss",
         label_rect_id: "flow_rate_label",
-        value_rect_id: "flow_rate_value",
+        visual_container: true,
         offset: 6,
         digits: 0,
+        values: [
+            {
+                id: "flow_rate",
+                device: "CAN",
+                domain: "sensor",
+                unit: "L/h",
+                value_rect_id: "flow_rate_value",
+                texts: {
+                    de: {
+                        desc: "Durchfluss"
+                    },
+                    en: {
+                        desc: "Flow rate"
+                    },
+                    it: {
+                        desc: "Portata acqua"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Durchfluss",
-                desc: "Durchfluss"
+                label: "Durchfluss"
             },
             en: {
-                label: "Flow rate",
-                desc: "Flow rate"
+                label: "Flow rate"
             },
             it: {
-                label: "Portata",
-                desc: "Portata acqua"
+                label: "Portata"
             }
         }
     },
     {
-        id: "return_temperature_can",
-        domain: "sensor",
-        device: "CAN",
-        unit: "\xb0C",
+        group_id: "Ruecklauf",
         label_rect_id: "return_flow_label",
-        value_rect_id: "return_flow_can_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "return_temperature_can",
+                device: "CAN",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "return_flow_can_value",
+                texts: {
+                    de: {
+                        desc: "TR - R\xfccklauftemperatur (CAN)"
+                    },
+                    en: {
+                        desc: "TR - Return temperature (CAN)"
+                    },
+                    it: {
+                        desc: "TR - Temperatura di ritorno (CAN)"
+                    }
+                }
+            },
+            {
+                id: "return_temperature_uart",
+                device: "UART",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "return_flow_uart_value",
+                texts: {
+                    de: {
+                        desc: "TR - R\xfccklauftemperatur (UART)"
+                    },
+                    en: {
+                        desc: "TR - Return temperature (UART)"
+                    },
+                    it: {
+                        desc: "TR - Temperatura di ritorno (UART)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "R\xfccklauf",
-                desc: "TR - R\xfccklauftemperatur (CAN)"
+                label: "R\xfccklauf"
             },
             en: {
-                label: "Return",
-                desc: "TR - Return temperature (CAN)"
+                label: "Return"
             },
             it: {
-                label: "Ritorno",
-                desc: "TR - Temperatura di ritorno (CAN)"
+                label: "Ritorno"
             }
         }
     },
     {
-        id: "return_temperature_uart",
-        domain: "sensor",
-        device: "UART",
-        unit: "\xb0C",
-        value_rect_id: "return_flow_uart_value",
-        offset: 6,
-        texts: {
-            de: {
-                desc: "TR - R\xfccklauftemperatur (UART)"
-            },
-            en: {
-                desc: "TR - Return temperature (UART)"
-            },
-            it: {
-                desc: "TR - Temperatura di ritorno (UART)"
-            }
-        }
-    },
-    {
-        id: "evaporator",
-        domain: "sensor",
-        device: "UART",
-        unit: "\xb0C",
+        group_id: "Verdampfer",
         label_rect_id: "evaporator_label",
-        value_rect_id: "evaporator_value",
+        visual_container: true,
         offset: 6,
         category: {
             de: "Mitte",
             en: "Middle",
             it: "Centro"
         },
+        values: [
+            {
+                id: "evaporator",
+                device: "UART",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "evaporator_value",
+                texts: {
+                    de: {
+                        desc: "Verdampfertemperatur"
+                    },
+                    en: {
+                        desc: "Evaporator temperature"
+                    },
+                    it: {
+                        desc: "Temperatura dell'evaporatore"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Verdampfer",
-                desc: "Verdampfertemperatur"
+                label: "Verdampfer"
             },
             en: {
-                label: "Evaporator",
-                desc: "Evaporator temperature"
+                label: "Evaporator"
             },
             it: {
-                label: "Evaporatore",
-                desc: "Temperatura dell'evaporatore"
+                label: "Evaporatore"
             }
         }
     },
     {
-        id: "hot_gas",
-        domain: "sensor",
-        device: "UART",
-        unit: "\xb0C",
+        group_id: "hot_gas",
         label_rect_id: "hot_gas_label",
-        value_rect_id: "hot_gas_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "hot_gas",
+                device: "UART",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "hot_gas_value",
+                texts: {
+                    de: {
+                        desc: "Hei\xdfgastemperatur"
+                    },
+                    en: {
+                        desc: "Hot gas temperature"
+                    },
+                    it: {
+                        desc: "Temperatura del gas caldo"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Hei\xdfgas",
-                desc: "Hei\xdfgastemperatur"
+                label: "Hei\xdfgas"
             },
             en: {
-                label: "Hot gas",
-                desc: "Hot gas temperature"
+                label: "Hot gas"
             },
             it: {
-                label: "Gas caldo",
-                desc: "Temperatura del gas caldo"
+                label: "Gas caldo"
             }
         }
     },
     {
-        id: "hot_gas_condenser",
-        domain: "sensor",
-        unit: "\xb0C",
+        group_id: "hot_gas_condenser",
         label_rect_id: "hot_gas_condenser_label",
-        value_rect_id: "hot_gas_condenser_value",
+        visual_container: true,
         offset: 6,
-        optional: true,
         parent: "hot_gas_condenser",
+        values: [
+            {
+                id: "hot_gas_condenser",
+                domain: "sensor",
+                unit: "\xb0C",
+                optional: true,
+                value_rect_id: "hot_gas_condenser_value",
+                texts: {
+                    de: {
+                        desc: "Hei\xdfgastemperatur am Kondensator"
+                    },
+                    en: {
+                        desc: "Hot gas temperature at the condenser"
+                    },
+                    it: {
+                        desc: "Temperatura del gas caldo al condensatore"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Hei\xdfgas",
-                desc: "Hei\xdfgastemperatur am Kondensator"
+                label: "Hei\xdfgas"
             },
             en: {
-                label: "Hot gas",
-                desc: "Hot gas temperature at the condenser"
+                label: "Hot gas"
             },
             it: {
-                label: "Gas caldo",
-                desc: "Temperatura del gas caldo al condensatore"
+                label: "Gas caldo"
             }
         }
     },
     {
-        id: "spread",
-        domain: "sensor",
-        device: "CAN",
-        unit: "\xb0C",
+        group_id: "Spreizung",
         label_rect_id: "spread_label",
-        value_rect_id: "spread_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "spread",
+                device: "CAN",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "spread_value",
+                texts: {
+                    de: {
+                        desc: "Spreizung (TV - TR)"
+                    },
+                    en: {
+                        desc: "Temperature spread (TV - TR)"
+                    },
+                    it: {
+                        desc: "Differenza di temperatura (TV - TR)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Spreizung",
-                desc: "Spreizung (TV - TR)"
+                label: "Spreizung"
             },
             en: {
-                label: "Spread",
-                desc: "Temperature spread (TV - TR)"
+                label: "Spread"
             },
             it: {
-                label: "\u0394T",
-                desc: "Differenza di temperatura (TV - TR)"
+                label: "\u0394T"
             }
         }
     },
     {
-        id: "flow_temperature_can",
-        domain: "sensor",
-        device: "CAN",
-        unit: "\xb0C",
+        group_id: "Vorlauf",
         label_rect_id: "flow_label",
-        value_rect_id: "flow_can_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "flow_temperature_can",
+                device: "CAN",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "flow_can_value",
+                texts: {
+                    de: {
+                        desc: "TV - Vorlauftemperatur (CAN)"
+                    },
+                    en: {
+                        desc: "TV - Flow temperature (CAN)"
+                    },
+                    it: {
+                        desc: "TV - Temperatura di mandata (CAN)"
+                    }
+                }
+            },
+            {
+                id: "flow_temperature_uart",
+                device: "UART",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "flow_uart_value",
+                texts: {
+                    de: {
+                        desc: "TV - Vorlauftemperatur (UART)"
+                    },
+                    en: {
+                        desc: "TV - Flow temperature (UART)"
+                    },
+                    it: {
+                        desc: "TV - Temperatura di mandata (UART)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Vorlauf",
-                desc: "TV - Vorlauftemperatur (CAN)"
+                label: "Vorlauf"
             },
             en: {
-                label: "Flow",
-                desc: "TV - Flow temperature (CAN)"
+                label: "Flow"
             },
             it: {
-                label: "Mandata",
-                desc: "TV - Temperatura di mandata (CAN)"
+                label: "Mandata"
             }
         }
     },
     {
-        id: "flow_temperature_uart",
-        domain: "sensor",
-        device: "UART",
-        unit: "\xb0C",
-        value_rect_id: "flow_uart_value",
-        offset: 6,
-        texts: {
-            de: {
-                desc: "TV - Vorlauftemperatur (UART)"
-            },
-            en: {
-                desc: "TV - Flow temperature (UART)"
-            },
-            it: {
-                desc: "TV - Temperatura di mandata (UART)"
-            }
-        }
-    },
-    {
-        id: "flow_temperature_setpoint",
-        domain: "sensor",
-        device: "CAN",
-        unit: "\xb0C",
+        group_id: "Vorlauf-Soll",
         label_rect_id: "flow_setpoint_label",
-        value_rect_id: "flow_setpoint_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "flow_temperature_setpoint",
+                device: "CAN",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "flow_setpoint_value",
+                texts: {
+                    de: {
+                        desc: "Vorlauf-Solltemperatur"
+                    },
+                    en: {
+                        desc: "Flow temperature setpoint"
+                    },
+                    it: {
+                        desc: "Temperatura di mandata impostata"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Vorlauf-Soll",
-                desc: "Vorlauf-Solltemperatur"
+                label: "Vorlauf-Soll"
             },
             en: {
-                label: "Flow set",
-                desc: "Flow temperature setpoint"
+                label: "Flow set"
             },
             it: {
-                label: "Mand. imp.",
-                desc: "Temperatura di mandata impostata"
+                label: "Mand. imp."
             }
         }
     },
     {
-        id: "water_pressure",
-        domain: "sensor",
-        device: "CAN",
-        unit: "bar",
+        group_id: "Druck",
         label_rect_id: "pressure_label",
-        value_rect_id: "pressure_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "water_pressure",
+                device: "CAN",
+                domain: "sensor",
+                unit: "bar",
+                value_rect_id: "pressure_value",
+                texts: {
+                    de: {
+                        desc: "Wasserdruck"
+                    },
+                    en: {
+                        desc: "Water pressure"
+                    },
+                    it: {
+                        desc: "Pressione dell'acqua"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Druck",
-                desc: "Wasserdruck"
+                label: "Druck"
             },
             en: {
-                label: "Pressure",
-                desc: "Water pressure"
+                label: "Pressure"
             },
             it: {
-                label: "Pressione",
-                desc: "Pressione dell'acqua"
+                label: "Pressione"
             }
         }
     },
     {
-        id: "flow_temperature_bh_can",
-        domain: "sensor",
-        device: "CAN",
-        unit: "\xb0C",
+        group_id: "Vorlauf-BH",
         label_rect_id: "flow_bh_label",
-        value_rect_id: "flow_bh_can_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "flow_temperature_bh_can",
+                device: "CAN",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "flow_bh_can_value",
+                texts: {
+                    de: {
+                        desc: "TVBH - Vorlauf nach Heizstab (CAN)"
+                    },
+                    en: {
+                        desc: "TVBH - Flow after backup heater (CAN)"
+                    },
+                    it: {
+                        desc: "TVBH - Mandata dopo resistenza (CAN)"
+                    }
+                }
+            },
+            {
+                id: "flow_temperature_bh_uart",
+                device: "UART",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "flow_bh_uart_value",
+                texts: {
+                    de: {
+                        desc: "TVBH - Vorlauf nach Heizstab (UART)"
+                    },
+                    en: {
+                        desc: "TVBH - Flow after backup heater (UART)"
+                    },
+                    it: {
+                        desc: "TVBH - Mandata dopo resistenza (UART)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Vorlauf BH",
-                desc: "TVBH - Vorlauf nach Heizstab (CAN)"
+                label: "Vorlauf BH"
             },
             en: {
-                label: "Flow BH",
-                desc: "TVBH - Flow after backup heater (CAN)"
+                label: "Flow BH"
             },
             it: {
-                label: "Mand. BH",
-                desc: "TVBH - Mandata dopo resistenza (CAN)"
+                label: "Mand. BH"
             }
         }
     },
     {
-        id: "flow_temperature_bh_uart",
-        domain: "sensor",
-        device: "UART",
-        unit: "\xb0C",
-        value_rect_id: "flow_bh_uart_value",
-        offset: 6,
-        texts: {
-            de: {
-                desc: "TVBH - Vorlauf nach Heizstab (UART)"
-            },
-            en: {
-                desc: "TVBH - Flow after backup heater (UART)"
-            },
-            it: {
-                desc: "TVBH - Mandata dopo resistenza (UART)"
-            }
-        }
-    },
-    {
-        id: "compressor_status",
-        domain: "binary_sensor",
-        device: "CAN",
-        value_rect_id: "comp_rect",
+        group_id: "compressor_on_off_group",
         offset: 2,
         fontSize: "40px",
-        texts: {
-            de: {
-                desc: "Kompressor - Status"
-            },
-            en: {
-                desc: "Compressor - status"
-            },
-            it: {
-                desc: "Compressore - stato"
+        values: [
+            {
+                id: "compressor_status",
+                device: "CAN",
+                domain: "binary_sensor",
+                value_rect_id: "comp_rect",
+                texts: {
+                    de: {
+                        desc: "Kompressor - Status"
+                    },
+                    en: {
+                        desc: "Compressor - status"
+                    },
+                    it: {
+                        desc: "Compressore - stato"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "fan_speed",
-        domain: "sensor",
-        device: "UART",
-        unit: "RPM",
+        group_id: "Luefter",
         label_rect_id: "fan_label",
-        value_rect_id: "fan_value",
+        visual_container: true,
         offset: 6,
         category: {
             de: "Unten",
@@ -495,166 +1243,247 @@ const $eb5cfe1dd9fe4e85$export$9b06e6104ce35b16 = [
             it: "In basso"
         },
         digits: 0,
-        texts: {
-            de: {
-                label: "L\xfcfter",
-                desc: "L\xfcfterdrehzahl"
-            },
-            en: {
-                label: "Fan",
-                desc: "Fan speed"
-            },
-            it: {
-                label: "Ventola",
-                desc: "Velocit\xe0 della ventola"
+        values: [
+            {
+                id: "fan_speed",
+                device: "UART",
+                domain: "sensor",
+                unit: "RPM",
+                value_rect_id: "fan_value",
+                texts: {
+                    de: {
+                        desc: "L\xfcfterdrehzahl"
+                    },
+                    en: {
+                        desc: "Fan speed"
+                    },
+                    it: {
+                        desc: "Velocit\xe0 della ventola"
+                    }
+                }
             }
-        }
-    },
-    {
-        id: "compressor_speed",
-        domain: "sensor",
-        device: "UART",
-        unit: "RPM",
-        label_rect_id: "compressor_label",
-        value_rect_id: "compressor_value",
-        offset: 6,
-        digits: 0,
-        texts: {
-            de: {
-                label: "Verdichter",
-                desc: "Verdichterdrehzahl"
-            },
-            en: {
-                label: "Compressor",
-                desc: "Compressor speed"
-            },
-            it: {
-                label: "Compressore",
-                desc: "Velocit\xe0 del compressore"
-            }
-        }
-    },
-    {
-        id: "storage_temperature",
-        domain: "sensor",
-        device: "CAN",
-        unit: "\xb0C",
-        label_rect_id: "storage_label",
-        value_rect_id: "storage_value",
-        offset: 6,
-        texts: {
-            de: {
-                label: "Speicher",
-                desc: "Speichertemperatur (Ist)"
-            },
-            en: {
-                label: "Tank",
-                desc: "DHW tank temperature (actual)"
-            },
-            it: {
-                label: "Bollitore",
-                desc: "Temperatura bollitore (attuale)"
-            }
-        }
-    },
-    {
-        id: "storage_setpoint",
-        domain: "select",
-        device: "CAN",
-        unit: "\xb0C",
-        label_rect_id: "storage_setpoint_label",
-        value_rect_id: "storage_setpoint_value",
-        offset: 6,
-        texts: {
-            de: {
-                label: "Soll",
-                desc: "Speichertemperatur (Soll)"
-            },
-            en: {
-                label: "Setpoint",
-                desc: "DHW tank temperature setpoint"
-            },
-            it: {
-                label: "Imp.",
-                desc: "Temperatura bollitore impostata"
-            }
-        }
-    },
-    {
-        id: "buh_power",
-        domain: "sensor",
-        unit: [
-            "W",
-            "kW"
         ],
+        texts: {
+            de: {
+                label: "L\xfcfter"
+            },
+            en: {
+                label: "Fan"
+            },
+            it: {
+                label: "Ventola"
+            }
+        }
+    },
+    {
+        group_id: "Verdichter",
+        label_rect_id: "compressor_label",
+        visual_container: true,
+        offset: 6,
+        digits: 0,
+        values: [
+            {
+                id: "compressor_speed",
+                device: "UART",
+                domain: "sensor",
+                unit: "RPM",
+                value_rect_id: "compressor_value",
+                texts: {
+                    de: {
+                        desc: "Verdichterdrehzahl"
+                    },
+                    en: {
+                        desc: "Compressor speed"
+                    },
+                    it: {
+                        desc: "Velocit\xe0 del compressore"
+                    }
+                }
+            }
+        ],
+        texts: {
+            de: {
+                label: "Verdichter"
+            },
+            en: {
+                label: "Compressor"
+            },
+            it: {
+                label: "Compressore"
+            }
+        }
+    },
+    {
+        group_id: "Speicher",
+        label_rect_id: "storage_label",
+        visual_container: true,
+        offset: 6,
+        values: [
+            {
+                id: "storage_temperature",
+                device: "CAN",
+                domain: "sensor",
+                unit: "\xb0C",
+                value_rect_id: "storage_value",
+                texts: {
+                    de: {
+                        desc: "Speichertemperatur (Ist)"
+                    },
+                    en: {
+                        desc: "DHW tank temperature (actual)"
+                    },
+                    it: {
+                        desc: "Temperatura bollitore (attuale)"
+                    }
+                }
+            }
+        ],
+        texts: {
+            de: {
+                label: "Speicher"
+            },
+            en: {
+                label: "Tank"
+            },
+            it: {
+                label: "Bollitore"
+            }
+        }
+    },
+    {
+        group_id: "Speicher-Soll",
+        label_rect_id: "storage_setpoint_label",
+        visual_container: true,
+        offset: 6,
+        values: [
+            {
+                id: "storage_setpoint",
+                device: "CAN",
+                domain: "select",
+                unit: "\xb0C",
+                value_rect_id: "storage_setpoint_value",
+                texts: {
+                    de: {
+                        desc: "Speichertemperatur (Soll)"
+                    },
+                    en: {
+                        desc: "DHW tank temperature setpoint"
+                    },
+                    it: {
+                        desc: "Temperatura bollitore impostata"
+                    }
+                }
+            }
+        ],
+        texts: {
+            de: {
+                label: "Soll"
+            },
+            en: {
+                label: "Setpoint"
+            },
+            it: {
+                label: "Imp."
+            }
+        }
+    },
+    {
+        group_id: "buh",
         label_rect_id: "buh_info_label",
-        value_rect_id: "buh_info_value",
+        visual_container: true,
         offset: 6,
         digits: 0,
-        optional: true,
         parent: "buh",
+        values: [
+            {
+                id: "buh_power",
+                domain: "sensor",
+                unit: [
+                    "W",
+                    "kW"
+                ],
+                optional: true,
+                value_rect_id: "buh_info_value",
+                texts: {
+                    de: {
+                        desc: "Heizstableistung"
+                    },
+                    en: {
+                        desc: "Backup heater power"
+                    },
+                    it: {
+                        desc: "Potenza della resistenza elettrica"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Heizstab",
-                desc: "Heizstableistung"
+                label: "Heizstab"
             },
             en: {
-                label: "Backup heater",
-                desc: "Backup heater power"
+                label: "Backup heater"
             },
             it: {
-                label: "Resistenza",
-                desc: "Potenza della resistenza elettrica"
+                label: "Resistenza"
             }
         }
     },
     {
-        id: "mixer",
-        domain: "sensor",
-        device: "CAN",
-        unit: "%",
-        value_rect_id: "dhw_mixer_value",
+        group_id: "DHW-Valve",
         offset: 6,
         digits: 0,
         fontSize: "40px",
-        texts: {
-            de: {
-                desc: "Mischerstellung"
-            },
-            en: {
-                desc: "Mixer position"
-            },
-            it: {
-                desc: "Posizione del miscelatore"
+        values: [
+            {
+                id: "mixer",
+                device: "CAN",
+                domain: "sensor",
+                unit: "%",
+                value_rect_id: "dhw_mixer_value",
+                texts: {
+                    de: {
+                        desc: "Mischerstellung"
+                    },
+                    en: {
+                        desc: "Mixer position"
+                    },
+                    it: {
+                        desc: "Posizione del miscelatore"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "bypass",
-        domain: "sensor",
-        device: "CAN",
-        unit: "%",
-        value_rect_id: "bypass_value",
+        group_id: "BPV-Valve",
         offset: 6,
         digits: 0,
         fontSize: "40px",
-        texts: {
-            de: {
-                desc: "Bypass-Ventilstellung"
-            },
-            en: {
-                desc: "Bypass valve position"
-            },
-            it: {
-                desc: "Posizione della valvola di bypass"
+        values: [
+            {
+                id: "bypass",
+                device: "CAN",
+                domain: "sensor",
+                unit: "%",
+                value_rect_id: "bypass_value",
+                texts: {
+                    de: {
+                        desc: "Bypass-Ventilstellung"
+                    },
+                    en: {
+                        desc: "Bypass valve position"
+                    },
+                    it: {
+                        desc: "Posizione della valvola di bypass"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "error_code",
-        domain: "sensor",
-        device: "CAN",
-        value_rect_id: "error_code_value",
+        group_id: "Info",
+        visual_container: true,
         offset: 6,
         fontSize: "40px",
         align: "left",
@@ -663,202 +1492,195 @@ const $eb5cfe1dd9fe4e85$export$9b06e6104ce35b16 = [
             en: "Info",
             it: "Info"
         },
-        texts: {
-            de: {
-                suffix: "Fehlercode: ",
-                desc: "Fehlercode"
+        values: [
+            {
+                id: "error_code",
+                device: "CAN",
+                domain: "sensor",
+                value_rect_id: "fehlercode_value",
+                texts: {
+                    de: {
+                        suffix: "Fehlercode: ",
+                        desc: "Fehlercode"
+                    },
+                    en: {
+                        suffix: "Error code: ",
+                        desc: "Error code"
+                    },
+                    it: {
+                        suffix: "Codice errore: ",
+                        desc: "Codice di errore"
+                    }
+                }
             },
-            en: {
-                suffix: "Error code: ",
-                desc: "Error code"
+            {
+                id: "operating_mode",
+                device: "CAN",
+                domain: "sensor",
+                value_rect_id: "betriebsmodus_value",
+                texts: {
+                    de: {
+                        suffix: "Modus: ",
+                        desc: "Betriebsmodus (vom Benutzer eingestellt)"
+                    },
+                    en: {
+                        suffix: "Mode: ",
+                        desc: "Operating mode (user setting)"
+                    },
+                    it: {
+                        suffix: "Modalit\xe0: ",
+                        desc: "Modalit\xe0 operativa (impostata dall'utente)"
+                    }
+                }
             },
-            it: {
-                suffix: "Codice errore: ",
-                desc: "Codice di errore"
+            {
+                id: "mode_of_operating",
+                device: "CAN",
+                domain: "sensor",
+                value_rect_id: "betriebsart_value",
+                texts: {
+                    de: {
+                        suffix: "Status: ",
+                        desc: "Aktueller W\xe4rmepumpenstatus"
+                    },
+                    en: {
+                        suffix: "State: ",
+                        desc: "Current heat pump state"
+                    },
+                    it: {
+                        suffix: "Stato: ",
+                        desc: "Stato attuale della pompa di calore"
+                    }
+                }
+            },
+            {
+                id: "thermal_power",
+                device: "CAN",
+                domain: "sensor",
+                unit: "kW",
+                value_rect_id: "therm_leistung_value",
+                texts: {
+                    de: {
+                        suffix: "Therm. Leistung: ",
+                        desc: "Thermische Leistung"
+                    },
+                    en: {
+                        suffix: "Thermal power: ",
+                        desc: "Thermal power"
+                    },
+                    it: {
+                        suffix: "Potenza termica: ",
+                        desc: "Potenza termica"
+                    }
+                }
+            },
+            {
+                id: "el_power",
+                domain: "sensor",
+                unit: "kW",
+                optional: true,
+                value_rect_id: "el_power_value",
+                texts: {
+                    de: {
+                        suffix: "El. Leistung: ",
+                        desc: "Elektrische Leistung"
+                    },
+                    en: {
+                        suffix: "Electric power: ",
+                        desc: "Electric power"
+                    },
+                    it: {
+                        suffix: "Potenza elettrica: ",
+                        desc: "Potenza elettrica"
+                    }
+                }
+            },
+            {
+                id: "cop",
+                domain: "sensor",
+                optional: true,
+                value_rect_id: "cop_value",
+                texts: {
+                    de: {
+                        suffix: "COP: ",
+                        desc: "Leistungszahl (COP)"
+                    },
+                    en: {
+                        suffix: "COP: ",
+                        desc: "Coefficient of performance (COP)"
+                    },
+                    it: {
+                        suffix: "COP: ",
+                        desc: "Coefficiente di prestazione (COP)"
+                    }
+                }
+            },
+            {
+                id: "room_temperature",
+                domain: "sensor",
+                unit: "\xb0C",
+                optional: true,
+                value_rect_id: "t_room_is_value",
+                texts: {
+                    de: {
+                        suffix: "Raumtemp.: ",
+                        desc: "Aktuelle Raumtemperatur"
+                    },
+                    en: {
+                        suffix: "Room temp.: ",
+                        desc: "Current room temperature"
+                    },
+                    it: {
+                        suffix: "Temp. ambiente: ",
+                        desc: "Temperatura ambiente attuale"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "operating_mode",
-        domain: "select",
-        device: "CAN",
-        value_rect_id: "operating_mode_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        texts: {
-            de: {
-                suffix: "Modus: ",
-                desc: "Betriebsmodus (vom Benutzer eingestellt)"
-            },
-            en: {
-                suffix: "Mode: ",
-                desc: "Operating mode (user setting)"
-            },
-            it: {
-                suffix: "Modalit\xe0: ",
-                desc: "Modalit\xe0 operativa (impostata dall'utente)"
-            }
-        }
-    },
-    {
-        id: "mode_of_operating",
-        domain: "sensor",
-        device: "CAN",
-        value_rect_id: "mode_of_operating_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        texts: {
-            de: {
-                suffix: "Status: ",
-                desc: "Aktueller W\xe4rmepumpenstatus"
-            },
-            en: {
-                suffix: "State: ",
-                desc: "Current heat pump state"
-            },
-            it: {
-                suffix: "Stato: ",
-                desc: "Stato attuale della pompa di calore"
-            }
-        }
-    },
-    {
-        id: "thermal_power",
-        domain: "sensor",
-        device: "CAN",
-        unit: "kW",
-        value_rect_id: "thermal_power_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        texts: {
-            de: {
-                suffix: "Therm. Leistung: ",
-                desc: "Thermische Leistung"
-            },
-            en: {
-                suffix: "Thermal power: ",
-                desc: "Thermal power"
-            },
-            it: {
-                suffix: "Potenza termica: ",
-                desc: "Potenza termica"
-            }
-        }
-    },
-    {
-        id: "el_power",
-        domain: "sensor",
-        unit: "kW",
-        value_rect_id: "el_power_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        optional: true,
-        texts: {
-            de: {
-                suffix: "El. Leistung: ",
-                desc: "Elektrische Leistung"
-            },
-            en: {
-                suffix: "Electric power: ",
-                desc: "Electric power"
-            },
-            it: {
-                suffix: "Potenza elettrica: ",
-                desc: "Potenza elettrica"
-            }
-        }
-    },
-    {
-        id: "cop",
-        domain: "sensor",
-        value_rect_id: "cop_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        optional: true,
-        texts: {
-            de: {
-                suffix: "COP: ",
-                desc: "Leistungszahl (COP)"
-            },
-            en: {
-                suffix: "COP: ",
-                desc: "Coefficient of performance (COP)"
-            },
-            it: {
-                suffix: "COP: ",
-                desc: "Coefficiente di prestazione (COP)"
-            }
-        }
-    },
-    {
-        id: "room_temperature",
-        domain: "sensor",
-        value_rect_id: "t_room_is_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        optional: true,
-        texts: {
-            de: {
-                suffix: "Raumtemp.: ",
-                desc: "Aktuelle Raumtemperatur"
-            },
-            en: {
-                suffix: "Room temp.: ",
-                desc: "Current room temperature"
-            },
-            it: {
-                suffix: "Temp. ambiente: ",
-                desc: "Temperatura ambiente attuale"
-            }
-        }
-    },
-    {
-        id: "system_date",
-        domain: "sensor",
-        device: "CAN",
-        value_rect_id: "date_value",
+        group_id: "DateTime",
         parent: "date_value",
         offset: 6,
         fontSize: "40px",
-        optional: true,
-        texts: {
-            de: {
-                desc: "Systemdatum"
+        values: [
+            {
+                id: "system_date",
+                device: "CAN",
+                domain: "sensor",
+                optional: true,
+                value_rect_id: "date_value",
+                texts: {
+                    de: {
+                        desc: "Systemdatum"
+                    },
+                    en: {
+                        desc: "System date"
+                    },
+                    it: {
+                        desc: "Data di sistema"
+                    }
+                }
             },
-            en: {
-                desc: "System date"
-            },
-            it: {
-                desc: "Data di sistema"
+            {
+                id: "system_time",
+                device: "CAN",
+                domain: "sensor",
+                optional: true,
+                value_rect_id: "time_value",
+                texts: {
+                    de: {
+                        desc: "Systemzeit"
+                    },
+                    en: {
+                        desc: "System time"
+                    },
+                    it: {
+                        desc: "Ora di sistema"
+                    }
+                }
             }
-        }
-    },
-    {
-        id: "system_time",
-        domain: "sensor",
-        device: "CAN",
-        value_rect_id: "time_value",
-        parent: "time_value",
-        offset: 6,
-        fontSize: "40px",
-        optional: true,
-        texts: {
-            de: {
-                desc: "Systemzeit"
-            },
-            en: {
-                desc: "System time"
-            },
-            it: {
-                desc: "Ora di sistema"
-            }
-        }
+        ]
     }
 ];
 const $eb5cfe1dd9fe4e85$export$d0d68bb9ed2c643d = [
@@ -866,27 +1688,53 @@ const $eb5cfe1dd9fe4e85$export$d0d68bb9ed2c643d = [
     "en",
     "it"
 ];
+const $eb5cfe1dd9fe4e85$export$655dd0e71353e7d = (lang)=>!!lang && $eb5cfe1dd9fe4e85$export$d0d68bb9ed2c643d.includes(lang);
+const $eb5cfe1dd9fe4e85$export$cfaf3f619f4fde4d = "glass-light";
+const $eb5cfe1dd9fe4e85$export$1ecca0613f5e56d2 = [
+    {
+        id: "glass-dark",
+        file: "hpsu_glass_dark.svg",
+        labels: {
+            de: "Glas, dunkel",
+            en: "Glass, dark",
+            it: "Vetro, scuro"
+        }
+    },
+    {
+        id: "glass-light",
+        file: "hpsu_glass_light.svg",
+        labels: {
+            de: "Glas, hell",
+            en: "Glass, light",
+            it: "Vetro, chiaro"
+        }
+    },
+    {
+        id: "glass-petrol",
+        file: "hpsu_glass_petrol.svg",
+        labels: {
+            de: "Glas, Petrol",
+            en: "Glass, petrol",
+            it: "Vetro, petrolio"
+        }
+    }
+];
+const $eb5cfe1dd9fe4e85$export$6fb81034e128eb0 = (id)=>($eb5cfe1dd9fe4e85$export$1ecca0613f5e56d2.find((l)=>l.id === id) ?? $eb5cfe1dd9fe4e85$export$1ecca0613f5e56d2.find((l)=>l.id === $eb5cfe1dd9fe4e85$export$cfaf3f619f4fde4d)).file;
 const $eb5cfe1dd9fe4e85$export$f8cda7abf1aa048 = {
     de: {
         on: "An",
         off: "Aus",
-        errorLoading: "Fehler beim Laden des HPSU Dashboards.",
-        selectCanDevice: "CAN Ger\xe4t ausw\xe4hlen",
-        selectUartDevice: "UART Ger\xe4t ausw\xe4hlen"
+        errorLoading: "Fehler beim Laden des HPSU Dashboards."
     },
     en: {
         on: "On",
         off: "Off",
-        errorLoading: "Failed to load the HPSU dashboard.",
-        selectCanDevice: "Select CAN device",
-        selectUartDevice: "Select UART device"
+        errorLoading: "Failed to load the HPSU dashboard."
     },
     it: {
         on: "On",
         off: "Off",
-        errorLoading: "Errore durante il caricamento della dashboard HPSU.",
-        selectCanDevice: "Seleziona dispositivo CAN",
-        selectUartDevice: "Seleziona dispositivo UART"
+        errorLoading: "Errore durante il caricamento della dashboard HPSU."
     }
 };
 const $eb5cfe1dd9fe4e85$export$ac75e9db5428c70 = [
@@ -907,6 +1755,7 @@ const $eb5cfe1dd9fe4e85$export$3d4c4b3107861578 = {
     umwaelzpumpe: "circulation_pump",
     umwaelzpumpe_an_aus: "circulation_pump_status",
     durchfluss: "flow_rate",
+    ruecklauf: "return_temperature_can",
     ruecklauf_1: "return_temperature_can",
     ruecklauf_2: "return_temperature_uart",
     verdampfer: "evaporator",
@@ -928,12 +1777,14 @@ const $eb5cfe1dd9fe4e85$export$3d4c4b3107861578 = {
     thermische_leistung: "thermal_power",
     t_room_is: "room_temperature"
 };
+const $eb5cfe1dd9fe4e85$export$52baa4d7dee4809c = (key)=>$eb5cfe1dd9fe4e85$export$3d4c4b3107861578[key] ?? key;
 const $eb5cfe1dd9fe4e85$export$127f9a442b42d18 = function(config) {
-    const validIds = new Set($eb5cfe1dd9fe4e85$export$9b06e6104ce35b16.map((item)=>item.id));
+    const validIds = new Set($eb5cfe1dd9fe4e85$export$9b06e6104ce35b16.flatMap((item)=>item.values.map((value)=>value.id)));
     const validEntities = {};
     for (const [key, value] of Object.entries(config.entities ?? {})){
-        const id = $eb5cfe1dd9fe4e85$export$3d4c4b3107861578[key] ?? key;
-        if (validIds.has(id)) validEntities[id] = value;
+        const id = $eb5cfe1dd9fe4e85$export$52baa4d7dee4809c(key);
+        // an explicit English key wins over a legacy one for the same value
+        if (validIds.has(id) && (id === key || !(id in validEntities))) validEntities[id] = value;
     }
     return {
         ...config,
@@ -1755,37 +2606,231 @@ const $d067581fc0d59830$var$ensureArray = (value)=>{
         value
     ];
 };
-class $d067581fc0d59830$export$70410bc798970b36 extends (0, $ab210b2da7b39b9d$export$3f2f9f5909897157) {
-    static{
-        this.helpersLoaded = false;
+// Sensors grouped by function. Ids that are not listed end up in "other".
+const $d067581fc0d59830$var$FUNCTION_GROUPS = [
+    {
+        key: "refrigerant",
+        ids: [
+            "compressor_status",
+            "compressor_speed",
+            "expansion_valve",
+            "pressure_equalization",
+            "hot_gas",
+            "hot_gas_condenser",
+            "condensate",
+            "evaporator",
+            "fan_speed",
+            "outside_temperature",
+            "ta2"
+        ]
+    },
+    {
+        key: "heating",
+        ids: [
+            "circulation_pump",
+            "circulation_pump_status",
+            "flow_rate",
+            "flow_temperature_can",
+            "flow_temperature_uart",
+            "flow_temperature_bh_can",
+            "flow_temperature_bh_uart",
+            "return_temperature_can",
+            "return_temperature_uart",
+            "flow_temperature_setpoint",
+            "spread",
+            "water_pressure",
+            "bypass"
+        ]
+    },
+    {
+        key: "hotwater",
+        ids: [
+            "storage_temperature",
+            "storage_setpoint",
+            "mixer",
+            "buh_power"
+        ]
+    },
+    {
+        key: "info",
+        ids: [
+            "error_code",
+            "operating_mode",
+            "mode_of_operating",
+            "thermal_power",
+            "el_power",
+            "cop",
+            "room_temperature",
+            "system_date",
+            "system_time"
+        ]
     }
-    setConfig(config) {
+];
+// Values that exist for both buses are shown side by side (CAN left, UART right)
+const $d067581fc0d59830$var$PAIRS = [
+    [
+        "return_temperature_can",
+        "return_temperature_uart"
+    ],
+    [
+        "flow_temperature_can",
+        "flow_temperature_uart"
+    ],
+    [
+        "flow_temperature_bh_can",
+        "flow_temperature_bh_uart"
+    ]
+];
+const $d067581fc0d59830$var$CLOSE_PATH = "M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z";
+const $d067581fc0d59830$var$TEXTS = {
+    de: {
+        appearance: "Darstellung",
+        devices: "Ger\xe4te",
+        sensors: "Sensoren",
+        layout: "Layout",
+        animations: "Animationen",
+        background: "Hintergrund",
+        box: "Textfelder",
+        text: "Text",
+        show: "Hintergrund anzeigen",
+        custom: "Eigene Farben verwenden",
+        color: "Farbe",
+        opacity: "Deckkraft",
+        fill: "F\xfcllung",
+        fill_opacity: "Deckkraft der F\xfcllung",
+        border: "Rahmen",
+        border_opacity: "Deckkraft des Rahmens",
+        value_color: "Textfarbe",
+        label_color: "Farbe der Beschriftung",
+        custom_help: "Aus: es gilt der Stil des Layouts.",
+        canDevice: "CAN-Ger\xe4t",
+        uartDevice: "UART-Ger\xe4t",
+        devices_help: "Die Ger\xe4te schr\xe4nken die Auswahl der Sensoren ein.",
+        assigned: "zugeordnet",
+        group_by: "Gruppieren nach",
+        by_function: "Funktion",
+        by_bus: "Bus (CAN / UART)",
+        search: "Suchen",
+        clear: "Leeren",
+        no_match: "Keine Treffer",
+        refrigerant: "K\xe4ltekreis",
+        heating: "Heizwasser",
+        hotwater: "Warmwasser und Speicher",
+        info: "Info und Betrieb",
+        other: "Weitere",
+        bus_can: "CAN",
+        bus_uart: "UART",
+        bus_other: "Extern / ohne Ger\xe4t",
+        unit_warning: "Einheit {actual}, erwartet {expected}"
+    },
+    en: {
+        appearance: "Appearance",
+        devices: "Devices",
+        sensors: "Sensors",
+        layout: "Layout",
+        animations: "Animations",
+        background: "Background",
+        box: "Text boxes",
+        text: "Text",
+        show: "Show background",
+        custom: "Use custom colours",
+        color: "Colour",
+        opacity: "Opacity",
+        fill: "Fill",
+        fill_opacity: "Fill opacity",
+        border: "Border",
+        border_opacity: "Border opacity",
+        value_color: "Text colour",
+        label_color: "Label colour",
+        custom_help: "Off: the style of the layout applies.",
+        canDevice: "CAN device",
+        uartDevice: "UART device",
+        devices_help: "The devices narrow down the sensor choices.",
+        assigned: "assigned",
+        group_by: "Group by",
+        by_function: "Function",
+        by_bus: "Bus (CAN / UART)",
+        search: "Search",
+        clear: "Clear",
+        no_match: "No matches",
+        refrigerant: "Refrigerant circuit",
+        heating: "Heating water",
+        hotwater: "Hot water and tank",
+        info: "Info and operation",
+        other: "Other",
+        bus_can: "CAN",
+        bus_uart: "UART",
+        bus_other: "External / no device",
+        unit_warning: "Unit {actual}, expected {expected}"
+    },
+    it: {
+        appearance: "Aspetto",
+        devices: "Dispositivi",
+        sensors: "Sensori",
+        layout: "Layout",
+        animations: "Animazioni",
+        background: "Sfondo",
+        box: "Caselle di testo",
+        text: "Testo",
+        show: "Mostra lo sfondo",
+        custom: "Usa colori personalizzati",
+        color: "Colore",
+        opacity: "Opacit\xe0",
+        fill: "Riempimento",
+        fill_opacity: "Opacit\xe0 del riempimento",
+        border: "Bordo",
+        border_opacity: "Opacit\xe0 del bordo",
+        value_color: "Colore del testo",
+        label_color: "Colore delle etichette",
+        custom_help: "Disattivato: vale lo stile del layout.",
+        canDevice: "Dispositivo CAN",
+        uartDevice: "Dispositivo UART",
+        devices_help: "I dispositivi restringono la scelta dei sensori.",
+        assigned: "assegnati",
+        group_by: "Raggruppa per",
+        by_function: "Funzione",
+        by_bus: "Bus (CAN / UART)",
+        search: "Cerca",
+        clear: "Svuota",
+        no_match: "Nessun risultato",
+        refrigerant: "Circuito frigorifero",
+        heating: "Acqua di riscaldamento",
+        hotwater: "Acqua calda e bollitore",
+        info: "Info e funzionamento",
+        other: "Altro",
+        bus_can: "CAN",
+        bus_uart: "UART",
+        bus_other: "Esterni / senza dispositivo",
+        unit_warning: "Unit\xe0 {actual}, attesa {expected}"
+    }
+};
+class $d067581fc0d59830$export$70410bc798970b36 extends (0, $ab210b2da7b39b9d$export$3f2f9f5909897157) {
+    async setConfig(config) {
+        // HACK: This call is necessary to load the ha-entity-picker components.
+        const cardHelpers = await window.loadCardHelpers();
+        const entitiesCard = await cardHelpers.createCardElement({
+            type: "entities",
+            entities: []
+        });
+        await entitiesCard.constructor.getConfigElement();
+        // HACK end
+        // switch states are kept while the config is the one this editor just wrote; an external change (YAML) recomputes them
+        if (JSON.stringify(config) !== this.lastFired) {
+            const has = (g)=>!!g && Object.keys(g).some((k)=>k !== "show" && g[k] !== undefined);
+            this.ui = {
+                background: has(config.background),
+                box: has(config.box),
+                text: has(config.text)
+            };
+        }
         this.config = (0, $eb5cfe1dd9fe4e85$export$127f9a442b42d18)(config);
         this.svgItemConfig = (0, $eb5cfe1dd9fe4e85$export$9b06e6104ce35b16).map((svg_item)=>({
                 ...svg_item,
-                entityId: this.config.entities?.[svg_item.id] ?? null
+                values: svg_item.values.map((value)=>({
+                        ...value,
+                        entityId: this.config.entities?.[value.id] || null
+                    }))
             }));
-    }
-    connectedCallback() {
-        super.connectedCallback();
-        $d067581fc0d59830$export$70410bc798970b36.loadHaComponents();
-    }
-    // HACK: Creating an entities card config element forces Home Assistant to
-    // lazily register the ha-selector / ha-entity-picker components.
-    static async loadHaComponents() {
-        if ($d067581fc0d59830$export$70410bc798970b36.helpersLoaded) return;
-        $d067581fc0d59830$export$70410bc798970b36.helpersLoaded = true;
-        try {
-            const cardHelpers = await window.loadCardHelpers();
-            const entitiesCard = await cardHelpers.createCardElement({
-                type: "entities",
-                entities: []
-            });
-            await entitiesCard.constructor.getConfigElement();
-        } catch (e) {
-            $d067581fc0d59830$export$70410bc798970b36.helpersLoaded = false;
-            console.error("Failed to load Home Assistant card helpers.", e);
-        }
     }
     willUpdate(changedProperties) {
         if (changedProperties.has("hass") && this.hass?.language) {
@@ -1793,86 +2838,498 @@ class $d067581fc0d59830$export$70410bc798970b36 extends (0, $ab210b2da7b39b9d$ex
             this.language = (0, $eb5cfe1dd9fe4e85$export$d0d68bb9ed2c643d).includes(lang) ? lang : "en";
         }
     }
+    tr(key) {
+        return $d067581fc0d59830$var$TEXTS[this.language]?.[key] ?? $d067581fc0d59830$var$TEXTS.en[key] ?? key;
+    }
+    allValues() {
+        return this.svgItemConfig.flatMap((item)=>item.values.map((value)=>({
+                    item: item,
+                    value: value
+                })));
+    }
+    description(value) {
+        return value.texts[this.language]?.desc || value.texts.en?.desc || value.id;
+    }
     render() {
-        if (!this.config || this.svgItemConfig.length === 0) return 0, $f58f44579a4747ac$export$45b790e32b2810ee;
-        const categories = {};
-        let lastCategory = this.svgItemConfig[0].category;
-        if (lastCategory) this.svgItemConfig.forEach((item)=>{
-            lastCategory = item.category ?? lastCategory;
-            const category = lastCategory[this.language];
-            if (!categories[category]) categories[category] = [];
-            categories[category].push(item);
-        });
-        const texts = (0, $eb5cfe1dd9fe4e85$export$f8cda7abf1aa048)[this.language];
+        if (!this.config) return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)``;
+        const tabs = [
+            "appearance",
+            "devices",
+            "sensors"
+        ];
         return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
             <div class="card-config">
-                <ha-expansion-panel
-                    .header=${"HPSU Devices"}
-                >
-                    <ha-selector
-                        .hass=${this.hass}
-                        .selector=${{
-            device: {}
-        }}
-                        .value=${this.config.canDevice}
-                        @value-changed=${this._entityChanged}
-                        id="can-device-selector"
-                        .placeholder=${texts.selectCanDevice}>
-                    </ha-selector>
-                    <ha-selector
-                        .hass=${this.hass}
-                        .selector=${{
-            device: {}
-        }}
-                        .value=${this.config.uartDevice}
-                        @value-changed=${this._entityChanged}
-                        id="uart-device-selector"
-                        .placeholder=${texts.selectUartDevice}>
-                    </ha-selector>
-                </ha-expansion-panel>
-                ${Object.keys(categories).map((category)=>(0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-                    <ha-expansion-panel
-                        .header=${category}
-                    >
-                        ${categories[category].map((svg_item)=>(0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-                            <ha-selector
-                                .hass=${this.hass}
-                                .selector=${{
-                    entity: {
-                        include_entities: this.getRelevantEntityIds(svg_item)
-                    }
-                }}
-                                .placeholder=${svg_item.texts[this.language]?.desc || "<missing>"}
-                                .value=${svg_item.entityId}
-                                @value-changed=${this._entityChanged}
-                                data-id=${svg_item.id}
-                            >
-                            </ha-selector>
-                        `)}
-                    </ha-expansion-panel>
-                `)}
+                <div class="tabs" role="tablist">
+                    ${tabs.map((id)=>(0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+                        <button class="tab ${this.tab === id ? "active" : ""}" role="tab"
+                            aria-selected=${this.tab === id}
+                            @click=${()=>{
+                this.tab = id;
+            }}>
+                            ${this.tr(id)}
+                        </button>
+                    `)}
+                </div>
+                ${this.tab === "appearance" ? this.renderAppearance() : (0, $f58f44579a4747ac$export$45b790e32b2810ee)}
+                ${this.tab === "devices" ? this.renderDevices() : (0, $f58f44579a4747ac$export$45b790e32b2810ee)}
+                ${this.tab === "sensors" ? this.renderSensors() : (0, $f58f44579a4747ac$export$45b790e32b2810ee)}
             </div>
         `;
     }
-    getRelevantEntityIds(svg_item) {
+    // ---- tab: appearance ---------------------------------------------------------------------------------
+    renderAppearance() {
+        const opacity = {
+            number: {
+                min: 0,
+                max: 100,
+                step: 1,
+                mode: "slider",
+                unit_of_measurement: "%"
+            }
+        };
+        const showBg = this.config.background?.show !== false;
+        const bgOn = showBg && this.ui.background;
+        const schema = [
+            {
+                name: "layout",
+                selector: {
+                    select: {
+                        mode: "dropdown",
+                        options: (0, $eb5cfe1dd9fe4e85$export$1ecca0613f5e56d2).map((l)=>({
+                                value: l.id,
+                                label: l.labels[this.language] ?? l.labels.en
+                            }))
+                    }
+                }
+            },
+            {
+                name: "animations",
+                selector: {
+                    boolean: {}
+                }
+            },
+            {
+                type: "expandable",
+                name: "background",
+                title: this.tr("background"),
+                schema: [
+                    {
+                        name: "show",
+                        selector: {
+                            boolean: {}
+                        }
+                    },
+                    {
+                        name: "custom",
+                        selector: {
+                            boolean: {}
+                        },
+                        disabled: !showBg
+                    },
+                    {
+                        name: "color",
+                        selector: {
+                            color_rgb: {}
+                        },
+                        disabled: !bgOn
+                    },
+                    {
+                        name: "opacity",
+                        selector: opacity,
+                        disabled: !bgOn
+                    }
+                ]
+            },
+            {
+                type: "expandable",
+                name: "box",
+                title: this.tr("box"),
+                schema: [
+                    {
+                        name: "custom",
+                        selector: {
+                            boolean: {}
+                        }
+                    },
+                    {
+                        name: "fill",
+                        selector: {
+                            color_rgb: {}
+                        },
+                        disabled: !this.ui.box
+                    },
+                    {
+                        name: "fill_opacity",
+                        selector: opacity,
+                        disabled: !this.ui.box
+                    },
+                    {
+                        name: "border",
+                        selector: {
+                            color_rgb: {}
+                        },
+                        disabled: !this.ui.box
+                    },
+                    {
+                        name: "border_opacity",
+                        selector: opacity,
+                        disabled: !this.ui.box
+                    }
+                ]
+            },
+            {
+                type: "expandable",
+                name: "text",
+                title: this.tr("text"),
+                schema: [
+                    {
+                        name: "custom",
+                        selector: {
+                            boolean: {}
+                        }
+                    },
+                    {
+                        name: "value_color",
+                        selector: {
+                            color_rgb: {}
+                        },
+                        disabled: !this.ui.text
+                    },
+                    {
+                        name: "label_color",
+                        selector: {
+                            color_rgb: {}
+                        },
+                        disabled: !this.ui.text
+                    }
+                ]
+            }
+        ];
+        const data = {
+            layout: this.config.layout ?? (0, $eb5cfe1dd9fe4e85$export$cfaf3f619f4fde4d),
+            animations: this.config.animations !== false,
+            background: {
+                show: showBg,
+                custom: this.ui.background,
+                opacity: 100,
+                ...this.config.background ?? {}
+            },
+            box: {
+                custom: this.ui.box,
+                fill_opacity: 100,
+                border_opacity: 100,
+                ...this.config.box ?? {}
+            },
+            text: {
+                custom: this.ui.text,
+                ...this.config.text ?? {}
+            }
+        };
+        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+            <ha-form
+                .hass=${this.hass}
+                .data=${data}
+                .schema=${schema}
+                .computeLabel=${(s)=>this.labelFor(s)}
+                .computeHelper=${(s)=>s.name === "custom" ? this.tr("custom_help") : ""}
+                @value-changed=${this._appearanceChanged}>
+            </ha-form>
+        `;
+    }
+    labelFor(schema) {
+        return this.tr(schema.name);
+    }
+    // Only values that differ from the defaults are written to the card config.
+    static compact(group, defaults) {
+        const result = {};
+        for (const [key, value] of Object.entries(group ?? {})){
+            if (key === "custom" || value === undefined || value === null || value === "") continue;
+            if (JSON.stringify(value) === JSON.stringify(defaults[key])) continue;
+            result[key] = value;
+        }
+        return Object.keys(result).length ? result : undefined;
+    }
+    _appearanceChanged(event) {
+        event.stopPropagation();
+        const data = event.detail.value;
+        const compact = $d067581fc0d59830$export$70410bc798970b36.compact;
+        // switching off resets everything below it
+        const bg = {
+            ...data.background
+        };
+        const ui = {
+            ...this.ui
+        };
+        if (bg.show === false) {
+            ui.background = false;
+            delete bg.color;
+            delete bg.opacity;
+        } else {
+            ui.background = !!bg.custom;
+            if (!ui.background) {
+                delete bg.color;
+                delete bg.opacity;
+            }
+        }
+        const box = {
+            ...data.box
+        };
+        ui.box = !!box.custom;
+        if (!ui.box) for (const key of [
+            "fill",
+            "fill_opacity",
+            "border",
+            "border_opacity"
+        ])delete box[key];
+        const text = {
+            ...data.text
+        };
+        ui.text = !!text.custom;
+        if (!ui.text) {
+            delete text.value_color;
+            delete text.label_color;
+        }
+        this.ui = ui;
+        this._fire({
+            ...this.config,
+            layout: data.layout === (0, $eb5cfe1dd9fe4e85$export$cfaf3f619f4fde4d) ? undefined : data.layout,
+            animations: data.animations === false ? false : undefined,
+            background: compact(bg, {
+                show: true,
+                opacity: 100
+            }),
+            box: compact(box, {
+                fill_opacity: 100,
+                border_opacity: 100
+            }),
+            text: compact(text, {})
+        });
+    }
+    // ---- tab: devices --------------------------------------------------------------------------------------
+    renderDevices() {
+        const assigned = Object.values(this.config.entities ?? {}).filter(Boolean).length;
+        const total = this.allValues().length;
+        const schema = [
+            {
+                name: "canDevice",
+                selector: {
+                    device: {}
+                }
+            },
+            {
+                name: "uartDevice",
+                selector: {
+                    device: {}
+                }
+            }
+        ];
+        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+            <ha-form
+                .hass=${this.hass}
+                .data=${{
+            canDevice: this.config.canDevice,
+            uartDevice: this.config.uartDevice
+        }}
+                .schema=${schema}
+                .computeLabel=${(s)=>this.tr(s.name)}
+                @value-changed=${this._devicesChanged}>
+            </ha-form>
+            <p class="hint">${this.tr("devices_help")}</p>
+            <p class="hint">${assigned} / ${total} ${this.tr("assigned")}</p>
+        `;
+    }
+    _devicesChanged(event) {
+        event.stopPropagation();
+        const data = event.detail.value;
+        this._fire({
+            ...this.config,
+            canDevice: data.canDevice,
+            uartDevice: data.uartDevice
+        });
+    }
+    // ---- tab: sensors / info ---------------------------------------------------------------------------------
+    renderSensors() {
+        const all = this.allValues();
+        let groups;
+        if (this.groupBy === "function") {
+            const used = new Set();
+            groups = $d067581fc0d59830$var$FUNCTION_GROUPS.map((g)=>{
+                const entries = g.ids.map((id)=>all.find((e)=>e.value.id === id)).filter((e)=>!!e);
+                entries.forEach((e)=>used.add(e.value.id));
+                return {
+                    title: this.tr(g.key),
+                    entries: entries
+                };
+            });
+            const rest = all.filter((e)=>!used.has(e.value.id));
+            if (rest.length) groups.push({
+                title: this.tr("other"),
+                entries: rest
+            });
+        } else groups = [
+            {
+                title: this.tr("bus_can"),
+                entries: all.filter((e)=>e.value.device === "CAN")
+            },
+            {
+                title: this.tr("bus_uart"),
+                entries: all.filter((e)=>e.value.device === "UART")
+            },
+            {
+                title: this.tr("bus_other"),
+                entries: all.filter((e)=>!e.value.device)
+            }
+        ].filter((g)=>g.entries.length);
+        const query = this.search.trim().toLowerCase();
+        const matches = (e)=>{
+            if (!query) return true;
+            const entityName = e.value.entityId ? this.hass.states[e.value.entityId]?.attributes?.friendly_name ?? "" : "";
+            return [
+                this.description(e.value),
+                e.value.id,
+                e.value.entityId ?? "",
+                entityName,
+                e.value.device ?? ""
+            ].join(" ").toLowerCase().includes(query);
+        };
+        const rendered = groups.map((group)=>this.renderGroup(group.title, group.entries, matches, query));
+        const anyMatch = groups.some((g)=>g.entries.some(matches));
+        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+            <div class="toolbar">
+                <ha-selector
+                    .hass=${this.hass}
+                    .selector=${{
+            select: {
+                mode: "dropdown",
+                options: [
+                    {
+                        value: "function",
+                        label: this.tr("by_function")
+                    },
+                    {
+                        value: "bus",
+                        label: this.tr("by_bus")
+                    }
+                ]
+            }
+        }}
+                    .label=${this.tr("group_by")}
+                    .value=${this.groupBy}
+                    @value-changed=${(e)=>{
+            e.stopPropagation();
+            this.groupBy = e.detail.value;
+        }}>
+                </ha-selector>
+                <div class="search">
+                    <ha-selector
+                        .hass=${this.hass}
+                        .selector=${{
+            text: {}
+        }}
+                        .label=${this.tr("search")}
+                        .required=${false}
+                        .value=${this.search}
+                        @value-changed=${(e)=>{
+            e.stopPropagation();
+            this.search = String(e.detail.value ?? "");
+        }}>
+                    </ha-selector>
+                    ${this.search ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+                        <ha-icon-button class="clear" .label=${this.tr("clear")} .path=${$d067581fc0d59830$var$CLOSE_PATH}
+                            @click=${()=>{
+            this.search = "";
+        }}></ha-icon-button>` : (0, $f58f44579a4747ac$export$45b790e32b2810ee)}
+                </div>
+            </div>
+            ${rendered}
+            ${query && !anyMatch ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<p class="hint">${this.tr("no_match")}</p>` : (0, $f58f44579a4747ac$export$45b790e32b2810ee)}
+        `;
+    }
+    renderGroup(title, entries, matches, query) {
+        const visible = entries.filter(matches);
+        if (!visible.length) return 0, $f58f44579a4747ac$export$45b790e32b2810ee;
+        const assigned = entries.filter((e)=>e.value.entityId).length;
+        // CAN / UART pairs side by side (only in the grouping by function)
+        const rows = [];
+        const done = new Set();
+        for (const e of visible){
+            if (done.has(e.value.id)) continue;
+            const pair = this.groupBy === "function" ? $d067581fc0d59830$var$PAIRS.find((p)=>p.includes(e.value.id)) : undefined;
+            const partner = pair ? visible.find((v)=>v.value.id === (pair[0] === e.value.id ? pair[1] : pair[0])) : undefined;
+            if (pair && partner) {
+                const [first, second] = pair[0] === e.value.id ? [
+                    e,
+                    partner
+                ] : [
+                    partner,
+                    e
+                ];
+                done.add(first.value.id);
+                done.add(second.value.id);
+                rows.push((0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<div class="pair">${this.renderRow(first.item, first.value)}${this.renderRow(second.item, second.value)}</div>`);
+            } else {
+                done.add(e.value.id);
+                rows.push(this.renderRow(e.item, e.value));
+            }
+        }
+        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+            <ha-expansion-panel outlined .header=${`${title} (${assigned}/${entries.length})`} ?expanded=${query !== ""}>
+                <div class="rows">${rows}</div>
+            </ha-expansion-panel>
+        `;
+    }
+    renderRow(svg_item, value_item) {
+        const bus = value_item.device ? ` \xb7 ${value_item.device}` : "";
+        const warning = this.unitWarning(value_item);
+        return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
+            <div class="row">
+                <ha-selector
+                    .hass=${this.hass}
+                    .selector=${{
+            entity: {
+                include_entities: this.getRelevantEntityIds(svg_item, value_item)
+            }
+        }}
+                    .label=${this.description(value_item) + bus}
+                    .required=${false}
+                    .value=${value_item.entityId}
+                    @value-changed=${this._entityChanged}
+                    data-id=${value_item.id}>
+                </ha-selector>
+                ${warning ? (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<div class="warning">${warning}</div>` : (0, $f58f44579a4747ac$export$45b790e32b2810ee)}
+            </div>
+        `;
+    }
+    // Warns when the chosen entity reports another unit than the card expects (e.g. °F instead of °C).
+    unitWarning(value_item) {
+        if (!value_item.entityId || value_item.unit === undefined) return "";
+        const state = this.hass.states[value_item.entityId];
+        const actual = state?.attributes?.unit_of_measurement;
+        const expected = $d067581fc0d59830$var$ensureArray(value_item.unit);
+        if (!state || !actual || expected.includes(actual)) return "";
+        return this.tr("unit_warning").replace("{actual}", String(actual)).replace("{expected}", expected.join(", "));
+    }
+    getRelevantEntityIds(svg_item, value_item) {
         const relevantEntityIds = [];
-        const targetDeviceId = svg_item.device === "UART" ? this.config.uartDevice : this.config.canDevice;
-        const targetUnit = $d067581fc0d59830$var$ensureArray(svg_item.unit);
+        const targetDeviceId = value_item.device === "UART" ? this.config.uartDevice : this.config.canDevice;
+        const targetUnit = $d067581fc0d59830$var$ensureArray(value_item.unit);
         for(const entityId in this.hass.states){
             if (!Object.prototype.hasOwnProperty.call(this.hass.states, entityId)) continue;
             const entity = this.hass.states[entityId];
             const domain = entityId.substring(0, entityId.indexOf('.'));
-            if (svg_item.device && targetDeviceId) {
+            if (value_item.device && targetDeviceId) {
                 const entityRegistryEntry = this.hass.entities[entityId];
                 if (!entityRegistryEntry || entityRegistryEntry.device_id !== targetDeviceId) continue;
             }
-            if (svg_item.domain !== undefined && svg_item.domain !== domain) continue;
+            if (value_item.domain !== undefined && value_item.domain !== domain) continue;
             if (domain !== "select") {
                 const unitOfMeasurement = entity.attributes.unit_of_measurement;
                 if (!targetUnit.includes(unitOfMeasurement)) continue;
             }
             relevantEntityIds.push(entityId);
         }
+        // never drop the entity that is already selected, otherwise the picker reports "unknown entity"
+        if (value_item.entityId && this.hass.states[value_item.entityId] && !relevantEntityIds.includes(value_item.entityId)) relevantEntityIds.push(value_item.entityId);
         return relevantEntityIds;
     }
     _entityChanged(event) {
@@ -1881,18 +3338,30 @@ class $d067581fc0d59830$export$70410bc798970b36 extends (0, $ab210b2da7b39b9d$ex
         const updatedEntities = {
             ...this.config.entities
         };
-        let canDevice = this.config.canDevice;
-        if (picker.id === "can-device-selector") canDevice = event.detail.value;
-        let uartDevice = this.config.uartDevice;
-        if (picker.id === "uart-device-selector") uartDevice = event.detail.value;
         const entityId = picker.getAttribute("data-id");
-        if (entityId) updatedEntities[entityId] = event.detail.value;
-        this.config = {
+        if (entityId) {
+            const value = event.detail.value;
+            if (value) updatedEntities[entityId] = value;
+            else delete updatedEntities[entityId]; // cleared with the cross
+        }
+        this.svgItemConfig = this.svgItemConfig.map((item)=>({
+                ...item,
+                values: item.values.map((v)=>({
+                        ...v,
+                        entityId: updatedEntities[v.id] || null
+                    }))
+            }));
+        this._fire({
             ...this.config,
-            canDevice: canDevice,
-            uartDevice: uartDevice,
             entities: $d067581fc0d59830$export$70410bc798970b36.sortRecordBySvgOrder(updatedEntities, this.svgItemConfig)
-        };
+        });
+    }
+    _fire(config) {
+        const clean = {};
+        for (const [key, value] of Object.entries(config))if (value !== undefined && value !== null && value !== "") clean[key] = value;
+        config = clean;
+        this.lastFired = JSON.stringify(config);
+        this.config = config;
         this.dispatchEvent(new CustomEvent('config-changed', {
             detail: {
                 config: this.config
@@ -1903,9 +3372,9 @@ class $d067581fc0d59830$export$70410bc798970b36 extends (0, $ab210b2da7b39b9d$ex
     }
     static sortRecordBySvgOrder(data, svgItems) {
         const dataKeys = Object.keys(data);
-        const sortedEntries = svgItems.filter((item)=>dataKeys.includes(item.id)).map((item)=>[
-                item.id,
-                data[item.id]
+        const sortedEntries = svgItems.flatMap((item)=>item.values).filter((value)=>dataKeys.includes(value.id)).map((value)=>[
+                value.id,
+                data[value.id]
             ]);
         return Object.fromEntries(sortedEntries);
     }
@@ -1915,33 +3384,115 @@ class $d067581fc0d59830$export$70410bc798970b36 extends (0, $ab210b2da7b39b9d$ex
                 display: flex;
                 flex-direction: column;
                 padding: 16px;
+                gap: 8px;
             }
-            ha-selector, ha-device-picker, ha-entity-picker {
-                margin: 5px;
+            .tabs {
+                display: flex;
+                gap: 4px;
+                border-bottom: 1px solid var(--divider-color);
+                margin-bottom: 8px;
+                overflow-x: auto;
+            }
+            .tab {
+                background: none;
+                border: none;
+                border-bottom: 2px solid transparent;
+                color: var(--secondary-text-color);
+                cursor: pointer;
+                font: inherit;
+                font-weight: 500;
+                padding: 10px 14px;
+            }
+            .tab.active {
+                color: var(--primary-color);
+                border-bottom-color: var(--primary-color);
+            }
+            .toolbar {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .rows {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+                gap: 8px 12px;
+                padding: 8px 0;
+            }
+            .pair {
+                grid-column: 1 / -1;
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+                gap: 8px 12px;
+            }
+            .search {
+                position: relative;
+            }
+            .search ha-selector {
                 display: block;
+            }
+            .search .clear {
+                position: absolute;
+                right: 4px;
+                top: 50%;
+                transform: translateY(-50%);
+                --mdc-icon-button-size: 36px;
+                z-index: 1;
+            }
+            .row ha-selector, ha-selector, ha-form {
+                display: block;
+            }
+            ha-expansion-panel {
+                margin-top: 8px;
+            }
+            .warning {
+                color: var(--warning-color, orange);
+                font-size: 12px;
+                padding: 2px 4px;
+            }
+            .hint {
+                color: var(--secondary-text-color);
+                font-size: 13px;
+                margin: 4px 2px;
             }
         `;
     }
     constructor(...args){
-        super(...args), this.language = "en", this.svgItemConfig = [];
+        super(...args), this.language = "en", this.svgItemConfig = [], this.tab = "appearance", this.groupBy = "function", this.search = "", // UI-only switches ("use own colours"); they are not stored, the colours themselves are the setting
+        this.ui = {
+            background: false,
+            box: false,
+            text: false
+        }, this.lastFired = "";
     }
 }
-(0, $656ade2323340eda$export$71511d61b312f219)([
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
     (0, $9cd908ed2625c047$export$d541bacb2bda4494)({
         attribute: false
     })
 ], $d067581fc0d59830$export$70410bc798970b36.prototype, "hass", void 0);
-(0, $656ade2323340eda$export$71511d61b312f219)([
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
     (0, $9cd908ed2625c047$export$d541bacb2bda4494)({
-        attribute: false
+        type: Object
     })
 ], $d067581fc0d59830$export$70410bc798970b36.prototype, "config", void 0);
-(0, $656ade2323340eda$export$71511d61b312f219)([
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
     (0, $04c21ea1ce1f6057$export$ca000e230c0caa3e)()
 ], $d067581fc0d59830$export$70410bc798970b36.prototype, "language", void 0);
-(0, $656ade2323340eda$export$71511d61b312f219)([
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
     (0, $04c21ea1ce1f6057$export$ca000e230c0caa3e)()
 ], $d067581fc0d59830$export$70410bc798970b36.prototype, "svgItemConfig", void 0);
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
+    (0, $04c21ea1ce1f6057$export$ca000e230c0caa3e)()
+], $d067581fc0d59830$export$70410bc798970b36.prototype, "tab", void 0);
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
+    (0, $04c21ea1ce1f6057$export$ca000e230c0caa3e)()
+], $d067581fc0d59830$export$70410bc798970b36.prototype, "groupBy", void 0);
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
+    (0, $04c21ea1ce1f6057$export$ca000e230c0caa3e)()
+], $d067581fc0d59830$export$70410bc798970b36.prototype, "search", void 0);
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
+    (0, $04c21ea1ce1f6057$export$ca000e230c0caa3e)()
+], $d067581fc0d59830$export$70410bc798970b36.prototype, "ui", void 0);
 
 
 
@@ -2020,7 +3571,6 @@ const $33e813419ea8f3a8$export$1cb98903879b8bf5 = (0, $107bb7d062dde330$export$9
 
 
 
-const $a399cc6bbb0eb26a$var$SCRIPT_FILENAME = "hpsu-dashboard-card.js";
 var $a399cc6bbb0eb26a$export$4661a56c3a27d933 = /*#__PURE__*/ function(DashboardState) {
     DashboardState["Loading"] = "loading";
     DashboardState["Ready"] = "ready";
@@ -2032,11 +3582,20 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
         this.config = (0, $eb5cfe1dd9fe4e85$export$127f9a442b42d18)(config);
         this.svg_item_config = (0, $eb5cfe1dd9fe4e85$export$9b06e6104ce35b16).map((svg_item)=>({
                 ...svg_item,
-                entityId: this.config.entities?.[svg_item.id] ?? null
+                values: svg_item.values.map((value)=>({
+                        ...value,
+                        entityId: this.config.entities?.[value.id] || null
+                    }))
             }));
-    }
-    static getConfigElement() {
-        return document.createElement("hpsu-dashboard-card-editor");
+        this.updateLanguage();
+        if (this.hasUpdated && this._state === "ready") this.updateAnimations();
+        // Layout switched while the card is already shown (e.g. in the card editor): reload the SVG.
+        if (this.hasUpdated && this.loadedLayoutFile !== null && ((0, $eb5cfe1dd9fe4e85$export$6fb81034e128eb0)(this.config.layout) !== this.loadedLayoutFile || this.styleSignature() !== this.loadedStyleSignature)) {
+            this.clickHandlersAdded = false;
+            this._state = "loading";
+            this.svgContent = null;
+            this.updateComplete.then(()=>this.createDashboard());
+        }
     }
     static getStubConfig() {
         return {
@@ -2047,20 +3606,28 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
         return 12;
     }
     willUpdate(changed) {
-        if (changed.has("hass") && this.hass?.language) {
-            const lang = this.hass.language.split("-")[0];
-            this.language = (0, $eb5cfe1dd9fe4e85$export$d0d68bb9ed2c643d).includes(lang) ? lang : "en";
-        }
+        if (changed.has("hass")) this.updateLanguage();
+    }
+    // The config language wins over the Home Assistant language; unsupported languages fall back to English.
+    updateLanguage() {
+        const configLang = this.config?.language;
+        const lang = configLang || this.hass?.language?.split("-")[0];
+        this.language = (0, $eb5cfe1dd9fe4e85$export$655dd0e71353e7d)(lang) ? lang : "en";
     }
     async firstUpdated() {
         await this.createDashboard();
     }
     async createDashboard() {
-        const url = this.makeURL("hpsu.svg");
+        const file = (0, $eb5cfe1dd9fe4e85$export$6fb81034e128eb0)(this.config?.layout);
+        const url = this.makeURL(file);
         try {
-            const response = await fetch(url);
+            const response = await fetch(url, {
+                cache: "no-cache"
+            }); // always revalidate, layouts are updated independently of the JS
             if (!response.ok) throw new Error(`Failed to fetch '${url}' (${response.status})`);
             const rawSvgString = await response.text();
+            this.loadedLayoutFile = file;
+            this.loadedStyleSignature = this.styleSignature();
             const svgWithLabels = this.createSvgWithLabels(rawSvgString);
             if (!svgWithLabels) throw new Error("The SVG was not parsed correctly.");
             this.svgContent = svgWithLabels;
@@ -2068,145 +3635,81 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
         } catch (e) {
             console.error(e);
             this.svgContent = null;
+            // show an error instead of an empty card that keeps "loading"
             this._state = "error";
         }
     }
     addClickHandlers() {
-        const setClickHandler = (elementId, getEntityId)=>{
-            const element = this.shadowRoot?.getElementById(elementId);
+        // The entity is resolved at click time, so reconfiguring the card
+        // does not leave handlers pointing at stale entity ids.
+        const setClickHandler = (elementId, valueId)=>{
+            const element = this.shadowRoot.getElementById(elementId);
             if (element) {
                 element.addEventListener("click", ()=>{
-                    const entityId = getEntityId();
+                    const entityId = this.findEntityIdById(valueId);
                     if (entityId) this.handleStateClick(entityId);
                 });
                 element.setAttribute("cursor", "pointer");
             }
         };
         this.svg_item_config.forEach((svg_item)=>{
-            if (svg_item.valueBox) {
-                const id = `${svg_item.valueBox.id}_text`;
-                // Resolve the entity at click time, so reconfiguring the card
-                // does not leave handlers pointing at stale entity ids.
-                setClickHandler(id, ()=>this.findEntityIdById(svg_item.id));
-            }
+            svg_item.values.forEach((value_item)=>{
+                if (value_item.valueBox) setClickHandler(`${value_item.valueBox.id}_text`, value_item.id);
+            });
         });
-        const pressureEqualization = ()=>this.findEntityIdById("pressure_equalization");
-        setClickHandler("eev_arrow_left", pressureEqualization);
-        setClickHandler("eev_arrow_right", pressureEqualization);
+        // Layouts without status texts show on/off on the symbol itself; clicking it opens the details.
+        setClickHandler("compressor-symbol", "compressor_status");
+        setClickHandler("pump-symbol", "circulation_pump_status");
+        setClickHandler("eev-symbol", "pressure_equalization");
     }
-    updated() {
+    updated(changedProperties) {
         if (this.isPanelView()) this.setAttribute('panel-view', '');
         else this.removeAttribute('panel-view');
-        if (this._state === "ready") {
+        if (this._state == "ready") {
             this.updateLabels();
             this.updateOpacity();
-            this.updateDynamics();
+            this.updateAnimations();
+            this.updateDynamicStyle();
             if (!this.clickHandlersAdded) {
                 this.addClickHandlers();
                 this.clickHandlersAdded = true;
             }
         }
     }
+    static getConfigElement() {
+        return document.createElement("hpsu-dashboard-card-editor");
+    }
     static{
         this.styles = (0, $def2de46b9306e8a$export$dbf350e5966cf602)`
+        .card-config {
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+        }
+        h2 {
+            font-size: 20px;
+            margin-bottom: 16px;
+        }
+        paper-input {
+            margin-bottom: 16px;
+        }
+
         svg {
             display: block;
             width: 100%;
             height: 100%;
         }
 
-        /* ---- dynamic schema animations ------------------------------- */
-
-        @keyframes hpsu-arrow-pulse {
-            0%, 100% { opacity: 0.25; }
-            50% { opacity: 1; }
-        }
-        @keyframes hpsu-pump-pulse {
-            0%, 100% { scale: 1; filter: brightness(1); }
-            50% { scale: 1.06; filter: brightness(1.25); }
-        }
-        @keyframes hpsu-compressor-glow {
-            0%, 100% { filter: brightness(1); }
-            50% { filter: brightness(1.5) drop-shadow(0 0 8px #ffd24d); }
-        }
-        @keyframes hpsu-fan-flutter {
-            0%, 100% { scale: 1 1; filter: brightness(1); }
-            50% { scale: 0.88 1; filter: brightness(1.18); }
-        }
-        @keyframes hpsu-buh-glow {
-            0%, 100% { filter: brightness(1) drop-shadow(0 0 2px #d4aa00); }
-            50% { filter: brightness(1.6) drop-shadow(0 0 10px #ff9900); }
-        }
-
-        /* Smooth opacity changes for valve arrow groups. */
-        #dhw-open-arrows, #dhw-closed-arrows,
-        #bpv-open-arrows, #bpv-closed-arrows,
-        [id^="Flow-Arrow-"] {
-            transition: opacity 0.8s ease;
-        }
-
-        /* Marching flow arrows while water is flowing. */
-        :host([flowing]) [id^="Flow-Arrow-"] {
-            animation: hpsu-arrow-pulse var(--hpsu-flow-period, 1.5s) ease-in-out infinite;
-        }
-        :host([flowing]) #Flow-Arrow-2,
-        :host([flowing]) #Flow-Arrow-6 { animation-delay: calc(var(--hpsu-flow-period, 1.5s) / -8 * 1); }
-        :host([flowing]) #Flow-Arrow-3,
-        :host([flowing]) #Flow-Arrow-7 { animation-delay: calc(var(--hpsu-flow-period, 1.5s) / -8 * 2); }
-        :host([flowing]) #Flow-Arrow-4,
-        :host([flowing]) #Flow-Arrow-8 { animation-delay: calc(var(--hpsu-flow-period, 1.5s) / -8 * 3); }
-
-        /* Circulation pump pulses while running. */
-        #g3 { transform-box: fill-box; transform-origin: center; }
-        :host([pump-on]) #g3 {
-            animation: hpsu-pump-pulse var(--hpsu-pump-period, 1.6s) ease-in-out infinite;
-        }
-
-        /* Compressor glows while running. */
-        #compressor_on_off_group { transform-box: fill-box; transform-origin: center; }
-        :host([compressor-on]) #compressor_on_off_group {
-            animation: hpsu-compressor-glow 2.4s ease-in-out infinite;
-        }
-
-        /* Fan is drawn side-on: flutter instead of a rotation. */
-        #fan { transform-box: fill-box; transform-origin: center; }
-        :host([fan-on]) #fan {
-            animation: hpsu-fan-flutter var(--hpsu-fan-period, 0.6s) ease-in-out infinite;
-        }
-
-        /* Backup heater rod glows while heating. */
-        :host([buh-on]) #buh-rod {
-            animation: hpsu-buh-glow 1.8s ease-in-out infinite;
-        }
-
-        /* EEV arrows pulse during pressure equalization. */
-        :host([eev-on]) #eev_arrow_left,
-        :host([eev-on]) #eev_arrow_right {
-            animation: hpsu-arrow-pulse 1.2s ease-in-out infinite;
-        }
-
-        /* Mode/state and COP labels fade smoothly between their signal colors. */
-        #mode_of_operating_value_text,
-        #operating_mode_value_text,
-        #cop_value_text {
+        /* heat pump state, operating mode and COP fade between their signal colours */
+        text[data-signal] {
             transition: fill 0.8s ease;
         }
 
-        /* DHW tank shifts from blue to red as it warms up. */
-        #water-tank {
-            filter: hue-rotate(var(--hpsu-tank-hue, 0deg));
-            transition: filter 2s ease;
-        }
-
         @media (prefers-reduced-motion: reduce) {
-            :host [id^="Flow-Arrow-"], :host #g3, :host #fan,
-            :host #compressor_on_off_group, :host #buh-rod,
-            :host #eev_arrow_left, :host #eev_arrow_right {
-                animation: none !important;
+            svg * {
+                animation-play-state: paused !important;
             }
         }
-
-        /* --------------------------------------------------------------- */
 
         :host([panel-view]) {
             display: block;
@@ -2236,17 +3739,16 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
         `;
     }
     render() {
+        return this.renderContent();
+    }
+    renderContent() {
         switch(this._state){
             case "error":
                 return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<ha-card>${(0, $eb5cfe1dd9fe4e85$export$f8cda7abf1aa048)[this.language].errorLoading}</ha-card>`;
             case "ready":
-                return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`
-                    <hpsu-dashboard-card-container>
-                        ${this.svgContent ? (0, $33e813419ea8f3a8$export$1cb98903879b8bf5)(this.svgContent) : (0, $f58f44579a4747ac$export$45b790e32b2810ee)}
-                    </hpsu-dashboard-card-container>
-                `;
+                return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<ha-card>${this.svgContent ? (0, $33e813419ea8f3a8$export$1cb98903879b8bf5)(this.svgContent) : (0, $f58f44579a4747ac$export$45b790e32b2810ee)}</ha-card>`;
             default:
-                return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)``;
+                return (0, $f58f44579a4747ac$export$c0bb0b647f701bb5)`<ha-card></ha-card>`;
         }
     }
     createSvgWithLabels(svgString) {
@@ -2258,109 +3760,351 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
             console.error("The SVG was not parsed correctly.");
             return null;
         }
+        this.layoutStyle = {
+            radius: svgElement.getAttribute("data-box-radius") ?? undefined,
+            fill: svgElement.getAttribute("data-box-fill") ?? undefined,
+            stroke: svgElement.getAttribute("data-box-stroke") ?? undefined,
+            strokeWidth: svgElement.getAttribute("data-box-stroke-width") ?? undefined,
+            text: svgElement.getAttribute("data-text-color") ?? undefined,
+            label: svgElement.getAttribute("data-label-color") ?? undefined,
+            // the SVG styles the states itself (CSS on [data-state]); the card only sets the state
+            ownStates: svgElement.hasAttribute("data-own-state-style")
+        };
+        this.applyStyleOverrides(svgElement);
         svgElement.setAttribute("preserveAspectRatio", "xMidYMid meet");
         svgElement.style.display = "block";
         this.createStateLabels(svgDoc);
         return new XMLSerializer().serializeToString(svgElement);
     }
+    // Style overrides from the card config (editor tab "appearance"). They only replace single values of the
+    // layout; the defaults and the look stay in the SVG.
+    styleSignature() {
+        const c = this.config ?? {};
+        return JSON.stringify([
+            c.background,
+            c.box,
+            c.text
+        ]);
+    }
+    parseColor(value) {
+        if (!value) return undefined;
+        const hex = value.trim().match(/^#([0-9a-f]{3,8})$/i);
+        if (hex) {
+            let h = hex[1];
+            if (h.length === 3 || h.length === 4) h = h.split("").map((x)=>x + x).join("");
+            const n = parseInt(h.slice(0, 6), 16);
+            return [
+                n >> 16 & 255,
+                n >> 8 & 255,
+                n & 255,
+                h.length === 8 ? parseInt(h.slice(6, 8), 16) / 255 : 1
+            ];
+        }
+        const m = value.match(/rgba?\(([^)]+)\)/);
+        if (m) {
+            const p = m[1].split(",").map((x)=>parseFloat(x));
+            return [
+                p[0],
+                p[1],
+                p[2],
+                p[3] ?? 1
+            ];
+        }
+        return undefined;
+    }
+    // colour from the config (or the layout's own colour if only the opacity is set) with the opacity applied
+    composeColor(color, opacity, base) {
+        if (color === undefined && opacity === undefined) return undefined;
+        const own = Array.isArray(color) && color.length >= 3 ? color.map(Number) : undefined;
+        const fallback = this.parseColor(base);
+        const rgb = own ?? fallback?.slice(0, 3);
+        if (!rgb) return undefined;
+        const alpha = opacity !== undefined ? Math.min(100, Math.max(0, Number(opacity))) / 100 : own ? 1 : fallback?.[3] ?? 1;
+        return alpha >= 1 ? `rgb(${rgb[0]},${rgb[1]},${rgb[2]})` : `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})`;
+    }
+    applyStyleOverrides(svgElement) {
+        const cfg = this.config ?? {};
+        if (cfg.box) {
+            const fill = this.composeColor(cfg.box.fill, cfg.box.fill_opacity, this.layoutStyle.fill);
+            const border = this.composeColor(cfg.box.border, cfg.box.border_opacity, this.layoutStyle.stroke);
+            if (fill) this.layoutStyle.fill = fill;
+            if (border) this.layoutStyle.stroke = border;
+        }
+        if (cfg.text) {
+            const value = this.composeColor(cfg.text.value_color, undefined, undefined);
+            const label = this.composeColor(cfg.text.label_color, undefined, undefined);
+            if (value) this.layoutStyle.text = value;
+            if (label) this.layoutStyle.label = label;
+        }
+        // background: the SVG draws it from --bg-color / --bg-opacity (with its own defaults)
+        const style = svgElement.style;
+        if (cfg.background?.show === false) svgElement.setAttribute("data-bg", "off");
+        else if (cfg.background) {
+            const color = this.composeColor(cfg.background.color, undefined, undefined);
+            if (color) style.setProperty("--bg-color", color);
+            if (cfg.background.opacity !== undefined) style.setProperty("--bg-opacity", String(Math.min(100, Math.max(0, Number(cfg.background.opacity))) / 100));
+        }
+    }
+    strToFloat(str) {
+        if (str === "" || str === undefined || str === null || str.trim() === "") return 0;
+        return parseFloat(str);
+    }
     createStateLabels(svgDoc) {
+        const haCard = this.haCardElement;
+        if (!haCard) return;
+        let style = getComputedStyle(haCard);
+        let rootStyle = getComputedStyle(document.body); // Oder document.documentElement
+        let backgroundColor = style.getPropertyValue('--ha-card-background').trim();
+        let borderColor = style.getPropertyValue('--ha-card-border-color').trim();
+        if (borderColor === "") borderColor = style.getPropertyValue('--divider-color').trim();
+        if (borderColor === "") borderColor = '#000000ff';
+        let borderWidth = style.getPropertyValue('--ha-card-border-width').trim();
+        let globalWidth = rootStyle.getPropertyValue('--ha-card-border-width').trim();
+        console.log("global-width: " + globalWidth + ", " + this.strToFloat(borderWidth) + "|" + borderWidth);
+        if (this.strToFloat(borderWidth) === 0) {
+            if (backgroundColor === "") borderWidth = "5px";
+            else borderWidth = "0px";
+        }
+        if (backgroundColor === "") backgroundColor = "none";
+        //const borderWidth = "5px";
+        let borderRadius = style.getPropertyValue('--ha-card-border-radius').trim();
+        /*if (parseFloat(borderRadius) === 0) {
+            let rootStyle = getComputedStyle(document.body); // Oder document.documentElement
+            let globalRadius = rootStyle.getPropertyValue('--ha-card-border-radius').trim();
+            borderRadius = "10px"; //globalRadius;
+        }*/ const secondaryTextColor = this.layoutStyle.label ?? (style.getPropertyValue('--secondary-text-color').trim() || '#808080');
+        console.log("bg-color:" + backgroundColor + "|radius: " + borderRadius + "|border-color: " + borderColor + "|border-width:" + borderWidth);
+        // A layout may bring its own box style (rounded corners, colours); it wins over the HA theme.
+        if (this.layoutStyle.radius !== undefined) borderRadius = this.layoutStyle.radius;
+        if (this.layoutStyle.fill !== undefined) backgroundColor = this.layoutStyle.fill;
+        if (this.layoutStyle.stroke !== undefined) borderColor = this.layoutStyle.stroke;
+        if (this.layoutStyle.strokeWidth !== undefined) borderWidth = this.layoutStyle.strokeWidth;
+        let currentBackgroundColor = backgroundColor;
         this.svg_item_config.forEach((svg_item)=>{
-            svg_item.valueBox = svg_item.value_rect_id ? svgDoc.getElementById(svg_item.value_rect_id) : null;
-            if (svg_item.valueBox) {
-                const group = svg_item.valueBox.parentNode;
-                if (group) {
-                    svg_item.entityId = this.config.entities?.[svg_item.id] ?? null;
-                    const valueText = this.createText(svg_item.valueBox);
-                    svg_item.labelBox = svg_item.label_rect_id ? svgDoc.getElementById(svg_item.label_rect_id) : null;
-                    if (svg_item.labelBox) {
-                        const labelText = this.createText(svg_item.labelBox);
-                        group.appendChild(labelText);
-                        labelText.setAttribute("font-size", "35");
-                        labelText.setAttribute("fill", "rgb(191, 191, 191)");
-                        labelText.textContent = svg_item.texts[this.language]?.label ?? `${svg_item.id} <missing>`;
-                        this.layoutText(labelText, svg_item.labelBox, "middle", 3);
-                    }
-                    group.appendChild(valueText);
-                } else console.warn(`Rect with ID ${svg_item.value_rect_id} parent not found.`);
+            const group = svgDoc.getElementById(svg_item.group_id ?? "");
+            svg_item.labelBox = svg_item.label_rect_id ? svgDoc.getElementById(svg_item.label_rect_id) : null;
+            // Create label text
+            if (group && svg_item.labelBox) {
+                svg_item.labelBox.setAttribute("fill", backgroundColor);
+                svg_item.labelBox.setAttribute("stroke", borderColor);
+                svg_item.labelBox.setAttribute("stroke-width", borderWidth);
+                svg_item.labelBox.setAttribute("rx", borderRadius);
+                svg_item.labelBox.setAttribute("ry", borderRadius);
+                const labelText = this.createText(svg_item.labelBox);
+                group.appendChild(labelText);
+                labelText.setAttribute("font-size", "35");
+                labelText.setAttribute("fill", secondaryTextColor);
+                labelText.textContent = svg_item.texts?.[this.language]?.label ?? `${svg_item.group_id} <missing>`;
+                this.layoutText(labelText, svg_item.labelBox, "middle", 3);
             }
+            // Create parent rect with round corners
+            var roundCorners = this.strToFloat(borderRadius) > 0;
+            if (svg_item.visual_container && group && roundCorners) {
+                const bbox = this.getBBox(group);
+                const parent_box = this.createRect(svg_item.group_id);
+                parent_box.setAttribute("x", bbox.x.toString());
+                parent_box.setAttribute("y", bbox.y.toString());
+                parent_box.setAttribute("width", bbox.width.toString());
+                parent_box.setAttribute("height", bbox.height.toString());
+                parent_box.setAttribute("fill", backgroundColor);
+                parent_box.setAttribute("stroke", borderColor);
+                parent_box.setAttribute("stroke-width", borderWidth);
+                parent_box.setAttribute("rx", borderRadius);
+                parent_box.setAttribute("ry", borderRadius);
+                group.insertBefore(parent_box, group.firstChild);
+                currentBackgroundColor = "none";
+            }
+            const hadLabel = !!svg_item.labelBox;
+            if (roundCorners && svg_item.labelBox) this.removeSVGElement(svg_item.labelBox);
+            // With a layout-owned rounded container the single frame is drawn by the container;
+            // inner value boxes get no stroke of their own, only a thin divider line on top.
+            const ownFrame = this.layoutStyle.radius !== undefined && currentBackgroundColor === "none";
+            // Create value texts
+            svg_item.values.forEach((value_item)=>{
+                value_item.valueBox = svgDoc.getElementById(value_item.value_rect_id ?? "");
+                if (value_item.valueBox) {
+                    let currentBorderColor = borderColor;
+                    value_item.valueBox.setAttribute("fill", currentBackgroundColor);
+                    value_item.valueBox.setAttribute("stroke", ownFrame ? "none" : currentBorderColor);
+                    value_item.valueBox.setAttribute("stroke-width", borderWidth);
+                    //svg_item.valueBox.setAttribute("rx", borderRadius);
+                    //svg_item.valueBox.setAttribute("ry", borderRadius);
+                    if (group && ownFrame && !value_item.optional && (hadLabel || svg_item.values.indexOf(value_item) > 0)) {
+                        const box = value_item.valueBox;
+                        const bx = this.strToFloat(box.getAttribute("x") ?? "");
+                        const by = this.strToFloat(box.getAttribute("y") ?? "");
+                        const bw = this.strToFloat(box.getAttribute("width") ?? "");
+                        const divider = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                        divider.setAttribute("x1", bx.toString());
+                        divider.setAttribute("x2", (bx + bw).toString());
+                        divider.setAttribute("y1", by.toString());
+                        divider.setAttribute("y2", by.toString());
+                        divider.setAttribute("stroke", borderColor);
+                        divider.setAttribute("stroke-width", "1.5");
+                        divider.setAttribute("stroke-opacity", "0.6");
+                        const boxTransform = box.getAttribute("transform");
+                        if (boxTransform) divider.setAttribute("transform", boxTransform);
+                        group.appendChild(divider);
+                    }
+                    if (group) {
+                        value_item.entityId = this.config.entities?.[value_item.id] ?? null;
+                        const valueText = this.createText(value_item.valueBox);
+                        group.appendChild(valueText);
+                    } else console.warn(`Rect with ID ${value_item.value_rect_id} parent not found.`);
+                }
+            });
         });
     }
+    removeSVGElement(childElement) {
+        const parentElement = childElement.parentElement;
+        if (parentElement) parentElement.removeChild(childElement);
+    }
+    getBBox(group) {
+        const clonedGroup = group.cloneNode(true);
+        const cleanupCallback = (child, parent)=>{
+            const tagName = child.tagName.toLowerCase();
+            if (tagName === 'path') {
+                parent.removeChild(child);
+                return true;
+            }
+            if (tagName === 'rect') child.setAttribute('fill', 'rgba(0, 0, 0, 0.01)');
+            return false;
+        };
+        this.processNode(clonedGroup, cleanupCallback);
+        const tempSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        tempSvg.style.cssText = `
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+            width: 0;
+            height: 0;
+            overflow: hidden;
+        `;
+        tempSvg.appendChild(clonedGroup);
+        this.shadowRoot.appendChild(tempSvg);
+        try {
+            return clonedGroup.getBBox();
+        } finally{
+            this.shadowRoot.removeChild(tempSvg);
+        }
+    }
+    processNode(node, callback) {
+        for(let i = node.children.length - 1; i >= 0; i--){
+            const child = node.children[i];
+            if (child.tagName.toLowerCase() === 'g') this.processNode(child, callback);
+            else {
+                const wasRemoved = callback(child, node);
+                if (wasRemoved) continue;
+            }
+        }
+    }
     createText(box) {
-        const textElement = document.createElementNS("http://www.w3.org/2000/svg", "text");
-        textElement.id = `${box.id}_text`;
-        textElement.setAttribute("dominant-baseline", "middle");
-        textElement.setAttribute("stroke-width", "1");
+        const textText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        textText.id = `${box.id}_text`;
+        textText.setAttribute("dominant-baseline", "middle");
+        textText.setAttribute("stroke-width", "1");
         const transform = box.getAttribute('transform');
-        if (transform) textElement.setAttribute("transform", transform);
-        return textElement;
+        if (transform) textText.setAttribute("transform", transform);
+        return textText;
+    }
+    createRect(group_id) {
+        const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+        rect.id = `${group_id}_rect`;
+        return rect;
     }
     layoutText(text, box, align, yOffset) {
-        const xPos = parseFloat(box.getAttribute('x') ?? "0");
-        const yPos = parseFloat(box.getAttribute('y') ?? "0");
-        const width = parseFloat(box.getAttribute('width') ?? "0");
-        const height = parseFloat(box.getAttribute('height') ?? "0");
-        if (align === "left") {
+        const xPos = parseFloat(box.getAttribute('x') ?? "");
+        const yPos = parseFloat(box.getAttribute('y') ?? "");
+        const width = parseFloat(box.getAttribute('width') ?? "");
+        const height = parseFloat(box.getAttribute('height') ?? "");
+        if (align == "left") {
             text.setAttribute("x", xPos.toString());
             text.setAttribute("text-anchor", "start");
         } else {
             text.setAttribute("x", (xPos + width / 2).toString());
             text.setAttribute("text-anchor", "middle");
         }
-        if (yOffset !== undefined) text.setAttribute("y", (yPos + height / 2 + yOffset).toString());
+        if (yOffset != undefined) text.setAttribute("y", (yPos + height / 2 + yOffset).toString());
     }
     updateLabels() {
-        if (!this.config || !this.svg_item_config.length) return;
-        this.svg_item_config.forEach((svg_item)=>{
-            const newState = svg_item.entityId ? this.hass.states[svg_item.entityId] : null;
-            const parentBox = svg_item.parent ? this.shadowRoot?.getElementById(svg_item.parent) : null;
-            if (parentBox) parentBox.style.display = newState ? "block" : "none";
-            if (svg_item.valueBox) {
-                const id = `${svg_item.valueBox.id}_text`;
-                const valueText = this.shadowRoot?.getElementById(id);
-                if (valueText) {
-                    const fontSize = svg_item.fontSize || "56";
-                    if (!newState) {
-                        valueText.textContent = "N/D";
-                        valueText.setAttribute("fill", "orange");
-                        valueText.setAttribute("font-size", "30px");
-                        valueText.setAttribute("display", svg_item.optional === true ? "none" : "block");
-                    } else if (newState.state === "unknown" || newState.state === "unavailable") {
-                        valueText.textContent = "N/A";
-                        valueText.setAttribute("fill", "orange");
-                        valueText.setAttribute("font-size", "30px");
-                    } else {
-                        valueText.setAttribute("font-size", fontSize);
-                        if (this.isBooleanSensor(svg_item.entityId)) {
-                            const lang_map = (0, $eb5cfe1dd9fe4e85$export$f8cda7abf1aa048)[this.language];
-                            valueText.textContent = newState.state === "on" ? lang_map.on : newState.state === "off" ? lang_map.off : "<invalid>";
-                            valueText.setAttribute("fill", newState.state === "on" ? "yellow" : "silver");
-                        } else {
-                            let entityState = this.formatNumber(newState, svg_item.digits ?? 1);
-                            entityState = (0, $eb5cfe1dd9fe4e85$export$812790f65cac9681)[entityState] ?? entityState;
-                            const suffix = svg_item.texts[this.language]?.suffix;
-                            valueText.textContent = suffix ? suffix + entityState : entityState;
-                            const isError = svg_item.id === "error_code" && !(0, $eb5cfe1dd9fe4e85$export$ac75e9db5428c70).includes(newState.state);
-                            let fill = isError ? "red" : "silver";
-                            if (svg_item.id === "mode_of_operating" || svg_item.id === "operating_mode") fill = this.getModeColor(newState.state) ?? "silver";
-                            else if (svg_item.id === "cop") fill = this.getCopColor(parseFloat(newState.state)) ?? "silver";
-                            valueText.setAttribute("fill", fill);
-                        }
-                    }
-                    this.layoutText(valueText, svg_item.valueBox, svg_item.align, svg_item.offset);
-                } else console.warn(`Label not found for entity: ${svg_item.entityId}`);
+        const haCard = this.haCardElement;
+        if (!haCard) return;
+        if (this.config) {
+            if (this.svg_item_config) {
+                let style = getComputedStyle(haCard);
+                const primaryTextColor = this.layoutStyle.text ?? (style.getPropertyValue('--primary-text-color').trim() || 'black');
+                this.svg_item_config.forEach((svg_item)=>{
+                    svg_item.values.forEach((value_item)=>{
+                        const newState = value_item.entityId ? this.hass.states[value_item.entityId] : null;
+                        const parentBox = svg_item.parent ? this.shadowRoot.getElementById(svg_item.parent) : null;
+                        if (parentBox) parentBox.style.display = newState ? "block" : "none";
+                        // optional value without entity: do not leave an empty box behind.
+                        // value_item.valueBox belongs to the parsed SVG document, so look up the live element.
+                        const liveBox = value_item.optional === true && value_item.value_rect_id ? this.shadowRoot.getElementById(value_item.value_rect_id) : null;
+                        if (liveBox) liveBox.style.display = newState ? "" : "none";
+                        const id = `${value_item.value_rect_id}_text`;
+                        const valueText = this.shadowRoot.querySelector(`#${id}`);
+                        if (valueText) {
+                            const fontSize = svg_item.fontSize || "56";
+                            if (!newState) {
+                                valueText.textContent = "N/D";
+                                this.textState(valueText, "na", {
+                                    "fill": "orange",
+                                    "font-size": "30px"
+                                });
+                                valueText.setAttribute("display", value_item.optional === true ? "none" : "block");
+                            } else if (newState.state == "unknown" || newState.state == "unavailable") {
+                                valueText.textContent = "N/A";
+                                this.textState(valueText, "unavailable", {
+                                    "fill": "orange",
+                                    "font-size": "30px"
+                                });
+                            } else {
+                                let entityState = newState.state || "--";
+                                valueText.setAttribute("font-size", fontSize);
+                                if (this.isBooleanSensor(value_item.entityId)) {
+                                    const lang_map = (0, $eb5cfe1dd9fe4e85$export$f8cda7abf1aa048)[this.language];
+                                    valueText.textContent = entityState === "on" ? lang_map.on : entityState === "off" ? lang_map.off : "<invalid>";
+                                    this.textState(valueText, entityState === "on" ? "on" : "off", {
+                                        "fill": entityState === "on" ? "yellow" : "silver"
+                                    });
+                                } else {
+                                    entityState = this.formatNumber(newState, svg_item.digits ?? 1);
+                                    entityState = (0, $eb5cfe1dd9fe4e85$export$812790f65cac9681)[entityState] ?? entityState;
+                                    const suffix = value_item.texts[this.language]?.suffix;
+                                    valueText.textContent = suffix ? suffix + entityState : entityState;
+                                    // the integration localizes states independently of the dashboard
+                                    // language, so the "no error" texts of all languages are accepted
+                                    if (value_item.id === "error_code" && !(0, $eb5cfe1dd9fe4e85$export$ac75e9db5428c70).includes(newState.state)) this.textState(valueText, "error", {
+                                        "fill": "red"
+                                    });
+                                    else {
+                                        // heat pump state, operating mode and COP show what the system is doing
+                                        let signal = null;
+                                        if (value_item.id === "mode_of_operating" || value_item.id === "operating_mode") signal = this.getModeColor(newState.state);
+                                        else if (value_item.id === "cop") signal = this.getCopColor(parseFloat(newState.state));
+                                        valueText.toggleAttribute("data-signal", signal !== null);
+                                        this.textState(valueText, "normal", {
+                                            "fill": signal ? this.readableOnBox(signal) : primaryTextColor
+                                        });
+                                    }
+                                }
+                            }
+                            this.layoutText(valueText, value_item.valueBox, value_item.valueBox.getAttribute("data-align") ?? svg_item.align, svg_item.offset);
+                        } else if (value_item.value_rect_id) console.warn("Value text not found: " + value_item.entityId);
+                    });
+                });
             }
-            if (svg_item.id === "pressure_equalization") {
-                const color = newState && newState.state === "on" ? '#00ff0080' : '#7f7f7f';
-                this.setFill("eev_arrow_left", color);
-                this.setFill("eev_arrow_right", color);
-            } else if (svg_item.id === "buh_power") {
-                const color = newState && this.isPositiveNumber(newState.state) ? '#d4aa00ff' : '#7f7f7f';
-                this.setFill("buh-control", color);
-            }
-        });
+        }
+    }
+    // Sets the semantic state of a value text. Layouts that style the states themselves (data-own-state-style)
+    // only get the state; other (custom) SVGs get inline colours.
+    textState(el, state, fallback) {
+        el.setAttribute("data-state", state);
+        if (!this.layoutStyle.ownStates || state === "normal") for (const [name, value] of Object.entries(fallback))el.setAttribute(name, value);
     }
     /**
-     * Maps a heat pump state/mode text (de/en/it) to a signal color so the
+     * Maps a heat pump state/mode text (de/en/it) to a signal colour so the
      * label itself shows at a glance what the system is doing.
      */ getModeColor(state) {
         const s = state.toLowerCase();
@@ -2375,10 +4119,9 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
         return null;
     }
     /**
-     * Colors the COP value according to real-world air/water heat pump
-     * efficiency: below ~2 is poor, around 3 is average for an A2/W35-45
-     * machine, 4+ is good and 5+ is excellent (mild weather / low flow
-     * temperature). A COP of 0 (compressor off) stays neutral.
+     * Colours the COP according to real-world air/water heat pump efficiency:
+     * below ~2 is poor, around 3 is average for an A2/W35-45 machine, 4+ is
+     * good and 5+ excellent. A COP of 0 (compressor off) stays neutral.
      */ getCopColor(cop) {
         if (!isFinite(cop) || cop <= 0) return null;
         if (cop < 2) return "#ff5252";
@@ -2389,76 +4132,105 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
         if (cop < 5) return "#9ccc65";
         return "#4caf50";
     }
-    setFill(elementId, color) {
-        this.shadowRoot?.getElementById(elementId)?.setAttribute('fill', color);
+    // The signal colours are tuned for dark boxes; on light boxes (e.g. "glass, light") they are darkened to stay readable.
+    readableOnBox(color) {
+        const box = this.parseColor(this.layoutStyle.fill);
+        const rgb = this.parseColor(color);
+        if (!box || !rgb) return color;
+        const luminance = (0.2126 * box[0] + 0.7152 * box[1] + 0.0722 * box[2]) / 255;
+        if (luminance < 0.6) return color;
+        const k = 0.55;
+        return `rgb(${Math.round(rgb[0] * k)},${Math.round(rgb[1] * k)},${Math.round(rgb[2] * k)})`;
     }
-    updateOpacity() {
-        if (!this.config) return;
-        const dhwOpenArrows = this.shadowRoot?.getElementById("dhw-open-arrows");
-        const dhwClosedArrows = this.shadowRoot?.getElementById("dhw-closed-arrows");
-        const bpvOpenArrows = this.shadowRoot?.getElementById("bpv-open-arrows");
-        const bpvClosedArrows = this.shadowRoot?.getElementById("bpv-closed-arrows");
-        if (!dhwOpenArrows || !dhwClosedArrows || !bpvOpenArrows || !bpvClosedArrows) return;
-        const flowRate = this.getNumericState("flow_rate");
-        const mixerState = this.getNumericState("mixer");
-        const bpvState = this.getNumericState("bypass");
-        dhwOpenArrows.style.opacity = (flowRate > 0 ? mixerState / 100.0 : 0).toString();
-        dhwClosedArrows.style.opacity = (flowRate > 0 ? (100.0 - mixerState) / 100.0 : 0).toString();
-        bpvOpenArrows.style.opacity = (flowRate > 0 ? bpvState / 100.0 : 0).toString();
-        bpvClosedArrows.style.opacity = (flowRate > 0 ? (100.0 - bpvState) / 100.0 : 0).toString();
-        for(let index = 1; index <= 8; ++index){
-            const arrow = this.shadowRoot?.getElementById(`Flow-Arrow-${index}`);
-            if (arrow) arrow.style.opacity = (flowRate > 0 ? 1 : 0).toString();
+    // Everything that depends on the look is described by the SVG itself:
+    //   data-run-map   {elementId: {entity, mode: "on" | "gt0"}}  -> the card sets data-state="on|off|unknown" on that element
+    //   data-temp-vars {--k-name: {entity: [ids], min, max}}      -> the card sets --k-name (0..1) on the <svg>
+    // How "on", "off" or a value looks (colours, paused animations) is defined by CSS inside the SVG.
+    updateDynamicStyle() {
+        const svg = this.shadowRoot?.querySelector("ha-card svg");
+        if (!svg || !this.config || !this.hass) return;
+        const parse = (attr)=>{
+            try {
+                return JSON.parse(svg.getAttribute(attr) ?? "{}");
+            } catch  {
+                return {};
+            }
+        };
+        // keys may still be the legacy German ids in custom layouts
+        const stateOf = (key)=>{
+            const entityId = this.config.entities?.[(0, $eb5cfe1dd9fe4e85$export$52baa4d7dee4809c)(key)];
+            return entityId ? this.hass.states[entityId]?.state : undefined;
+        };
+        // a bound is a number or {entity, offset, fallback}, e.g. relative to the DHW setpoint
+        const bound = (b)=>{
+            if (typeof b === "number") return b;
+            const value = parseFloat(stateOf(b?.entity) ?? "");
+            return Number.isFinite(value) ? value + (b.offset ?? 0) : b?.fallback;
+        };
+        for (const [id, rule] of Object.entries(parse("data-run-map"))){
+            const element = this.shadowRoot.getElementById(id);
+            if (!element) continue;
+            const state = stateOf(rule.entity);
+            let result = "unknown";
+            if (state !== undefined && state !== "unknown" && state !== "unavailable") result = (rule.mode === "gt0" ? parseFloat(state) > 0 : state === "on") ? "on" : "off";
+            element.setAttribute("data-state", result);
+        }
+        for (const [name, rule] of Object.entries(parse("data-temp-vars"))){
+            let value = NaN;
+            for (const key of Array.isArray(rule.entity) ? rule.entity : [
+                rule.entity
+            ]){
+                const candidate = parseFloat(stateOf(key) ?? "");
+                if (Number.isFinite(candidate)) {
+                    value = candidate;
+                    break;
+                }
+            }
+            const min = bound(rule.min);
+            const max = bound(rule.max);
+            if (Number.isFinite(value) && Number.isFinite(min) && Number.isFinite(max) && max !== min) {
+                const k = Math.min(1, Math.max(0, (value - min) / (max - min)));
+                svg.style.setProperty(name, k.toFixed(3));
+            } else svg.style.removeProperty(name); // the SVG falls back to its own default
         }
     }
-    getNumericState(itemId) {
-        const entityId = this.config.entities?.[itemId];
-        const entity = entityId ? this.hass.states[entityId] : null;
-        const value = entity ? parseFloat(entity.state) : NaN;
-        return isNaN(value) ? 0 : value;
+    // "animations: false" freezes everything; how is defined by the SVG (svg[data-animations="off"])
+    updateAnimations() {
+        const svg = this.shadowRoot?.querySelector("ha-card svg");
+        if (!svg) return;
+        svg.setAttribute("data-animations", this.config?.animations === false ? "off" : "on");
     }
-    getBinaryState(itemId) {
-        const entityId = this.config.entities?.[itemId];
-        return entityId ? this.hass.states[entityId]?.state === "on" : false;
-    }
-    /**
-     * Drives the CSS animations of the schema: pulsing flow arrows, pump,
-     * compressor and backup heater activity, fan flutter and the tank color.
-     * Animation speeds scale with the measured values.
-     */ updateDynamics() {
-        const clamp = (value, min, max)=>Math.min(max, Math.max(min, value));
-        const flowRate = this.getNumericState("flow_rate");
-        const compressorOn = this.getBinaryState("compressor_status");
-        const pumpPercent = this.getNumericState("circulation_pump");
-        const pumpOn = this.getBinaryState("circulation_pump_status") || pumpPercent > 0;
-        const fanRpm = this.getNumericState("fan_speed");
-        const fanOn = fanRpm > 0 || !this.config.entities?.["fan_speed"] && compressorOn;
-        const buhEntity = this.config.entities?.["buh_power"];
-        const buhOn = buhEntity ? this.isPositiveNumber(this.hass.states[buhEntity]?.state) : false;
-        const eevOn = this.getBinaryState("pressure_equalization");
-        this.toggleAttribute("flowing", flowRate > 0);
-        this.toggleAttribute("compressor-on", compressorOn);
-        this.toggleAttribute("pump-on", pumpOn);
-        this.toggleAttribute("fan-on", fanOn);
-        this.toggleAttribute("buh-on", buhOn);
-        this.toggleAttribute("eev-on", eevOn);
-        // Faster water flow, fan or pump speed -> faster animation.
-        const flowPeriod = flowRate > 0 ? clamp(1500 / flowRate, 0.5, 3) : 1.5;
-        const fanPeriod = fanRpm > 0 ? clamp(400 / fanRpm, 0.2, 1.2) : 0.6;
-        const pumpPeriod = pumpPercent > 0 ? clamp(120 / pumpPercent, 0.8, 3) : 1.6;
-        this.style.setProperty("--hpsu-flow-period", `${flowPeriod.toFixed(2)}s`);
-        this.style.setProperty("--hpsu-fan-period", `${fanPeriod.toFixed(2)}s`);
-        this.style.setProperty("--hpsu-pump-period", `${pumpPeriod.toFixed(2)}s`);
-        // DHW tank color relative to the configured DHW setpoint: blue when
-        // far below it, red when reached. The hue rotates "the long way"
-        // (blue -> cyan -> green -> yellow -> red, the classic thermal scale)
-        // so intermediate temperatures never look pink/magenta.
-        const tankTemp = this.getNumericState("storage_temperature");
-        const setpointEntity = this.config.entities?.["storage_setpoint"];
-        const setpoint = setpointEntity ? this.getNumericState("storage_setpoint") : 48;
-        const range = 18;
-        const warmth = tankTemp > 0 && setpoint > 0 ? clamp((tankTemp - (setpoint - range)) / range, 0, 1) : 0;
-        this.style.setProperty("--hpsu-tank-hue", `${Math.round(warmth * -215)}deg`);
+    updateOpacity() {
+        if (this.config) {
+            const dhwOpenArrows = this.shadowRoot.querySelector(`#dhw-open-arrows`);
+            const dhwClosedArrows = this.shadowRoot.querySelector(`#dhw-closed-arrows`);
+            const bpvOpenArrows = this.shadowRoot.querySelector(`#bpv-open-arrows`);
+            const bpvClosedArrows = this.shadowRoot.querySelector(`#bpv-closed-arrows`);
+            const mixerEntity = this.config.entities?.['mixer'] ?? null;
+            const bypassEntity = this.config.entities?.['bypass'] ?? null;
+            // valve flaps (layouts with T-piece valves): angle follows the percentage
+            const setFlap = (id, entity)=>{
+                const flap = this.shadowRoot.getElementById(id);
+                if (!flap) return;
+                const raw = entity && this.hass.states[entity] ? parseFloat(this.hass.states[entity].state) : 0;
+                const share = Math.min(1, Math.max(0, Number.isFinite(raw) ? raw / 100 : 0));
+                const [px, py] = (flap.getAttribute("data-pivot") ?? "0 0").split(" ");
+                const a0 = parseFloat(flap.getAttribute("data-a0") ?? "0");
+                const a1 = parseFloat(flap.getAttribute("data-a1") ?? "0");
+                flap.setAttribute("transform", `rotate(${a0 + (a1 - a0) * share} ${px} ${py})`);
+            };
+            setFlap("dhw-flap", mixerEntity);
+            setFlap("bpv-flap", bypassEntity);
+            if (!dhwOpenArrows || !dhwClosedArrows || !bpvOpenArrows || !bpvClosedArrows) return;
+            const mixer_id = this.config.entities?.['mixer'] ?? null;
+            const bypass_id = this.config.entities?.['bypass'] ?? null;
+            const mischerState = mixer_id && this.hass.states[mixer_id] ? parseFloat(this.hass.states[mixer_id].state) : 0;
+            const bpvState = bypass_id && this.hass.states[bypass_id] ? parseFloat(this.hass.states[bypass_id].state) : 0;
+            dhwOpenArrows.style.opacity = (mischerState / 100.0).toString();
+            dhwClosedArrows.style.opacity = ((100.0 - mischerState) / 100.0).toString();
+            bpvOpenArrows.style.opacity = (bpvState / 100.0).toString();
+            bpvClosedArrows.style.opacity = ((100.0 - bpvState) / 100.0).toString();
+        }
     }
     handleStateClick(entityId) {
         this.dispatchEvent(new CustomEvent("hass-more-info", {
@@ -2469,19 +4241,21 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
             composed: true
         }));
     }
-    /**
-     * Resolves a file shipped next to this script, wherever the script is
-     * served from: HA Marketplace (/local/community/<repo>/), legacy HACS
-     * (/hacsfiles/<repo>/) or a manual install (/local/<repo>/dist/).
-     * The script's own query string (e.g. ?hacstag=...) is reused as cache
-     * buster, so the SVG is refreshed exactly when the card is updated.
-     */ makeURL(filename) {
-        // import.meta.url can't be used: the bundler replaces it at build time.
-        const scriptElement = document.querySelector(`script[src*="/${$a399cc6bbb0eb26a$var$SCRIPT_FILENAME}"]`);
-        const scriptUrl = new URL(scriptElement?.src ?? `/local/community/daikin-rotex-hpsu-dashboard/${$a399cc6bbb0eb26a$var$SCRIPT_FILENAME}`, document.baseURI);
-        const fileUrl = new URL(filename, scriptUrl);
-        fileUrl.search = scriptUrl.search || `?v=${Date.now()}`;
-        return fileUrl.pathname + fileUrl.search;
+    makeURL(filename) {
+        // Resolve next to this card's own script, independent of install location
+        // (/hacsfiles/, /local/, /local/community/, ...).
+        // Not import.meta.url: Parcel inlines it as "file:///src/card.ts".
+        const scriptName = "hpsu-dashboard-card.js";
+        const scriptEl = Array.from(document.querySelectorAll("script[src]")).find((s)=>new URL(s.src, document.baseURI).pathname.endsWith(`/${scriptName}`));
+        const scriptUrl = scriptEl?.src ?? performance.getEntriesByType("resource").map((e)=>e.name).find((n)=>new URL(n, document.baseURI).pathname.endsWith(`/${scriptName}`));
+        if (!scriptUrl) {
+            console.warn(`hpsu-dashboard-card: cannot locate ${scriptName}, using default path`);
+            return `/local/community/daikin-rotex-hpsu-dashboard/${filename}`;
+        }
+        const url = new URL(filename, scriptUrl);
+        // Reuse the script's own query string (hacstag / v=...) as cache key.
+        url.search = new URL(scriptUrl).search;
+        return url.href;
     }
     isPanelView() {
         let node = this;
@@ -2505,30 +4279,32 @@ class $a399cc6bbb0eb26a$export$9de59f1af66e4f03 extends (0, $ab210b2da7b39b9d$ex
     isBooleanSensor(entityId) {
         return entityId?.startsWith("binary_sensor.") ?? false;
     }
-    isPositiveNumber(value) {
-        return !!value && !isNaN(Number(value)) && Number(value) > 0;
-    }
     findEntityIdById(id) {
-        return this.svg_item_config.find((item)=>item.id === id)?.entityId;
+        const value = this.svg_item_config.flatMap((item)=>item.values).find((value)=>value.id === id);
+        return value?.entityId ?? undefined;
     }
     constructor(...args){
-        super(...args), this._state = "loading", this.language = "en", this.svgContent = null, this.svg_item_config = [], this.clickHandlersAdded = false;
+        super(...args), this._state = "loading", this.language = "en", this.svgContent = null, this.svg_item_config = [], this.clickHandlersAdded = false, this.loadedLayoutFile = null, this.loadedStyleSignature = null, // Optional box/text styling provided by the SVG layout itself (data-* attributes on the <svg> root).
+        this.layoutStyle = {};
     }
 }
-(0, $656ade2323340eda$export$71511d61b312f219)([
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
     (0, $9cd908ed2625c047$export$d541bacb2bda4494)({
         attribute: false
     })
 ], $a399cc6bbb0eb26a$export$9de59f1af66e4f03.prototype, "hass", void 0);
-(0, $656ade2323340eda$export$71511d61b312f219)([
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
     (0, $04c21ea1ce1f6057$export$ca000e230c0caa3e)()
 ], $a399cc6bbb0eb26a$export$9de59f1af66e4f03.prototype, "_state", void 0);
-(0, $656ade2323340eda$export$71511d61b312f219)([
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
     (0, $04c21ea1ce1f6057$export$ca000e230c0caa3e)()
 ], $a399cc6bbb0eb26a$export$9de59f1af66e4f03.prototype, "language", void 0);
-(0, $656ade2323340eda$export$71511d61b312f219)([
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
     (0, $04c21ea1ce1f6057$export$ca000e230c0caa3e)()
 ], $a399cc6bbb0eb26a$export$9de59f1af66e4f03.prototype, "svgContent", void 0);
+(0, $24c52f343453d62d$export$29e00dfd3077644b)([
+    (0, $02a1f3a787c54a30$export$2fa187e846a241c4)('ha-card')
+], $a399cc6bbb0eb26a$export$9de59f1af66e4f03.prototype, "haCardElement", void 0);
 customElements.define("hpsu-dashboard-card", $a399cc6bbb0eb26a$export$9de59f1af66e4f03);
 customElements.define("hpsu-dashboard-card-editor", (0, $d067581fc0d59830$export$70410bc798970b36));
 window.customCards = window.customCards || [];
@@ -2536,8 +4312,7 @@ window.customCards.push({
     type: "hpsu-dashboard-card",
     name: "HPSU Dashboard",
     description: "A Lovelace card for visualizing the Daikin HPSU status.",
-    preview: true,
-    documentationURL: "https://github.com/wrfz/daikin-rotex-hpsu-dashboard"
+    preview: true
 });
 
 

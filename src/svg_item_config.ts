@@ -4,513 +4,738 @@ export type Category = Record<Language, string>;
 
 export type TextAlign = "left" | "middle";
 
-export interface SVGItemTexts {
-    label?: string;
+export interface SVGValueTexts {
     suffix?: string;
     desc: string;
 }
 
-export interface SVGItem {
-    entityId?: string | null;
-    parent?: string;
-    labelBox?: Element | null;
-    valueBox?: Element | null;
-
+export interface SVGValue {
     id: string;
-    label_rect_id?: string;
-    domain: string;
+    entityId?: string | null;
     device?: "CAN" | "UART";
+    domain: string;
+    unit?: string | string[];
+    optional?: boolean;
     value_rect_id?: string;
+    valueBox?: any;
+    texts: Record<Language, SVGValueTexts>;
+}
+
+export interface SVGItem {
+    parent?: string;
+    labelBox?: any;
+    group_id: string;
+    label_rect_id?: string;
+    visual_container?: boolean;
     offset?: number;
     category?: Category;
-    unit?: string | string[];
     digits?: number;
     fontSize?: string;
     align?: TextAlign;
-    optional?: boolean;
-    texts: Record<Language, SVGItemTexts>;
+    suffix?: string;
+    values: SVGValue[];
+    texts?: Record<Language, { label?: string }>;
 }
 
 export const svg_item_config: SVGItem[] = [
     {
-        id: "outside_temperature",
+        group_id: "TA",
         label_rect_id: "ta_label",
-        domain: "sensor",
-        device: "CAN",
-        unit: "°C",
-        value_rect_id: "ta_val",
         offset: 6,
         category: {
             de: "Oben",
             en: "Top",
             it: "In alto"
         },
+        visual_container: true,
+        values: [
+            {
+                id: "outside_temperature",
+                device: "CAN",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "ta_val",
+                texts: {
+                    de: {
+                        desc: "TA - Außentemperatur (RoCon OT1)"
+                    },
+                    en: {
+                        desc: "TA - Outside temperature (RoCon OT1)"
+                    },
+                    it: {
+                        desc: "TA - Temperatura esterna (sonda RoCon OT1)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "TA",
-                desc: "TA - Außentemperatur (RoCon OT1)"
+                label: "TA"
             },
             en: {
-                label: "TA",
-                desc: "TA - Outside temperature (RoCon OT1)"
+                label: "TA"
             },
             it: {
-                label: "TA",
-                desc: "TA - Temperatura esterna (sonda RoCon OT1)"
+                label: "TA"
             }
         }
     },
     {
-        id: "ta2",
+        group_id: "TA2",
         label_rect_id: "ta2_label",
-        domain: "sensor",
-        device: "CAN",
-        unit: "°C",
-        value_rect_id: "ta2_val",
         offset: 6,
-        optional: true,
         parent: "TA2",
+        visual_container: true,
+        values: [
+            {
+                id: "ta2",
+                device: "CAN",
+                domain: "sensor",
+                unit: "°C",
+                optional: true,
+                value_rect_id: "ta2_val",
+                texts: {
+                    de: {
+                        desc: "TA2 - Außentemperatur am Außengerät"
+                    },
+                    en: {
+                        desc: "TA2 - Outdoor unit air temperature"
+                    },
+                    it: {
+                        desc: "TA2 - Temperatura aria unità esterna"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "TA2",
-                desc: "TA2 - Außentemperatur am Außengerät"
+                label: "TA2"
             },
             en: {
-                label: "TA2",
-                desc: "TA2 - Outdoor unit air temperature"
+                label: "TA2"
             },
             it: {
-                label: "TA2",
-                desc: "TA2 - Temperatura aria unità esterna"
+                label: "TA2"
             }
         }
     },
     {
-        id: "expansion_valve",
+        group_id: "EEV",
         label_rect_id: "eev_label",
-        domain:  "sensor",
-        device: "UART",
-        unit: "pls",
-        value_rect_id: "eev_val",
         offset: 6,
         digits: 0,
+        visual_container: true,
+        values: [
+            {
+                id: "expansion_valve",
+                device: "UART",
+                domain: "sensor",
+                unit: "pls",
+                value_rect_id: "eev_val",
+                texts: {
+                    de: {
+                        desc: "Elektronisches Expansionsventil"
+                    },
+                    en: {
+                        desc: "Electronic expansion valve"
+                    },
+                    it: {
+                        desc: "Valvola di espansione elettronica"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "EEV",
-                desc: "Elektronisches Expansionsventil"
+                label: "EEV"
             },
             en: {
-                label: "EEV",
-                desc: "Electronic expansion valve"
+                label: "EEV"
             },
             it: {
-                label: "EEV",
-                desc: "Valvola di espansione elettronica"
+                label: "EEV"
             }
         }
     },
     {
-        id: "pressure_equalization",
-        domain: "binary_sensor",
-        device: "UART",
-        texts: {
-            de: {
-                desc: "Druckausgleich"
-            },
-            en: {
-                desc: "Pressure equalization"
-            },
-            it: {
-                desc: "Equalizzazione della pressione"
+        group_id: "eev-schema",
+        values: [
+            {
+                id: "pressure_equalization",
+                device: "UART",
+                domain: "binary_sensor",
+                texts: {
+                    de: {
+                        desc: "Druckausgleich"
+                    },
+                    en: {
+                        desc: "Pressure equalization"
+                    },
+                    it: {
+                        desc: "Equalizzazione della pressione"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "condensate",
-        label_rect_id: "condensate_label",
-        domain:  "sensor",
-        device: "UART",
-        unit: "°C",
-        value_rect_id: "condensate_value",
+        group_id: "Kondensat",
+        label_rect_id: "kondensat_label",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "condensate",
+                device: "UART",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "kondensat_value",
+                texts: {
+                    de: {
+                        desc: "Kondensattemperatur"
+                    },
+                    en: {
+                        desc: "Condensate temperature"
+                    },
+                    it: {
+                        desc: "Temperatura della condensa"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Kondensat",
-                desc: "Kondensattemperatur"
+                label: "Kondensat"
             },
             en: {
-                label: "Condensate",
-                desc: "Condensate temperature"
+                label: "Condensate"
             },
             it: {
-                label: "Condensa",
-                desc: "Temperatura della condensa"
+                label: "Condensa"
             }
         }
-	},
+    },
     {
-        id: "circulation_pump",
-        label_rect_id: "circulation_pump_label",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "%",
-        value_rect_id: "circulation_pump_value",
+        group_id: "Umwaelzpumpe",
+        label_rect_id: "uwp_label",
+        visual_container: true,
         offset: 6,
         digits: 0,
+        values: [
+            {
+                id: "circulation_pump",
+                device: "CAN",
+                domain: "sensor",
+                unit: "%",
+                value_rect_id: "uwp_value",
+                texts: {
+                    de: {
+                        desc: "Umwälzpumpe - Leistung"
+                    },
+                    en: {
+                        desc: "Circulation pump - speed"
+                    },
+                    it: {
+                        desc: "Pompa di circolazione - velocità"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Umwälzpumpe",
-                desc: "Umwälzpumpe - Leistung"
+                label: "Umwälzpumpe"
             },
             en: {
-                label: "Circ. pump",
-                desc: "Circulation pump - speed"
+                label: "Circ. pump"
             },
             it: {
-                label: "Pompa circ.",
-                desc: "Pompa di circolazione - velocità"
+                label: "Pompa circ."
             }
         }
     },
     {
-        id: "circulation_pump_status",
-        domain:  "binary_sensor",
-        device: "CAN",
-        value_rect_id: "circ_pump_rect",
+        group_id: "Umwaelzpumpe-Status",
         offset: 2,
         fontSize: "30px",
-        texts: {
-            de: {
-                desc: "Umwälzpumpe - Status"
-            },
-            en: {
-                desc: "Circulation pump - status"
-            },
-            it: {
-                desc: "Pompa di circolazione - stato"
+        values: [
+            {
+                id: "circulation_pump_status",
+                device: "CAN",
+                domain: "binary_sensor",
+                value_rect_id: "circ_pump_rect",
+                texts: {
+                    de: {
+                        desc: "Umwälzpumpe - Status"
+                    },
+                    en: {
+                        desc: "Circulation pump - status"
+                    },
+                    it: {
+                        desc: "Pompa di circolazione - stato"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "flow_rate",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "L/h",
+        group_id: "Durchfluss",
         label_rect_id: "flow_rate_label",
-        value_rect_id: "flow_rate_value",
+        visual_container: true,
         offset: 6,
         digits: 0,
+        values: [
+            {
+                id: "flow_rate",
+                device: "CAN",
+                domain: "sensor",
+                unit: "L/h",
+                value_rect_id: "flow_rate_value",
+                texts: {
+                    de: {
+                        desc: "Durchfluss"
+                    },
+                    en: {
+                        desc: "Flow rate"
+                    },
+                    it: {
+                        desc: "Portata acqua"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Durchfluss",
-                desc: "Durchfluss"
+                label: "Durchfluss"
             },
             en: {
-                label: "Flow rate",
-                desc: "Flow rate"
+                label: "Flow rate"
             },
             it: {
-                label: "Portata",
-                desc: "Portata acqua"
+                label: "Portata"
             }
         }
     },
     {
-        id: "return_temperature_can",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "°C",
+        group_id: "Ruecklauf",
         label_rect_id: "return_flow_label",
-        value_rect_id: "return_flow_can_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "return_temperature_can",
+                device: "CAN",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "return_flow_can_value",
+                texts: {
+                    de: {
+                        desc: "TR - Rücklauftemperatur (CAN)"
+                    },
+                    en: {
+                        desc: "TR - Return temperature (CAN)"
+                    },
+                    it: {
+                        desc: "TR - Temperatura di ritorno (CAN)"
+                    }
+                }
+            },
+            {
+                id: "return_temperature_uart",
+                device: "UART",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "return_flow_uart_value",
+                texts: {
+                    de: {
+                        desc: "TR - Rücklauftemperatur (UART)"
+                    },
+                    en: {
+                        desc: "TR - Return temperature (UART)"
+                    },
+                    it: {
+                        desc: "TR - Temperatura di ritorno (UART)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Rücklauf",
-                desc: "TR - Rücklauftemperatur (CAN)"
+                label: "Rücklauf"
             },
             en: {
-                label: "Return",
-                desc: "TR - Return temperature (CAN)"
+                label: "Return"
             },
             it: {
-                label: "Ritorno",
-                desc: "TR - Temperatura di ritorno (CAN)"
+                label: "Ritorno"
             }
         }
     },
     {
-        id: "return_temperature_uart",
-        domain:  "sensor",
-        device: "UART",
-        unit: "°C",
-        value_rect_id: "return_flow_uart_value",
-        offset: 6,
-        texts: {
-            de: {
-                desc: "TR - Rücklauftemperatur (UART)"
-            },
-            en: {
-                desc: "TR - Return temperature (UART)"
-            },
-            it: {
-                desc: "TR - Temperatura di ritorno (UART)"
-            }
-        }
-    },
-    {
-        id: "evaporator",
-        domain:  "sensor",
-        device: "UART",
-        unit: "°C",
+        group_id: "Verdampfer",
         label_rect_id: "evaporator_label",
-        value_rect_id: "evaporator_value",
+        visual_container: true,
         offset: 6,
         category: {
             de: "Mitte",
             en: "Middle",
             it: "Centro"
         },
+        values: [
+            {
+                id: "evaporator",
+                device: "UART",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "evaporator_value",
+                texts: {
+                    de: {
+                        desc: "Verdampfertemperatur"
+                    },
+                    en: {
+                        desc: "Evaporator temperature"
+                    },
+                    it: {
+                        desc: "Temperatura dell'evaporatore"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Verdampfer",
-                desc: "Verdampfertemperatur"
+                label: "Verdampfer"
             },
             en: {
-                label: "Evaporator",
-                desc: "Evaporator temperature"
+                label: "Evaporator"
             },
             it: {
-                label: "Evaporatore",
-                desc: "Temperatura dell'evaporatore"
+                label: "Evaporatore"
             }
         }
     },
     {
-        id: "hot_gas",
-        domain:  "sensor",
-        device: "UART",
-        unit: "°C",
+        group_id: "hot_gas",
         label_rect_id: "hot_gas_label",
-        value_rect_id: "hot_gas_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "hot_gas",
+                device: "UART",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "hot_gas_value",
+                texts: {
+                    de: {
+                        desc: "Heißgastemperatur"
+                    },
+                    en: {
+                        desc: "Hot gas temperature"
+                    },
+                    it: {
+                        desc: "Temperatura del gas caldo"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Heißgas",
-                desc: "Heißgastemperatur"
+                label: "Heißgas"
             },
             en: {
-                label: "Hot gas",
-                desc: "Hot gas temperature"
+                label: "Hot gas"
             },
             it: {
-                label: "Gas caldo",
-                desc: "Temperatura del gas caldo"
+                label: "Gas caldo"
             }
         }
     },
     {
-        id: "hot_gas_condenser",
-        domain:  "sensor",
-        unit: "°C",
+        group_id: "hot_gas_condenser",
         label_rect_id: "hot_gas_condenser_label",
-        value_rect_id: "hot_gas_condenser_value",
+        visual_container: true,
         offset: 6,
-        optional: true,
         parent: "hot_gas_condenser",
+        values: [
+            {
+                id: "hot_gas_condenser",
+                domain: "sensor",
+                unit: "°C",
+                optional: true,
+                value_rect_id: "hot_gas_condenser_value",
+                texts: {
+                    de: {
+                        desc: "Heißgastemperatur am Kondensator"
+                    },
+                    en: {
+                        desc: "Hot gas temperature at the condenser"
+                    },
+                    it: {
+                        desc: "Temperatura del gas caldo al condensatore"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Heißgas",
-                desc: "Heißgastemperatur am Kondensator"
+                label: "Heißgas"
             },
             en: {
-                label: "Hot gas",
-                desc: "Hot gas temperature at the condenser"
+                label: "Hot gas"
             },
             it: {
-                label: "Gas caldo",
-                desc: "Temperatura del gas caldo al condensatore"
+                label: "Gas caldo"
             }
         }
     },
     {
-        id: "spread",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "°C",
+        group_id: "Spreizung",
         label_rect_id: "spread_label",
-        value_rect_id: "spread_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "spread",
+                device: "CAN",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "spread_value",
+                texts: {
+                    de: {
+                        desc: "Spreizung (TV - TR)"
+                    },
+                    en: {
+                        desc: "Temperature spread (TV - TR)"
+                    },
+                    it: {
+                        desc: "Differenza di temperatura (TV - TR)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Spreizung",
-                desc: "Spreizung (TV - TR)"
+                label: "Spreizung"
             },
             en: {
-                label: "Spread",
-                desc: "Temperature spread (TV - TR)"
+                label: "Spread"
             },
             it: {
-                label: "ΔT",
-                desc: "Differenza di temperatura (TV - TR)"
+                label: "ΔT"
             }
         }
     },
     {
-        id: "flow_temperature_can",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "°C",
+        group_id: "Vorlauf",
         label_rect_id: "flow_label",
-        value_rect_id: "flow_can_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "flow_temperature_can",
+                device: "CAN",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "flow_can_value",
+                texts: {
+                    de: {
+                        desc: "TV - Vorlauftemperatur (CAN)"
+                    },
+                    en: {
+                        desc: "TV - Flow temperature (CAN)"
+                    },
+                    it: {
+                        desc: "TV - Temperatura di mandata (CAN)"
+                    }
+                }
+            },
+            {
+                id: "flow_temperature_uart",
+                device: "UART",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "flow_uart_value",
+                texts: {
+                    de: {
+                        desc: "TV - Vorlauftemperatur (UART)"
+                    },
+                    en: {
+                        desc: "TV - Flow temperature (UART)"
+                    },
+                    it: {
+                        desc: "TV - Temperatura di mandata (UART)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Vorlauf",
-                desc: "TV - Vorlauftemperatur (CAN)"
+                label: "Vorlauf"
             },
             en: {
-                label: "Flow",
-                desc: "TV - Flow temperature (CAN)"
+                label: "Flow"
             },
             it: {
-                label: "Mandata",
-                desc: "TV - Temperatura di mandata (CAN)"
+                label: "Mandata"
             }
         }
     },
     {
-        id: "flow_temperature_uart",
-        domain:  "sensor",
-        device: "UART",
-        unit: "°C",
-        value_rect_id: "flow_uart_value",
-        offset: 6,
-        texts: {
-            de: {
-                desc: "TV - Vorlauftemperatur (UART)"
-            },
-            en: {
-                desc: "TV - Flow temperature (UART)"
-            },
-            it: {
-                desc: "TV - Temperatura di mandata (UART)"
-            }
-        }
-    },
-    {
-        id: "flow_temperature_setpoint",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "°C",
+        group_id: "Vorlauf-Soll",
         label_rect_id: "flow_setpoint_label",
-        value_rect_id: "flow_setpoint_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "flow_temperature_setpoint",
+                device: "CAN",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "flow_setpoint_value",
+                texts: {
+                    de: {
+                        desc: "Vorlauf-Solltemperatur"
+                    },
+                    en: {
+                        desc: "Flow temperature setpoint"
+                    },
+                    it: {
+                        desc: "Temperatura di mandata impostata"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Vorlauf-Soll",
-                desc: "Vorlauf-Solltemperatur"
+                label: "Vorlauf-Soll"
             },
             en: {
-                label: "Flow set",
-                desc: "Flow temperature setpoint"
+                label: "Flow set"
             },
             it: {
-                label: "Mand. imp.",
-                desc: "Temperatura di mandata impostata"
+                label: "Mand. imp."
             }
         }
     },
     {
-        id: "water_pressure",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "bar",
+        group_id: "Druck",
         label_rect_id: "pressure_label",
-        value_rect_id: "pressure_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "water_pressure",
+                device: "CAN",
+                domain: "sensor",
+                unit: "bar",
+                value_rect_id: "pressure_value",
+                texts: {
+                    de: {
+                        desc: "Wasserdruck"
+                    },
+                    en: {
+                        desc: "Water pressure"
+                    },
+                    it: {
+                        desc: "Pressione dell'acqua"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Druck",
-                desc: "Wasserdruck"
+                label: "Druck"
             },
             en: {
-                label: "Pressure",
-                desc: "Water pressure"
+                label: "Pressure"
             },
             it: {
-                label: "Pressione",
-                desc: "Pressione dell'acqua"
+                label: "Pressione"
             }
         }
     },
     {
-        id: "flow_temperature_bh_can",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "°C",
+        group_id: "Vorlauf-BH",
         label_rect_id: "flow_bh_label",
-        value_rect_id: "flow_bh_can_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "flow_temperature_bh_can",
+                device: "CAN",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "flow_bh_can_value",
+                texts: {
+                    de: {
+                        desc: "TVBH - Vorlauf nach Heizstab (CAN)"
+                    },
+                    en: {
+                        desc: "TVBH - Flow after backup heater (CAN)"
+                    },
+                    it: {
+                        desc: "TVBH - Mandata dopo resistenza (CAN)"
+                    }
+                }
+            },
+            {
+                id: "flow_temperature_bh_uart",
+                device: "UART",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "flow_bh_uart_value",
+                texts: {
+                    de: {
+                        desc: "TVBH - Vorlauf nach Heizstab (UART)"
+                    },
+                    en: {
+                        desc: "TVBH - Flow after backup heater (UART)"
+                    },
+                    it: {
+                        desc: "TVBH - Mandata dopo resistenza (UART)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Vorlauf BH",
-                desc: "TVBH - Vorlauf nach Heizstab (CAN)"
+                label: "Vorlauf BH"
             },
             en: {
-                label: "Flow BH",
-                desc: "TVBH - Flow after backup heater (CAN)"
+                label: "Flow BH"
             },
             it: {
-                label: "Mand. BH",
-                desc: "TVBH - Mandata dopo resistenza (CAN)"
+                label: "Mand. BH"
             }
         }
     },
     {
-        id: "flow_temperature_bh_uart",
-        domain:  "sensor",
-        device: "UART",
-        unit: "°C",
-        value_rect_id: "flow_bh_uart_value",
-        offset: 6,
-        texts: {
-            de: {
-                desc: "TVBH - Vorlauf nach Heizstab (UART)"
-            },
-            en: {
-                desc: "TVBH - Flow after backup heater (UART)"
-            },
-            it: {
-                desc: "TVBH - Mandata dopo resistenza (UART)"
-            }
-        }
-    },
-    {
-        id: "compressor_status",
-        domain:  "binary_sensor",
-        device: "CAN",
-        value_rect_id: "comp_rect",
+        group_id: "compressor_on_off_group",
         offset: 2,
         fontSize: "40px",
-        texts: {
-            de: {
-                desc: "Kompressor - Status"
-            },
-            en: {
-                desc: "Compressor - status"
-            },
-            it: {
-                desc: "Compressore - stato"
+        values: [
+            {
+                id: "compressor_status",
+                device: "CAN",
+                domain: "binary_sensor",
+                value_rect_id: "comp_rect",
+                texts: {
+                    de: {
+                        desc: "Kompressor - Status"
+                    },
+                    en: {
+                        desc: "Compressor - status"
+                    },
+                    it: {
+                        desc: "Compressore - stato"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "fan_speed",
-        domain:  "sensor",
-        device: "UART",
-        unit: "RPM",
+        group_id: "Luefter",
         label_rect_id: "fan_label",
-        value_rect_id: "fan_value",
+        visual_container: true,
         offset: 6,
         category: {
             de: "Unten",
@@ -518,163 +743,244 @@ export const svg_item_config: SVGItem[] = [
             it: "In basso"
         },
         digits: 0,
+        values: [
+            {
+                id: "fan_speed",
+                device: "UART",
+                domain: "sensor",
+                unit: "RPM",
+                value_rect_id: "fan_value",
+                texts: {
+                    de: {
+                        desc: "Lüfterdrehzahl"
+                    },
+                    en: {
+                        desc: "Fan speed"
+                    },
+                    it: {
+                        desc: "Velocità della ventola"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Lüfter",
-                desc: "Lüfterdrehzahl"
+                label: "Lüfter"
             },
             en: {
-                label: "Fan",
-                desc: "Fan speed"
+                label: "Fan"
             },
             it: {
-                label: "Ventola",
-                desc: "Velocità della ventola"
+                label: "Ventola"
             }
         }
     },
     {
-        id: "compressor_speed",
-        domain:  "sensor",
-        device: "UART",
-        unit: "RPM",
+        group_id: "Verdichter",
         label_rect_id: "compressor_label",
-        value_rect_id: "compressor_value",
+        visual_container: true,
         offset: 6,
         digits: 0,
+        values: [
+            {
+                id: "compressor_speed",
+                device: "UART",
+                domain: "sensor",
+                unit: "RPM",
+                value_rect_id: "compressor_value",
+                texts: {
+                    de: {
+                        desc: "Verdichterdrehzahl"
+                    },
+                    en: {
+                        desc: "Compressor speed"
+                    },
+                    it: {
+                        desc: "Velocità del compressore"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Verdichter",
-                desc: "Verdichterdrehzahl"
+                label: "Verdichter"
             },
             en: {
-                label: "Compressor",
-                desc: "Compressor speed"
+                label: "Compressor"
             },
             it: {
-                label: "Compressore",
-                desc: "Velocità del compressore"
+                label: "Compressore"
             }
         }
     },
     {
-        id: "storage_temperature",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "°C",
+        group_id: "Speicher",
         label_rect_id: "storage_label",
-        value_rect_id: "storage_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "storage_temperature",
+                device: "CAN",
+                domain: "sensor",
+                unit: "°C",
+                value_rect_id: "storage_value",
+                texts: {
+                    de: {
+                        desc: "Speichertemperatur (Ist)"
+                    },
+                    en: {
+                        desc: "DHW tank temperature (actual)"
+                    },
+                    it: {
+                        desc: "Temperatura bollitore (attuale)"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Speicher",
-                desc: "Speichertemperatur (Ist)"
+                label: "Speicher"
             },
             en: {
-                label: "Tank",
-                desc: "DHW tank temperature (actual)"
+                label: "Tank"
             },
             it: {
-                label: "Bollitore",
-                desc: "Temperatura bollitore (attuale)"
+                label: "Bollitore"
             }
         }
     },
     {
-        id: "storage_setpoint",
-        domain:  "select",
-        device: "CAN",
-        unit: "°C",
+        group_id: "Speicher-Soll",
         label_rect_id: "storage_setpoint_label",
-        value_rect_id: "storage_setpoint_value",
+        visual_container: true,
         offset: 6,
+        values: [
+            {
+                id: "storage_setpoint",
+                device: "CAN",
+                domain: "select",
+                unit: "°C",
+                value_rect_id: "storage_setpoint_value",
+                texts: {
+                    de: {
+                        desc: "Speichertemperatur (Soll)"
+                    },
+                    en: {
+                        desc: "DHW tank temperature setpoint"
+                    },
+                    it: {
+                        desc: "Temperatura bollitore impostata"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Soll",
-                desc: "Speichertemperatur (Soll)"
+                label: "Soll"
             },
             en: {
-                label: "Setpoint",
-                desc: "DHW tank temperature setpoint"
+                label: "Setpoint"
             },
             it: {
-                label: "Imp.",
-                desc: "Temperatura bollitore impostata"
+                label: "Imp."
             }
         }
     },
     {
-        id: "buh_power",
-        domain:  "sensor",
-        unit: ["W", "kW"],
+        group_id: "buh",
         label_rect_id: "buh_info_label",
-        value_rect_id: "buh_info_value",
+        visual_container: true,
         offset: 6,
         digits: 0,
-        optional: true,
         parent: "buh",
+        values: [
+            {
+                id: "buh_power",
+                domain: "sensor",
+                unit: ["W", "kW"],
+                optional: true,
+                value_rect_id: "buh_info_value",
+                texts: {
+                    de: {
+                        desc: "Heizstableistung"
+                    },
+                    en: {
+                        desc: "Backup heater power"
+                    },
+                    it: {
+                        desc: "Potenza della resistenza elettrica"
+                    }
+                }
+            }
+        ],
         texts: {
             de: {
-                label: "Heizstab",
-                desc: "Heizstableistung"
+                label: "Heizstab"
             },
             en: {
-                label: "Backup heater",
-                desc: "Backup heater power"
+                label: "Backup heater"
             },
             it: {
-                label: "Resistenza",
-                desc: "Potenza della resistenza elettrica"
+                label: "Resistenza"
             }
         }
     },
     {
-        id: "mixer",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "%",
-        value_rect_id: "dhw_mixer_value",
+        group_id: "DHW-Valve",
         offset: 6,
         digits: 0,
         fontSize: "40px",
-        texts: {
-            de: {
-                desc: "Mischerstellung"
-            },
-            en: {
-                desc: "Mixer position"
-            },
-            it: {
-                desc: "Posizione del miscelatore"
+        values: [
+            {
+                id: "mixer",
+                device: "CAN",
+                domain: "sensor",
+                unit: "%",
+                value_rect_id: "dhw_mixer_value",
+                texts: {
+                    de: {
+                        desc: "Mischerstellung"
+                    },
+                    en: {
+                        desc: "Mixer position"
+                    },
+                    it: {
+                        desc: "Posizione del miscelatore"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "bypass",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "%",
-        value_rect_id: "bypass_value",
+        group_id: "BPV-Valve",
         offset: 6,
         digits: 0,
         fontSize: "40px",
-        texts: {
-            de: {
-                desc: "Bypass-Ventilstellung"
-            },
-            en: {
-                desc: "Bypass valve position"
-            },
-            it: {
-                desc: "Posizione della valvola di bypass"
+        values: [
+            {
+                id: "bypass",
+                device: "CAN",
+                domain: "sensor",
+                unit: "%",
+                value_rect_id: "bypass_value",
+                texts: {
+                    de: {
+                        desc: "Bypass-Ventilstellung"
+                    },
+                    en: {
+                        desc: "Bypass valve position"
+                    },
+                    it: {
+                        desc: "Posizione della valvola di bypass"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "error_code",
-        domain:  "sensor",
-        device: "CAN",
-        value_rect_id: "error_code_value",
+        group_id: "Info",
+        visual_container: true,
         offset: 6,
         fontSize: "40px",
         align: "left",
@@ -683,213 +989,224 @@ export const svg_item_config: SVGItem[] = [
             en: "Info",
             it: "Info"
         },
-        texts: {
-            de: {
-                suffix: "Fehlercode: ",
-                desc: "Fehlercode"
+        values: [
+            {
+                id: "error_code",
+                device: "CAN",
+                domain: "sensor",
+                value_rect_id: "fehlercode_value",
+                texts: {
+                    de: {
+                        suffix: "Fehlercode: ",
+                        desc: "Fehlercode"
+                    },
+                    en: {
+                        suffix: "Error code: ",
+                        desc: "Error code"
+                    },
+                    it: {
+                        suffix: "Codice errore: ",
+                        desc: "Codice di errore"
+                    }
+                }
             },
-            en: {
-                suffix: "Error code: ",
-                desc: "Error code"
+            {
+                id: "operating_mode",
+                device: "CAN",
+                domain: "sensor",
+                value_rect_id: "betriebsmodus_value",
+                texts: {
+                    de: {
+                        suffix: "Modus: ",
+                        desc: "Betriebsmodus (vom Benutzer eingestellt)"
+                    },
+                    en: {
+                        suffix: "Mode: ",
+                        desc: "Operating mode (user setting)"
+                    },
+                    it: {
+                        suffix: "Modalità: ",
+                        desc: "Modalità operativa (impostata dall'utente)"
+                    }
+                }
             },
-            it: {
-                suffix: "Codice errore: ",
-                desc: "Codice di errore"
+            {
+                id: "mode_of_operating",
+                device: "CAN",
+                domain: "sensor",
+                value_rect_id: "betriebsart_value",
+                texts: {
+                    de: {
+                        suffix: "Status: ",
+                        desc: "Aktueller Wärmepumpenstatus"
+                    },
+                    en: {
+                        suffix: "State: ",
+                        desc: "Current heat pump state"
+                    },
+                    it: {
+                        suffix: "Stato: ",
+                        desc: "Stato attuale della pompa di calore"
+                    }
+                }
+            },
+            {
+                id: "thermal_power",
+                device: "CAN",
+                domain: "sensor",
+                unit: "kW",
+                value_rect_id: "therm_leistung_value",
+                texts: {
+                    de: {
+                        suffix: "Therm. Leistung: ",
+                        desc: "Thermische Leistung"
+                    },
+                    en: {
+                        suffix: "Thermal power: ",
+                        desc: "Thermal power"
+                    },
+                    it: {
+                        suffix: "Potenza termica: ",
+                        desc: "Potenza termica"
+                    }
+                }
+            },
+            {
+                id: "el_power",
+                domain: "sensor",
+                unit: "kW",
+                optional: true,
+                value_rect_id: "el_power_value",
+                texts: {
+                    de: {
+                        suffix: "El. Leistung: ",
+                        desc: "Elektrische Leistung"
+                    },
+                    en: {
+                        suffix: "Electric power: ",
+                        desc: "Electric power"
+                    },
+                    it: {
+                        suffix: "Potenza elettrica: ",
+                        desc: "Potenza elettrica"
+                    }
+                }
+            },
+            {
+                id: "cop",
+                domain: "sensor",
+                optional: true,
+                value_rect_id: "cop_value",
+                texts: {
+                    de: {
+                        suffix: "COP: ",
+                        desc: "Leistungszahl (COP)"
+                    },
+                    en: {
+                        suffix: "COP: ",
+                        desc: "Coefficient of performance (COP)"
+                    },
+                    it: {
+                        suffix: "COP: ",
+                        desc: "Coefficiente di prestazione (COP)"
+                    }
+                }
+            },
+            {
+                id: "room_temperature",
+                domain: "sensor",
+                unit: "°C",
+                optional: true,
+                value_rect_id: "t_room_is_value",
+                texts: {
+                    de: {
+                        suffix: "Raumtemp.: ",
+                        desc: "Aktuelle Raumtemperatur"
+                    },
+                    en: {
+                        suffix: "Room temp.: ",
+                        desc: "Current room temperature"
+                    },
+                    it: {
+                        suffix: "Temp. ambiente: ",
+                        desc: "Temperatura ambiente attuale"
+                    }
+                }
             }
-        }
+        ]
     },
     {
-        id: "operating_mode",
-        domain:  "select",
-        device: "CAN",
-        value_rect_id: "operating_mode_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        texts: {
-            de: {
-                suffix: "Modus: ",
-                desc: "Betriebsmodus (vom Benutzer eingestellt)"
-            },
-            en: {
-                suffix: "Mode: ",
-                desc: "Operating mode (user setting)"
-            },
-            it: {
-                suffix: "Modalità: ",
-                desc: "Modalità operativa (impostata dall'utente)"
-            }
-        }
-    },
-    {
-        id: "mode_of_operating",
-        domain:  "sensor",
-        device: "CAN",
-        value_rect_id: "mode_of_operating_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        texts: {
-            de: {
-                suffix: "Status: ",
-                desc: "Aktueller Wärmepumpenstatus"
-            },
-            en: {
-                suffix: "State: ",
-                desc: "Current heat pump state"
-            },
-            it: {
-                suffix: "Stato: ",
-                desc: "Stato attuale della pompa di calore"
-            }
-        }
-    },
-    {
-        id: "thermal_power",
-        domain:  "sensor",
-        device: "CAN",
-        unit: "kW",
-        value_rect_id: "thermal_power_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        texts: {
-            de: {
-                suffix: "Therm. Leistung: ",
-                desc: "Thermische Leistung"
-            },
-            en: {
-                suffix: "Thermal power: ",
-                desc: "Thermal power"
-            },
-            it: {
-                suffix: "Potenza termica: ",
-                desc: "Potenza termica"
-            }
-        }
-    },
-    {
-        id: "el_power",
-        domain:  "sensor",
-        unit: "kW",
-        value_rect_id: "el_power_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        optional: true,
-        texts: {
-            de: {
-                suffix: "El. Leistung: ",
-                desc: "Elektrische Leistung"
-            },
-            en: {
-                suffix: "Electric power: ",
-                desc: "Electric power"
-            },
-            it: {
-                suffix: "Potenza elettrica: ",
-                desc: "Potenza elettrica"
-            }
-        }
-    },
-    {
-        id: "cop",
-        domain:  "sensor",
-        value_rect_id: "cop_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        optional: true,
-        texts: {
-            de: {
-                suffix: "COP: ",
-                desc: "Leistungszahl (COP)"
-            },
-            en: {
-                suffix: "COP: ",
-                desc: "Coefficient of performance (COP)"
-            },
-            it: {
-                suffix: "COP: ",
-                desc: "Coefficiente di prestazione (COP)"
-            }
-        }
-    },
-    {
-        id: "room_temperature",
-        domain:  "sensor",
-        value_rect_id: "t_room_is_value",
-        offset: 6,
-        fontSize: "40px",
-        align: "left",
-        optional: true,
-        texts: {
-            de: {
-                suffix: "Raumtemp.: ",
-                desc: "Aktuelle Raumtemperatur"
-            },
-            en: {
-                suffix: "Room temp.: ",
-                desc: "Current room temperature"
-            },
-            it: {
-                suffix: "Temp. ambiente: ",
-                desc: "Temperatura ambiente attuale"
-            }
-        }
-    },
-    {
-        id: "system_date",
-        domain:  "sensor",
-        device: "CAN",
-        value_rect_id: "date_value",
+        group_id: "DateTime",
         parent: "date_value",
         offset: 6,
         fontSize: "40px",
-        optional: true,
-        texts: {
-            de: {
-                desc: "Systemdatum"
+        values: [
+            {
+                id: "system_date",
+                device: "CAN",
+                domain: "sensor",
+                optional: true,
+                value_rect_id: "date_value",
+                texts: {
+                    de: {
+                        desc: "Systemdatum"
+                    },
+                    en: {
+                        desc: "System date"
+                    },
+                    it: {
+                        desc: "Data di sistema"
+                    }
+                }
             },
-            en: {
-                desc: "System date"
-            },
-            it: {
-                desc: "Data di sistema"
+            {
+                id: "system_time",
+                device: "CAN",
+                domain: "sensor",
+                optional: true,
+                value_rect_id: "time_value",
+                texts: {
+                    de: {
+                        desc: "Systemzeit"
+                    },
+                    en: {
+                        desc: "System time"
+                    },
+                    it: {
+                        desc: "Ora di sistema"
+                    }
+                }
             }
-        }
-    },
-    {
-        id: "system_time",
-        domain:  "sensor",
-        device: "CAN",
-        value_rect_id: "time_value",
-        parent: "time_value",
-        offset: 6,
-        fontSize: "40px",
-        optional: true,
-        texts: {
-            de: {
-                desc: "Systemzeit"
-            },
-            en: {
-                desc: "System time"
-            },
-            it: {
-                desc: "Ora di sistema"
-            }
-        }
+        ]
     }
 ];
 
 export const languages: Language[] = ["de", "en", "it"];
 
+export const isLanguage = (lang: string | undefined): lang is Language =>
+    !!lang && (languages as string[]).includes(lang);
+
+export interface LayoutOption {
+    id: string;
+    file: string;
+    labels: Record<Language, string>;
+}
+
+export const DEFAULT_LAYOUT = "glass-light";
+
+export const layouts: LayoutOption[] = [
+    { id: "glass-dark", file: "hpsu_glass_dark.svg", labels: { de: "Glas, dunkel", en: "Glass, dark", it: "Vetro, scuro" } },
+    { id: "glass-light", file: "hpsu_glass_light.svg", labels: { de: "Glas, hell", en: "Glass, light", it: "Vetro, chiaro" } },
+    { id: "glass-petrol", file: "hpsu_glass_petrol.svg", labels: { de: "Glas, Petrol", en: "Glass, petrol", it: "Vetro, petrolio" } },
+];
+
+export const layoutFile = (id?: string): string =>
+    (layouts.find(l => l.id === id) ?? layouts.find(l => l.id === DEFAULT_LAYOUT)!).file;
+
 export interface UITexts {
     on: string;
     off: string;
     errorLoading: string;
-    selectCanDevice: string;
-    selectUartDevice: string;
 }
 
 export const text_map: Record<Language, UITexts> = {
@@ -897,22 +1214,16 @@ export const text_map: Record<Language, UITexts> = {
         on: "An",
         off: "Aus",
         errorLoading: "Fehler beim Laden des HPSU Dashboards.",
-        selectCanDevice: "CAN Gerät auswählen",
-        selectUartDevice: "UART Gerät auswählen",
     },
     en: {
         on: "On",
         off: "Off",
         errorLoading: "Failed to load the HPSU dashboard.",
-        selectCanDevice: "Select CAN device",
-        selectUartDevice: "Select UART device",
     },
     it: {
         on: "On",
         off: "Off",
         errorLoading: "Errore durante il caricamento della dashboard HPSU.",
-        selectCanDevice: "Seleziona dispositivo CAN",
-        selectUartDevice: "Seleziona dispositivo UART",
     },
 };
 
@@ -935,14 +1246,15 @@ export const state_abbreviations: Record<string, string> = {
     "Préparation d’eau chaude": "Eau chaude",
 };
 
-// Maps configuration keys used by previous (German) releases to the current
-// English ids, so existing card configurations keep working after the rename.
+// Maps configuration keys used by the original (German) releases to the
+// current English ids, so existing card configurations keep working.
 export const legacy_id_map: Record<string, string> = {
     ta: "outside_temperature",
     kondensat: "condensate",
     umwaelzpumpe: "circulation_pump",
     umwaelzpumpe_an_aus: "circulation_pump_status",
     durchfluss: "flow_rate",
+    ruecklauf: "return_temperature_can",
     ruecklauf_1: "return_temperature_can",
     ruecklauf_2: "return_temperature_uart",
     verdampfer: "evaporator",
@@ -965,22 +1277,18 @@ export const legacy_id_map: Record<string, string> = {
     t_room_is: "room_temperature",
 };
 
-export interface HpsuDashboardConfig {
-    type: string;
-    entities?: Record<string, string>;
-    canDevice?: string;
-    uartDevice?: string;
-    [key: string]: unknown;
-}
+/** Current id for a configuration key, accepting the legacy German keys. */
+export const resolveId = (key: string): string => legacy_id_map[key] ?? key;
 
-export const validateConfig = function(config: HpsuDashboardConfig): HpsuDashboardConfig {
-    const validIds = new Set(svg_item_config.map(item => item.id));
+export const validateConfig = function<T extends { entities?: Record<string, string> }>(config: T): T {
+    const validIds = new Set(svg_item_config.flatMap(item => item.values.map(value => value.id)));
     const validEntities: Record<string, string> = {};
 
     for (const [key, value] of Object.entries(config.entities ?? {})) {
-        const id = legacy_id_map[key] ?? key;
-        if (validIds.has(id)) {
-            validEntities[id] = value as string;
+        const id = resolveId(key);
+        // an explicit English key wins over a legacy one for the same value
+        if (validIds.has(id) && (id === key || !(id in validEntities))) {
+            validEntities[id] = value;
         }
     }
 
@@ -988,4 +1296,4 @@ export const validateConfig = function(config: HpsuDashboardConfig): HpsuDashboa
         ...config,
         entities: validEntities
     };
-}
+};

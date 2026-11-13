@@ -28,37 +28,52 @@ Erstelle als nächstes ein hpsu-dashboard-card als ein Fullscreen - **Panel** mi
         type: panel
         cards:
           - type: custom:hpsu-dashboard-card
+            layout: glass-light
+            language: de # Überschreibt die Sprache in Home Assistant
             entities:
-              ta: sensor.hpsu_can_aussentemperatur
+              outside_temperature: sensor.hpsu_can_aussentemperatur
               ta2: sensor.hpsu_can_ta2
               expansion_valve: sensor.hpsu_uart_expansionsventil
               pressure_equalization: binary_sensor.hpsu_uart_druckausgleich
-              kondensat: sensor.hpsu_uart_temperatur_fl_ssigkeitsleitung
-              umwaelzpumpe: sensor.hpsu_can_umwaelzpumpe
-              umwaelzpumpe_an_aus: binary_sensor.hpsu_can_status_kesselpumpe
-              durchfluss: sensor.hpsu_can_durchfluss
-              ruecklauf_1: sensor.hpsu_can_ruecklauftemperatur_heizung
-              ruecklauf_2: sensor.hpsu_uart_r_cklauftemperatur
-              verdampfer: sensor.hpsu_uart_temperatur_lamellenw_rmetauscher
+              condensate: sensor.hpsu_uart_temperatur_fl_ssigkeitsleitung
+              circulation_pump: sensor.hpsu_can_umwaelzpumpe
+              circulation_pump_status: binary_sensor.hpsu_can_status_kesselpumpe
+              flow_rate: sensor.hpsu_can_durchfluss
+              return_temperature_can: sensor.hpsu_can_ruecklauftemperatur_heizung
+              return_temperature_uart: sensor.hpsu_uart_r_cklauftemperatur
+              evaporator: sensor.hpsu_uart_temperatur_lamellenw_rmetauscher
               hot_gas: sensor.hpsu_uart_temperatur_nach_k_ltemittelverdichter
               hot_gas_condenser: sensor.thermometer_hei_gas_am_kondensator
-              vorlauf_1: sensor.hpsu_can_heizkreis_vorlauf_tv
-              vorlauf_2: sensor.hpsu_uart_vorlauftemeratur_tv
-              vorlauf_soll: sensor.hpsu_can_vorlauf_soll
-              wasserdruck: sensor.hpsu_can_wasserdruck
-              vorlauf_bh_1: sensor.hpsu_can_vorlauftemperatur_heizung_tvbh
-              vorlauf_bh_2: sensor.hpsu_uart_vorlauftemeratur_tvbh
-              kompressor_an_aus: binary_sensor.hpsu_can_status_kompressor
-              luefter: sensor.hpsu_uart_ventilatordrehzahl
-              verdichter: sensor.hpsu_uart_kompressor_drehzahl
-              speicher: sensor.hpsu_can_warmwassertemperatur
-              speicher_soll: select.hpsu_can_t_ww_soll1
-              mischer: sensor.hpsu_can_dhw_mischer_position
+              flow_temperature_can: sensor.hpsu_can_heizkreis_vorlauf_tv
+              flow_temperature_uart: sensor.hpsu_uart_vorlauftemeratur_tv
+              flow_temperature_setpoint: sensor.hpsu_can_vorlauf_soll
+              water_pressure: sensor.hpsu_can_wasserdruck
+              flow_temperature_bh_can: sensor.hpsu_can_vorlauftemperatur_heizung_tvbh
+              flow_temperature_bh_uart: sensor.hpsu_uart_vorlauftemeratur_tvbh
+              compressor_status: binary_sensor.hpsu_can_status_kompressor
+              fan_speed: sensor.hpsu_uart_ventilatordrehzahl
+              compressor_speed: sensor.hpsu_uart_kompressor_drehzahl
+              storage_temperature: sensor.hpsu_can_warmwassertemperatur
+              storage_setpoint: select.hpsu_can_t_ww_soll1
+              mixer: sensor.hpsu_can_dhw_mischer_position
               bypass: sensor.hpsu_can_bpv
-              betriebsmodus: select.hpsu_can_betriebsmodus
-              betriebsart: sensor.hpsu_can_betriebsart
-              fehlercode: sensor.hpsu_can_fehlercode
-              thermische_leistung: sensor.hpsu_can_thermische_leistung
+              operating_mode: select.hpsu_can_betriebsmodus
+              mode_of_operating: sensor.hpsu_can_betriebsart
+              error_code: sensor.hpsu_can_fehlercode
+              thermal_power: sensor.hpsu_can_thermische_leistung
               cop: sensor.hpsu_cop_clipped
               spread: sensor.hpsu_can_spreizung
 
+Die früheren deutschen Schlüssel (`vorlauf_1`, `fehlercode`, `betriebsart`, …) werden weiterhin erkannt und automatisch übernommen.
+
+
+
+## Layout
+
+Mit `layout` wählst du die Darstellung (auch im Karten-Editor ganz oben auswählbar):
+
+| Wert | Darstellung |
+|------|-------------|
+| `glass-dark` | modernes Glas-Layout, dunkel |
+| `glass-light` | modernes Glas-Layout, hell (Standard) |
+| `glass-petrol` | modernes Glas-Layout, Petrol |
